@@ -1,0 +1,10 @@
+/* styles.css */
+.custom-background {
+    background-image: url('../assets/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center; 
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+  
