@@ -1,7 +1,6 @@
 import React from 'react';
 import logo from '../assets/logo.png';
 import backgroundImage from '../assets/background.jpg';
-import './sign_in.css';
 import { faGoogle,faApple } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
