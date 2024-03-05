@@ -4,8 +4,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { faGoogle,faApple } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
 
 const Sign_up = () => {
+  const navigate = useNavigate();
   const [startDate, setStartDate] = useState(new Date());
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -16,8 +18,12 @@ const Sign_up = () => {
   const [birthDate, setBirthDate] = useState('');
   const [error, setError] = useState(null);
 
+  function toSignIn (){
+    navigate('/signin');
+  }
   const handleSubmit = async (event) => {
     event.preventDefault();
+    navigate('/signin');
     try {
       // Make HTTP request to send form data to the server
       const response = await fetch('/api/signup', {
@@ -229,7 +235,7 @@ const Sign_up = () => {
           </form>
           <p className="mt-4 text-center text-sm text-gray-600">
             Already have an account?{' '}
-            <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+            <a onClick={toSignIn} className="font-medium text-blue-600 hover:text-blue-500">
               Sign in
             </a>
           </p>

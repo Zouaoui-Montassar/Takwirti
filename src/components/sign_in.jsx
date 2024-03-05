@@ -3,12 +3,17 @@ import logo from '../assets/logo.png';
 import backgroundImage from '../assets/background.jpg';
 import { faGoogle,faApple } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { useNavigate } from 'react-router-dom';
 
 const Sign_in = () => {
+    const navigate = useNavigate();
+    function toSignUp (){
+      navigate('/signup');
+    }
     const handleSubmit = (event) => {
         event.preventDefault();
         // Perform form submission logic here
+        navigate('/calendar');
       };
 
       const handleGoogleSignIn = () => {
@@ -83,6 +88,7 @@ const Sign_in = () => {
           </div>
           <div>
             <button
+              
               type="submit"
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-50 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
             >
@@ -112,7 +118,7 @@ const Sign_in = () => {
         </form>
         <p className="mt-4 text-center text-sm text-gray-600">
             Don't have an account?{' '}
-            <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+            <a onClick={toSignUp} className="font-medium text-blue-600 hover:text-blue-500">
               Sign up
             </a>
           </p>
