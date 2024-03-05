@@ -1,12 +1,17 @@
-import NavBar from './components/NavBar';
 import './App.css';
-import MainPage from './components/MainPage';
+import SideBar from './components/SideBar';
+
+const links = [
+   {label: 'Accueil', path: '/'} ,
+   {label: 'Page 1', path: '/page1'} ,
+   {label: 'Page 2', path: '/page2' },
+  // Add more links as needed
+];
 
 function App() {
   return (
     <div >
-      <NavBar/>
-      <MainPage/>
+      <SideBar links={links}/>
     </div>
   );
 }
