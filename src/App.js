@@ -1,15 +1,18 @@
 import './App.css';
 import Sign_up from './components/sign_up';
 import Sign_in from './components/sign_in';
-import Calendar from './components/calendar';
-import Calendar1 from './components/calendar';
+import ParentComponent from './components/parentcalendar';
+import List from './components/list';
+
 
 function App() {
   return (
     <div className="App">
-      <Calendar/>
+      <ParentComponent/>
       <Sign_up/>
       <Sign_in/>
+      <List date="2003-03-05" />
+
     </div>
   );
 }
