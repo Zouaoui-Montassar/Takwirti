@@ -21,12 +21,21 @@ const links1 = [
 
 const DashboardRes = () => {
   return (
-    <div className="dashboard-res">
-        <NavBar links={links1}/>
-        <SideBar links={links}/>
-        <Calendar/>
-        <Stats/>
+    <div className="dashboard-res flex flex-wrap justify-between">
+  <div className="w-full md:w-auto md:flex-grow md:flex-shrink-0 md:flex-basis-0">
+    <NavBar links={links1} />
+    <SideBar links={links} />
+  </div>
+  <div className="w-full md:w-auto md:flex-grow-0 md:flex-shrink-0 md:flex-basis-auto flex flex-wrap justify-around">
+    <div className="w-full md:w-1/2 lg:w-2/3 py-4">
+      <Calendar />
     </div>
+    <div className="">
+      <Stats />
+    </div>
+  </div>
+</div>
+
   )
 }
 
