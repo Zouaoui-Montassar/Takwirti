@@ -1,5 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import NavBar from './NavBar'
+import Footer from './Footer';
 
 const MainPage = () => {
   const text1 = "Empowering Football Enthusiasts to Connect, Play, and Thrive";
@@ -29,10 +31,13 @@ const MainPage = () => {
    }
 
   return (
+
+    <>
+    <NavBar/>
     <div>
       <div className='m-7 flex  items-center justify-center '>
         
-        <div className='flex flex-col mt-10 px-5'> 
+        <div className='flex flex-col mt-10 px-5 items-center justify-center'> 
         <motion.h1 variants={pVariants} initial="hidden" animate="visible" className='bold-52 '>{text1.split("").map((char,index) =>(
           <motion.span variants={spanVariants} key={index}>{char}</motion.span>
         ))}</motion.h1>
@@ -77,7 +82,7 @@ const MainPage = () => {
       </div>
 
       <div className='m-7 flex pt-5 items-center justify-center h-screen'>
-        <img src="/Section 4 image.jpg" alt="img1"  className='rounded-full ml-4 ' width={800} height={500}/>
+        <img src="/Section 4 image.jpg" alt="img1"  className='rounded-full ml-4  mb-9' width={800} height={500} />
         
         <div className='flex flex-col mt-10 px-5'> 
        <motion.h1 variants={pVariants} initial="hidden" animate="visible" className='bold-52 '>{text4.split("").map((char,index) =>(
@@ -96,6 +101,8 @@ const MainPage = () => {
 
 
     </div>
+     <Footer/>
+    </>
   )
 }
 
