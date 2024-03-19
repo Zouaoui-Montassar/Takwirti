@@ -5,7 +5,7 @@ import Stats from './components/stats';
 import MainPage from './components/MainPage';
 import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
-
+import DashboardRes from './components/DashboardRes';
 import ParentCalendar from './components/parentcalendar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AddTerrain from './components/AddTerrain';
@@ -31,6 +31,7 @@ function App() {
           <Route path="/signin" element={<Sign_in/>} />
           <Route path="/stats" element={<Stats/>} />
           <Route path='/addterrain' element={<AddTerrain/>}></Route>
+          <Route path='/dashboard' element={<DashboardRes/>}></Route>
 
         </Routes>
       </BrowserRouter>

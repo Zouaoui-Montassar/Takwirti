@@ -1,4 +1,4 @@
-import React from 'react';
+import {React,useState} from 'react';
 import logo from '../assets/logo.png';
 import backgroundImage from '../assets/background.jpg';
 import { faGoogle,faApple } from '@fortawesome/free-brands-svg-icons';
@@ -7,22 +7,63 @@ import { useNavigate } from 'react-router-dom';
 
 const Sign_in = () => {
     const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+      email: '',
+      password: ''
+    });
+
     function toSignUp (){
       navigate('/signup');
     }
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // Perform form submission logic here
-        navigate('/calendar');
-      };
 
-      const handleGoogleSignIn = () => {
-        // Perform Google sign-in logic here
-      };
-      
-      const handleAppleSignIn = () => {
-        // Perform Apple sign-in logic here
-      };
+    const handleChange = (event) => {
+      const { name, value } = event.target;
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
+    };
+
+    const handleSubmit = async (event) => {
+      try {
+        event.preventDefault();
+        const response = await fetch('http://localhost:4000/api/users/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+        if (!response.ok) {
+          alert("false");
+        }
+        else {
+          navigate('/dashboard');
+        }
+      } catch (error) {
+        console.error('Login failed:', error.message);
+      }
+    };
+
+    const handleGoogleSignIn = async() => {
+      try {
+        const response = await fetch('http://localhost:4000/auth/google', {
+          method: 'GET',
+          withCredentials: true,        
+          mode: 'no-cors',
+        });
+        console.log(response);
+      } catch (error) {
+        console.error('Error redirecting to Google Sign In:', error);
+        // Optionally display an error message to the user
+      }
+    };
+
+  
+  
+  const handleAppleSignIn = () => {
+    // Perform Apple sign-in logic here
+  };
       
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 ">
@@ -37,7 +78,7 @@ const Sign_in = () => {
             />
             <div className="text-3xl font-bold text-gray-900 pt-5 pl-8">Welcome back!</div>
           </div>
-        <form className="mt-8 space-y-6" action="#" method="POST" onSubmit={handleSubmit}>
+        <form className="mt-8 space-y-6"  onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-900">
               Email address
@@ -49,6 +90,8 @@ const Sign_in = () => {
                 type="email"
                 autoComplete="email"
                 required
+                value={formData.email}
+                onChange={handleChange}
                 className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-50 focus:border-primary-50 sm:text-sm"
               />
             </div>
@@ -64,6 +107,8 @@ const Sign_in = () => {
                 type="password"
                 autoComplete="current-password"
                 required
+                value={formData.password}
+                onChange={handleChange}
                 className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-50 focus:border-primary-50 sm:text-sm"
               />
             </div>
@@ -88,7 +133,6 @@ const Sign_in = () => {
           </div>
           <div>
             <button
-              
               type="submit"
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-50 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
             >
