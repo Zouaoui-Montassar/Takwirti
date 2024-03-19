@@ -3,8 +3,9 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const verifyToken = require('../middlewares/verifyToken');
 
-
+//register 
 router.post('/register', async (req, res) => {
     try {
       const { login, name, password } = req.body;
@@ -25,10 +26,34 @@ router.post('/register', async (req, res) => {
       res.status(500).json({ message: error.message });  // 500 => internal server error 
     }
   });
-  
+//login 
+  router.post('/login', async (req, res) => {
+    try {
+        const { login, password } = req.body;
 
-/* router.post('/login', async (req, res) => {
-  
-}); */
+        const user = await User.findOne({ login });
+        if (!user) {
+            return res.status(401).json({ message: 'Authentication failed' });
+        }
+
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if (!passwordMatch) {
+            return res.status(401).json({ message: 'Authentication failed' });
+        }
+
+        const token = jwt.sign({ userId: user._id, login: user.login }, 'webseckey', { expiresIn: '1h' });
+
+        res.status(200).json({ message: 'Authentication successful', token });
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+// protected route lel login ( jwt )
+router.get('/protected', verifyToken, (req, res) => {
+    res.json({ message: 'You are authorized!' });
+  });
+
 
 module.exports = router; 
+

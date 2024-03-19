@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+
+// class lel connection maa ldatabase 
 class Database {
     constructor() {
         this.Url = "mongodb://localhost:27017/testingauthproject"
