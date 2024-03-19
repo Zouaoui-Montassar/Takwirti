@@ -1,0 +1,4 @@
+TakwirtiDb : 
+	achraf
+	rbUIdAOAQaG9v0nK
+	mongodb+srv://achraf:rbUIdAOAQaG9v0nK@cluster0.b0lcvzd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
