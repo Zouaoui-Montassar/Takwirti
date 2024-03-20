@@ -71,7 +71,7 @@ const login = async (req, res, next) => {
 const deleteUser = async (req, res) => {
     const { id } = req.body;
     try {
-        const deletedUser = await userModel.findByIdAndRemove(id);
+        const deletedUser = await userModel.findByIdAndDelete(id);
         res.status(201).json({ message: "User successfully deleted", user: deletedUser });
     } catch (error) {
         res.status(400).json({ message: "An error occurred", error: error.message });
