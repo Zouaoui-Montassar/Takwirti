@@ -1,14 +1,16 @@
 import './App.css';
-import Sign_up from './components/sign_up';
-import Sign_in from './components/sign_in';
-import Stats from './components/stats';
+import Sign_up from './components/Sign_up';
+import Sign_in from './components/Sign_in';
+import Stats from './components/Stats';
 import MainPage from './components/MainPage';
 import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
 import DashboardRes from './components/DashboardRes';
-import ParentCalendar from './components/parentcalendar';
+import ParentCalendar from './components/Parentcalendar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AddTerrain from './components/AddTerrain';
+import Responsable from './components/Responsable';
+import MesTerrains from 'components/MesTerrains';
 
 const links = [
   {label: 'Accueil', path: '/'} ,
@@ -30,9 +32,9 @@ function App() {
           <Route path="/signup" element={<Sign_up/>} />
           <Route path="/signin" element={<Sign_in/>} />
           <Route path="/stats" element={<Stats/>} />
-          <Route path='/addterrain' element={<AddTerrain/>}></Route>
-          <Route path='/dashboard' element={<DashboardRes/>}></Route>
-
+          <Route path='/responsable' element={<Responsable/>}/>
+          <Route path='/addterrain' element={<AddTerrain/>}/>
+          <Route path='/mesterrains' element={<MesTerrains/>}/>
         </Routes>
       </BrowserRouter>
     </div>
