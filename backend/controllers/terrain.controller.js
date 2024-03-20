@@ -137,20 +137,11 @@ const updateCalendar = async (req, res, next) => {
         const respId = req.params.respId;
         const updatedData = req.body;
 
-        // Find the terrain objects by idRes
-        const terrainList = await terrainModel.find({ idRes: respId });
-        console.log(terrainList);
-        if (!terrainList || terrainList.length === 0) {
+        // Update all terrains with the provided respId
+        const result = await terrainModel.updateMany({ idRes: respId }, {calendrier : updatedData});
+        // Check if any terrains were updated
+        if (result.nModified === 1) {
             return res.status(404).json({ message: "No terrains found for the provided idRes" });
-        }
-
-        // Iterate over the list of terrains and update each one
-        for (const terrain of terrainList) {
-            // Update the found terrain object with the provided data
-            Object.assign(terrain, updatedData);
-
-            // Save the updated terrain object to the database
-            await terrain.save();
         }
 
         // Send a success response
@@ -160,7 +151,6 @@ const updateCalendar = async (req, res, next) => {
         res.status(500).json({ message: "Failed to update terrains", error: error.message });
     }
 };
-
 
 module.exports.terrainController = {
     addTerrain,
