@@ -46,24 +46,12 @@ const Sign_in = () => {
     };
 
     const handleGoogleSignIn = async() => {
-      try {
-        const response = await fetch('http://localhost:4000/auth/google', {
-          method: 'GET',
-          withCredentials: true,        
-          mode: 'no-cors',
-        });
-        console.log(response);
-      } catch (error) {
-        console.error('Error redirecting to Google Sign In:', error);
-        // Optionally display an error message to the user
-      }
+
     };
 
-  
-  
-  const handleAppleSignIn = () => {
-    // Perform Apple sign-in logic here
-  };
+    const handleAppleSignIn = () => {
+     // Perform Apple sign-in logic here
+    };
       
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 ">
