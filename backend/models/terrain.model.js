@@ -3,7 +3,7 @@ const schema = mongoose.Schema;
 
 const terrainSchema = new schema({
     nom: { type: String, required: true },
-    idRes: { type: String, required: true },
+    idRes: { type: Object, required: true },
     phone: { type: String, required: true },
     prix: { type: Number, required: true }, 
     position: { type: String, required: true }, 

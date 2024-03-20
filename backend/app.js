@@ -20,7 +20,7 @@ app.use(session({
 
 
 app.use(cors({
-    origin: 'http://localhost:3000/',
+    origin: 'http://localhost:3000/',     // je pense nhotou cors w khw khater deja el port 4000 fel .env
     methods: ['GET', 'POST', 'PUT', 'DELETE']
   }));
 app.use(logger('dev'));
