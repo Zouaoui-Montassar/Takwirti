@@ -10,6 +10,9 @@ const UserSchema = new Schema({
     tel: { type: String, },
 });
 
+UserSchema.discriminator('Particulier', ParticulierSchema);
+UserSchema.discriminator('Responsable', ResponsableSchema);
+
 module.exports.userModel =  mongoose.model('User', UserSchema);
 
 
