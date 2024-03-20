@@ -88,15 +88,18 @@ const deleteTerrain = async (req, res) => {
         res.status(500).json({ message: "Failed to delete terrain", error: error.message });
     }
 };
-/*
+
 // search terrain function
 const searchTerrain = async (req, res) => {
     try {
         // Extract search parameters from request body or query parameters
         const { searchTerm } = req.body; // Assuming searchTerm is the parameter to search for
 
-        // Use the Mongoose model to perform the search
-        const searchResults = await Terrain.find({ $text: { $search: searchTerm } });
+        // Use a case-insensitive regular expression for the search term
+        const regex = new RegExp(searchTerm, 'i');
+
+        // Use the Mongoose model to perform the case-insensitive search
+        const searchResults = await terrainModel.find({ nom: { $regex: regex } });
 
         // Return the search results to the client
         res.status(200).json({ results: searchResults });
@@ -106,11 +109,13 @@ const searchTerrain = async (req, res) => {
     }
 };
 
-// list terrain function
-const listTerrain = async (req, res) => {
+
+// list terrain function of a specific responsable
+const listTerrain = async (req, res) => { 
     try {
+        const respId = req.params.respId;
         // Use the Mongoose model to retrieve all terrain data
-        const terrainList = await Terrain.find();
+        const terrainList = await terrainModel.find({idRes : respId});
 
         // Return the list of terrain data to the client
         res.status(200).json({ terrainList: terrainList });
@@ -127,14 +132,41 @@ const calendar = async (req, res, next) => {
 
 // update calendar function
 const updateCalendar = async (req, res, next) => {
+    try {
+        // Extract terrain ID and updated data from request body or parameters
+        const respId = req.params.respId;
+        const updatedData = req.body;
 
-};*/
+        // Find the terrain objects by idRes
+        const terrainList = await terrainModel.find({ idRes: respId });
+        console.log(terrainList);
+        if (!terrainList || terrainList.length === 0) {
+            return res.status(404).json({ message: "No terrains found for the provided idRes" });
+        }
+
+        // Iterate over the list of terrains and update each one
+        for (const terrain of terrainList) {
+            // Update the found terrain object with the provided data
+            Object.assign(terrain, updatedData);
+
+            // Save the updated terrain object to the database
+            await terrain.save();
+        }
+
+        // Send a success response
+        res.status(200).json({ message: "Terrains updated successfully" });
+    } catch (error) {
+        // Handle errors if any
+        res.status(500).json({ message: "Failed to update terrains", error: error.message });
+    }
+};
+
+
 module.exports.terrainController = {
     addTerrain,
     updateTerrain,
     deleteTerrain,
-    //searchTerrain,
-    //listTerrain,
-    //calendar,
-    //updateCalendar
+    searchTerrain,
+    listTerrain,
+    updateCalendar
 };
