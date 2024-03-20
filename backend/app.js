@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 const { userRouter } = require('./routes/users.route');
+const { terrainRouter } = require('./routes/terrain.route');
 const cors = require('cors');
 const session = require('express-session');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -33,5 +34,6 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
     .catch(error => console.error("Failed to connect to MongoDB:", error));
 
 app.use("/api", userRouter)
+app.use("/ter", terrainRouter)
 
 module.exports = app;
