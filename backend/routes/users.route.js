@@ -15,7 +15,10 @@ router.post('/users/login', userController.login);
 router.put('/users/update_particulier/:id', userController.updateParticulier);
 router.put('/users/update_responsable/:id', userController.updateResponsable);
 
-// Get all users (possible lel admin dashboard mithel )
+// Get user by id 
+router.get('/users/:id', userController.getUserById);
+
+// Get all users (possible lel admin dashboard )
 router.get('/users', userController.getAllUsers);
 
 // Delete user ( admin kifkif )
