@@ -11,14 +11,20 @@ router.post('/users/register_particulier', userController.addParticulier);
 router.post('/users/login', userController.login);
 
 
+router.put('/users/update_particulier/:id', userController.updateParticulier);
+router.put('/users/update_responsable/:id', userController.updateResponsable);
+
+
+
 router.get('/protected-route', passport.authenticate('jwt', { session: false }), (req, res) => {
     res.send('You are authenticated!');
-}); 
+});
+
 
 
 module.exports.userRouter = router;
 
-// khedma le9dima , ken testit eli zedtou jdid w lkol cv fasakh ala rouhek
+// khedma le9dima , ken testit eli zedtou jdid w lkol cv fasakh ala rouhek , el /protected bel verifyToken ab3athha
 /* router.post('/users/signUp', userController.addUser);
 router.post('/users/login', userController.login);
 router.delete('/users/deleteUser', userController.deleteUser); */
