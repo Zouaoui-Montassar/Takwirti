@@ -76,13 +76,35 @@ const login = async (req, res) => {
     }
 };
 
+const updateParticulier = async (req, res) => {
+    const { id } = req.params;
+    const updatedFields = req.body;
+    try {
+        const updatedParticulier = await ParticulierModel.findByIdAndUpdate(id, updatedFields, { new: true });
+        res.status(200).json({ message: "Particulier updated successfully", user: updatedParticulier });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to update Particulier", error: error.message });
+    }
+};
 
+const updateResponsable = async (req, res) => {
+    const { id } = req.params;
+    const updatedFields = req.body;
+    try {
+        const updatedResponsable = await ResponsableModel.findByIdAndUpdate(id, updatedFields, { new: true });
+        res.status(200).json({ message: "Responsable updated successfully", user: updatedResponsable });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to update Responsable", error: error.message });
+    }
+};
 
 
 module.exports.userController = {
     addResp,
     addParticulier,
-    login
+    login,
+    updateParticulier,
+    updateResponsable
 };
 
 
