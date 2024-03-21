@@ -24,6 +24,12 @@ router.get('/users', userController.getAllUsers);
 // Delete user ( admin kifkif )
 router.delete('/users/delete_user/:id', userController.deleteUser);
 
+// add friend w remove jaw
+router.post('/users/add_friend', userController.addFriend);
+router.delete('/users/remove_friend', userController.removeFriend);
+
+
+
 
 router.get('/protected-route', passport.authenticate('jwt', { session: false }), (req, res) => {
     res.send('You are authenticated!');
