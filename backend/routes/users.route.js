@@ -6,14 +6,20 @@ const passport = require('../config/passport.config.js');
 // el register kol had andou route , fel login lzouz nafsha , w c deja yethatou fard collection eli heya users ama kol wehed andou schema lih , tel9a __t edhika teb3a el "heritage" , yetsama discriminant
 // yaani jet kima hachetna bedhabet 
 
+// register + login
 router.post('/users/register_responsable', userController.addResp);  
 router.post('/users/register_particulier', userController.addParticulier);
 router.post('/users/login', userController.login);
 
-
+// updates
 router.put('/users/update_particulier/:id', userController.updateParticulier);
 router.put('/users/update_responsable/:id', userController.updateResponsable);
 
+// Get all users (possible lel admin dashboard mithel )
+router.get('/users', userController.getAllUsers);
+
+// Delete user ( admin kifkif )
+router.delete('/users/delete_user/:id', userController.deleteUser);
 
 
 router.get('/protected-route', passport.authenticate('jwt', { session: false }), (req, res) => {
