@@ -1,16 +1,16 @@
 const { ParticulierModel } = require('../models/particulier.model');
 const mongoose = require('mongoose');
 
-
 const ajoutfriend = async (userId, friendId) => {
     try {
         console.log("lenna ! !! ");
         console.log(userId);
         const particulier = await ParticulierModel.findById(userId);
+        const friend = await ParticulierModel.findById(friendId);
         console.log("lenna 2! !! ");
         console.log("particulier", particulier); 
-        if (!particulier) {
-            throw new Error('Particulier not found');
+        if (!particulier || !friend) {
+            throw new Error('User or friend not found');
         }
 
         if (!mongoose.Types.ObjectId.isValid(friendId)) {
@@ -21,8 +21,11 @@ const ajoutfriend = async (userId, friendId) => {
             throw new Error('Friend already added');
         }
 
-        particulier.ListeAmi = [...particulier.ListeAmi, friendId];
+        particulier.ListeAmi.push(friendId); 
+        friend.ListeAmi.push(userId); 
+
         await particulier.save();
+        await friend.save();
         return { success: true };
     } catch (error) {
         console.error("Error in ajoutfriend:", error); 
@@ -36,18 +39,32 @@ const ajoutfriend = async (userId, friendId) => {
 const removeFriend = async (userId, friendId) => {
     try {
         console.log(`Removing friend with userId ${userId} from user with friendId ${friendId}`);
-        const particulier = await ParticulierModel.findById(userId);
-        console.log("particulier", particulier);
-        if (!particulier) {
-            throw new Error('Particulier not found');
+        const user = await ParticulierModel.findById(userId);
+        const friend = await ParticulierModel.findById(friendId);
+
+        console.log(user);
+        console.log(friend);
+
+        if (!user || !friend) {
+            throw new Error('User or friend not found');
         }
 
-        if (!mongoose.Types.ObjectId.isValid(friendId) || !particulier.ListeAmi.includes(friendId)) {
-            throw new Error('Invalid friend ID');
+        if (!user.ListeAmi.includes(friendId) || !friend.ListeAmi.includes(userId)) {
+            throw new Error('Not friends');
         }
 
-        particulier.ListeAmi = particulier.ListeAmi.filter(id => id !== friendId);
-        await particulier.save();
+        console.log(user.ListeAmi)
+        console.log(friend.ListeAmi)
+
+        user.ListeAmi.pull(friendId);
+        friend.ListeAmi.pull(userId);
+
+        await user.save();
+        await friend.save();
+
+        console.log(user.ListeAmi)
+        console.log(friend.ListeAmi)
+
         console.log(`Friend with userId ${userId} removed successfully from user with friendId ${friendId}`);
         return { success: true };
     } catch (error) {
@@ -55,6 +72,9 @@ const removeFriend = async (userId, friendId) => {
         return { success: false, message: error.message };
     }
 };
+
+
+
 
 
 module.exports = {
