@@ -134,7 +134,7 @@ const getUserById = async (req, res) => {
 };
 
 const addFriend = async (req, res) => {
-    const { userId, friendId } = req.body; // Use req.body to get userId and friendId
+    const { userId, friendId } = req.body; 
     try {
         console.log(`Adding friend with userId ${userId} to user with friendId ${friendId}`);
         await friendService.ajoutfriend(userId, friendId);
@@ -146,7 +146,7 @@ const addFriend = async (req, res) => {
 };
 
 const removeFriend = async (req, res) => {
-    const { userId, friendId } = req.body; // Use req.body to get userId and friendId
+    const { userId, friendId } = req.body; 
     try {
         await friendService.removeFriend(userId, friendId);
         res.status(200).json({ message: "Friend removed successfully" });
