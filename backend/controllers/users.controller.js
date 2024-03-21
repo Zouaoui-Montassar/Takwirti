@@ -5,6 +5,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const jwtSecret = process.env.JWT_SECRET;
+const friendService = require('../services/friend.service');
+
 
 
 const addResp = async (req, res) => {
@@ -32,7 +34,6 @@ const addResp = async (req, res) => {
     }
 };
 
-
 const addParticulier = async (req, res) => {
     const { email, password, ListeAmi, ...otherData } = req.body;
     try {
@@ -55,7 +56,6 @@ const addParticulier = async (req, res) => {
         });
     }
 };
-
 
 const login = async (req, res) => {
     const { email, password } = req.body;
@@ -133,6 +133,32 @@ const getUserById = async (req, res) => {
     }
 };
 
+const addFriend = async (req, res) => {
+    const { userId, friendId } = req.body; 
+    try {
+        console.log(`Adding friend with userId ${userId} to user with friendId ${friendId}`);
+        await friendService.ajoutfriend(userId, friendId);
+        console.log(`Friend with userId ${userId} added successfully to user with friendId ${friendId}`);
+        res.status(200).json({ message: "Friend added successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to add friend", error: error.message });
+    }
+};
+
+const removeFriend = async (req, res) => {
+    const { userId, friendId } = req.body; 
+    try {
+        await friendService.removeFriend(userId, friendId);
+        res.status(200).json({ message: "Friend removed successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to remove friend", error: error.message });
+    }
+};
+
+
+
+
+
 module.exports.userController = {
     addResp,
     addParticulier,
@@ -141,7 +167,9 @@ module.exports.userController = {
     updateResponsable,
     getAllUsers,
     deleteUser,
-    getUserById
+    getUserById,
+    addFriend,
+    removeFriend
 };
 
 

@@ -1,0 +1,7 @@
+fichier api_endpoints.json fih les api lkol w maahom description lkol wahda + el fazet mte3hom bech etesti behom fel postman
+
+kol api ahawka fih lmethod wel url w kol chy lezem bech etestiw ken thebou , juste badlou lvalues 
+
+el champ body houwa el request body ( JSON raw fel postman ), ahawka fi kol api mawjoud ken test7a9 thotou aamel copier coller w editi lvalues
+
+fama whoud yest7a9ouch body donc lrequest body yabda feragh kima fel delete user mithel
