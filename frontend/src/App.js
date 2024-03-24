@@ -1,5 +1,6 @@
 import './App.css';
-import Sign_up from './components/sign_up';
+import Signuprespo from './components/signuprespo';
+import Signupparti from './components/signupparti';
 import Sign_in from './components/sign_in';
 import Stats from './components/stats';
 import MainPage from './components/MainPage';
@@ -40,7 +41,8 @@ function App() {
           <Route path="/navbar" element={<NavBar/>} />
           <Route path="/sidebar" element={<SideBar links={links}/>} />
           <Route path="/calendar" element={<ParentCalendar/>} />
-          <Route path="/signup" element={<Sign_up/>} />
+          <Route path="/signuprespo" element={<Signuprespo/>} />
+          <Route path="/signupparti" element={<Signupparti/>} />
           <Route path="/signin" element={<Sign_in/>} />
           <Route path="/stats" element={<Stats/>} />
           <Route path='/responsable' element={<Responsable/>}/>
