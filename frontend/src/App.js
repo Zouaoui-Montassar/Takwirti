@@ -1,12 +1,12 @@
 import './App.css';
-import Sign_up from './components/Sign_up';
-import Sign_in from './components/Sign_in';
-import Stats from './components/Stats';
+import Sign_up from './components/sign_up';
+import Sign_in from './components/sign_in';
+import Stats from './components/stats';
 import MainPage from './components/MainPage';
 import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
 import DashboardRes from './components/DashboardRes';
-import ParentCalendar from './components/Parentcalendar';
+import ParentCalendar from './components/parentcalendar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AddTerrain from './components/AddTerrain';
 import Responsable from './components/Responsable';
