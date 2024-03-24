@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const jwtSecret = process.env.JWT_SECRET;
 const friendService = require('../services/friend.service');
+const axios = require("axios");
 
 
 
@@ -32,6 +33,16 @@ const addResp = async (req, res) => {
             error: error.message,
         });
     }
+    try {
+        const r = await axios.post(
+          "https://api.chatengine.io/users/",
+          { username, secret, email, first_name, last_name },
+          { headers: { "Private-Key": process.env.CHAT_ENGINE_PRIVATE_KEY } }
+        );
+        return res.status(r.status).json(r.data);
+    } catch (e) {
+        return res.status(e.response.status).json(e.response.data);
+    }
 };
 
 const addParticulier = async (req, res) => {
@@ -55,6 +66,16 @@ const addParticulier = async (req, res) => {
             error: error.message,
         });
     }
+    try {
+        const r = await axios.post(
+          "https://api.chatengine.io/users/",
+          { username, secret, email, first_name, last_name },
+          { headers: { "Private-Key": process.env.CHAT_ENGINE_PRIVATE_KEY } }
+        );
+        return res.status(r.status).json(r.data);
+    } catch (e) {
+        return res.status(e.response.status).json(e.response.data);
+    }
 };
 
 const login = async (req, res) => {
@@ -73,6 +94,18 @@ const login = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Internal server error" });
+    }
+    try {
+        const r = await axios.get("https://api.chatengine.io/users/me/", {
+          headers: {
+            "Project-ID": process.env.CHAT_ENGINE_PROJECT_ID,
+            "User-Name": username,
+            "User-Secret": secret,
+          },
+        });
+        return res.status(r.status).json(r.data);
+    } catch (e) {
+        return res.status(e.response.status).json(e.response.data);
     }
 };
 

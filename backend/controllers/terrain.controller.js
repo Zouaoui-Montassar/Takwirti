@@ -8,7 +8,7 @@ const addTerrain = async (req, res) => {
 
         // Create a new terrain object
         const newTerrain = {
-            nom,
+            nom, 
             idRes,
             phone,
             prix,
