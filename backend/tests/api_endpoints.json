@@ -1,0 +1,104 @@
+{
+    "register_responsable": {
+      "description": "Register a new responsable user",
+      "method": "POST",
+      "url": "http://localhost:4000/api/users/register_responsable",
+      "body": {
+        "nom": "string",
+        "prenom": "string",
+        "email": "string",
+        "password": "string",
+        "DN": "string",
+        "role": "Responsable",
+        "tel": "string"
+      }
+    },
+    "register_particulier": {
+      "description": "Register a new particulier user",
+      "method": "POST",
+      "url": "http://localhost:4000/api/users/register_particulier",
+      "body": {
+        "nom": "string",
+        "prenom": "string",
+        "email": "string",
+        "password": "string",
+        "DN": "string",
+        "role": "Particulier",
+        "tel": "string"
+      }
+    },
+    "login": {
+      "description": "User login",
+      "method": "POST",
+      "url": "http://localhost:4000/api/users/login",
+      "body": {
+        "email": "string",
+        "password": "string"
+      }
+    },
+    "update_particulier": {
+      "description": "Update particulier user , fel :id 7ot el :id ghadi , ex : api/users/update_particulier/65fb900e5fbb79acc5dcc59f",
+      "method": "PUT",
+      "url": "http://localhost:4000/api/users/update_particulier/:id",
+      "body": {
+        "nom": "string",
+        "prenom": "string",
+        "email": "string",
+        "password": "string",
+        "DN": "string",
+        "role": "string",
+        "tel": "string"
+      }
+    },
+    "update_responsable": {
+      "description": "Update responsable user",
+      "method": "PUT",
+      "url": "http://localhost:4000/api/users/update_responsable/:id",
+      "body": {
+        "nom": "string",
+        "prenom": "string",
+        "email": "string",
+        "password": "string",
+        "DN": "string",
+        "role": "string",
+        "tel": "string"
+      }
+    },
+    "get_user_by_id": {
+      "description": "Get user by ID",
+      "method": "GET",
+      "url": "http://localhost:4000/api/users/:id",
+      "body": {}
+    },
+    "get_all_users": {
+      "description": "Get all users",
+      "method": "GET",
+      "url": "http://localhost:4000/api/users",
+      "body": {}
+    },
+    "delete_user": {
+      "description": "Delete user , kima fel update",
+      "method": "DELETE",
+      "url": "http://localhost:4000/api/users/delete_user/:id",
+      "body": {}
+    },
+    "add_friend": {
+      "description": "Add a friend userId thot eli andou larray , friendId houwa id lfriend eli theb tajoutih",
+      "method": "POST",
+      "url": "http://localhost:4000/api/users/add_friend",
+      "body": {
+        "userId": "string",
+        "friendId": "string"
+      }
+    },
+    "remove_friend": {
+      "description": "Remove a friend",
+      "method": "DELETE",
+      "url": "http://localhost:4000/api/users/remove_friend",
+      "body": {
+        "userId": "string",
+        "friendId": "string"
+      }
+    }
+  }
+  
