@@ -1,3 +1,6 @@
+// useless khater deja nestaamel fel passport ama khaleha yomken narj3oulha
+
+
 const jwt = require('jsonwebtoken');
 const secret_key = '4715aed3c946f7b0a38e6b534a9583628d84e96d10fbc04700770d572af3dce43625dd'; // secret key
 
@@ -15,7 +18,6 @@ function verifyToken(req, res, next) {
         next();
     });
 }
-
-module.exports = verifyToken;         // pour le moment kif beha kif blech lin naamlou endpoint protected , wa9tha nest7a9ouha
+module.exports = verifyToken;         // useless khater deja nestaamel fel passport ama khaleha yomken narj3oulha
 
 
