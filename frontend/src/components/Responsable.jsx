@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from './NavBar'
+import NavBar from './NavBar copy'
 import SideBar from './SideBar'
 import Parentcalendar from './Parentcalendar'
 import Stats from './Stats';
@@ -28,7 +28,7 @@ const links = [
 const responsable = () => {
   return (
     <>
-     <NavBar/>
+     <NavBar copy links={links}/>
      
      <div className='flex flex-row'>
      <SideBar links={links}/>
