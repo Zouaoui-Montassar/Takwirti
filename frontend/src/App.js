@@ -10,7 +10,18 @@ import ParentCalendar from './components/Parentcalendar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AddTerrain from './components/AddTerrain';
 import Responsable from './components/Responsable';
-import MesTerrains from 'components/MesTerrains';
+import MesTerrains from './components/MesTerrains';
+import PageUtilisateur from './components/PageUtilisateur';
+import Detail from './components/Detail';
+
+const data = [
+  { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
+  { id: 2, name: 'Item 2', image:'/Section 2 image.png' },
+  { id: 3, name: 'Item 3', image:'/Section 3 image.jpg' },
+  { id: 4, name: 'Item 4', image:'/Section 3 image.jpg' },
+  { id: 5, name: 'Item 5', image:'/Section 3 image.jpg' },
+  // Add more items as needed
+];
 
 const links = [
   {label: 'Accueil', path: '/'} ,
@@ -35,6 +46,8 @@ function App() {
           <Route path='/responsable' element={<Responsable/>}/>
           <Route path='/addterrain' element={<AddTerrain/>}/>
           <Route path='/mesterrains' element={<MesTerrains/>}/>
+          <Route path='/utilisateur' element={<PageUtilisateur/>}/>
+          <Route path="/detail" element={<Detail  />} />
         </Routes>
       </BrowserRouter>
     </div>

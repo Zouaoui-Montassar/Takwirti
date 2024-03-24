@@ -18,14 +18,14 @@ const NavBar = ({ links }) => {
   };
 
   return (
-    <nav className='bg-primary-50 fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-3 text-white'>
+    <nav className='bg-green-500 fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-3 max-container text-white'>
       <div className='flex flex-row'>
         <img src={whitelogo} alt="logo" width={74} height={50} />
         <h1 className='text-2xl font-bold pt-4'> Takwirti |</h1> 
       </div>
       
-      <div className="hidden md:block"> {/* This div will hold the links */}
-        <List>
+      <div className="hidden md:block  "> {/* This div will hold the links */}
+        <List className="flex flex-row">
           {links.map((link, index) => (
             <ListItem className="text-white-50 text-xl" key={index}>
               {link.label} 
