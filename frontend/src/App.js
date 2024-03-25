@@ -14,6 +14,8 @@ import PageUtilisateur from './components/PageUtilisateur';
 import Detail from './components/Detail';
 import Sign_up from './components/sign_up';
 import { ReservationAdd } from './components/ReservationAdd';
+import List from './components/list';
+import ReservationList from './components/ReservationList';
 
 
 const data = [
@@ -52,6 +54,8 @@ function App() {
           <Route path='/utilisateur' element={<PageUtilisateur/>}/>
           <Route path="/detail" element={<Detail  />} />
           <Route path="/Reservation/add" element={<ReservationAdd/>} />
+          <Route path="/list" element={<List/>} />
+          <Route path="/reservation/list" element={<ReservationList/>} />
 
         </Routes>
       </BrowserRouter>

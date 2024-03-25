@@ -1,12 +1,17 @@
 import React, { useState, useRef } from 'react';
 import List from './list';
+import { useLocation } from 'react-router-dom';
 
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 const Calendar = ({ onDateSelect }) => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [selectedDate, setSelectedDate] = useState(new Date()); // Define setSelectedDate here
   const modalDateRef = useRef(null);
+  const location = useLocation(); // Get current location using useLocation hook
+  const isReservationPage = location.pathname === '/reservation/add'; // Assuming reservation page route is '/reservation'
+
 
   const generateCalendar = () => {
     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -32,11 +37,22 @@ const Calendar = ({ onDateSelect }) => {
       ].join(' ');
 
       calendar.push(
-        <div key={day} className={classNames} onClick={() => showModal(date.toDateString())}>
+        <div 
+          key={day} 
+          className={`${classNames} ${date.toDateString() === selectedDate?.toString() && 'bg-primary-50 text-white'}`} 
+          onClick={() => {
+            if (!isReservationPage) {
+              showModal(date.toDateString()); // Show modal if not on reservation page
+            } else {
+              handleDaySelect(date); // Handle day select if on reservation page
+              setSelectedDate(date); // Set the selected date
+            }
+          }}
+        >
           {day}
         </div>
       );
-    }
+      }      
 
     return (
       <>
@@ -75,6 +91,10 @@ const Calendar = ({ onDateSelect }) => {
     document.getElementById('myModal').classList.add('hidden');
   };
 
+  const handleDaySelect = (selectedDate) => {
+    setSelectedDate(selectedDate); // Update selectedDate state with the selected date
+    // You can perform any additional actions here, such as showing a modal or updating UI based on the selected date
+  };
   return (
     <div className="flex justify-center ">
       <div className="p-8">
@@ -85,15 +105,17 @@ const Calendar = ({ onDateSelect }) => {
             <button onClick={handleNextMonth} className="text-white">Next</button>
           </div>
           {generateCalendar()}
+          
           <div id="myModal" className="modal hidden fixed inset-0 flex items-center justify-center z-50">
             <div className="modal-overlay absolute inset-0 bg-black opacity-50"></div>
             <div className="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
               <div className="modal-content py-4 text-left px-6">
+                
                 <div className="flex justify-between items-center">
                   <p className="text-2xl font-bold" ref={modalDateRef}></p>
                   <button onClick={hideModal} className="modal-close px-3 py-1 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring">✕</button>
                 </div>
-                <List/>
+                <List date= {selectedDate}  />
               </div>
             </div>
           </div>
