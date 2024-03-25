@@ -76,8 +76,8 @@ const Calendar = ({ onDateSelect }) => {
   };
 
   return (
-    <div className="flex items-right justify-center h-screen pt-24">
-      <div className="lg:w-7/12 md:w-9/12 sm:w-10/12 mx-auto p-4">
+    <div className="flex justify-center ">
+      <div className="p-8">
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
           <div className="flex items-center justify-between px-6 py-3 bg-primary-50">
             <button onClick={handlePrevMonth} className="text-white">Previous</button>

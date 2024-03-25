@@ -13,6 +13,7 @@ import MesTerrains from './components/MesTerrains';
 import PageUtilisateur from './components/PageUtilisateur';
 import Detail from './components/Detail';
 import Sign_up from './components/sign_up';
+import { ReservationAdd } from './components/ReservationAdd';
 
 
 const data = [
@@ -37,7 +38,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/home" element={<MainPage/>} />
+          <Route path="/" element={<MainPage/>} />
           <Route path="/navbar" element={<NavBar/>} />
           <Route path="/sidebar" element={<SideBar links={links}/>} />
           <Route path="/calendar" element={<ParentCalendar/>} />
@@ -50,6 +51,8 @@ function App() {
           <Route path='/mesterrains' element={<MesTerrains/>}/>
           <Route path='/utilisateur' element={<PageUtilisateur/>}/>
           <Route path="/detail" element={<Detail  />} />
+          <Route path="/Reservation/add" element={<ReservationAdd/>} />
+
         </Routes>
       </BrowserRouter>
     </div>
