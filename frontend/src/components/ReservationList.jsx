@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import SearchBox from './SearchBox';
 
 const reservation = [
   /*{
@@ -30,9 +31,10 @@ const ReservationList = () => {
         <div className="flex flex-col items-center justify-center h-screen bg-gray-100 px-4 py-8">
             <div className="max-w-xg w-full h-3/4 md:w-1/3 mx-auto "> {/* Adjust width for medium screens and above */}
                 <div className="bg-white shadow-lg p-8 rounded-lg">
-                    <div className="bg-white text-sm text-gray-500 font-bold px-5 py-2 shadow border-b border-gray-300">
-                        Reservation list
-                    </div>
+                <div className="flex flex-row bg-white text-sm text-gray-500 font-bold px-5 py-2 shadow border-b border-gray-300 items-center justify-between">
+                    <p className='flex-grow-0'>Reservation list</p>
+                    <SearchBox className="py-4" />
+                </div>
 
                     <div className="w-full h-full overflow-auto shadow bg-white" id="journal-scroll">
                         {reservation.length > 0 ? (

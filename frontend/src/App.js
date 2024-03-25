@@ -16,6 +16,8 @@ import Sign_up from './components/sign_up';
 import { ReservationAdd } from './components/ReservationAdd';
 import List from './components/list';
 import ReservationList from './components/ReservationList';
+import ReservationEdit from './components/ReservationEdit';
+import SearchBox from './components/SearchBox';
 
 
 const data = [
@@ -56,6 +58,9 @@ function App() {
           <Route path="/Reservation/add" element={<ReservationAdd/>} />
           <Route path="/list" element={<List/>} />
           <Route path="/reservation/list" element={<ReservationList/>} />
+          <Route path="/Reservation/edit" element={<ReservationEdit/>} />
+          <Route path="/Reservation/search" element={<SearchBox/>} />
+          
 
         </Routes>
       </BrowserRouter>
