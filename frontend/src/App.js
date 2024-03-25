@@ -1,6 +1,4 @@
 import './App.css';
-import Signuprespo from './components/signuprespo';
-import Signupparti from './components/signupparti';
 import Sign_in from './components/sign_in';
 import Stats from './components/stats';
 import MainPage from './components/MainPage';
@@ -14,6 +12,8 @@ import Responsable from './components/Responsable';
 import MesTerrains from './components/MesTerrains';
 import PageUtilisateur from './components/PageUtilisateur';
 import Detail from './components/Detail';
+import Sign_up from './components/sign_up';
+
 
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
@@ -41,8 +41,8 @@ function App() {
           <Route path="/navbar" element={<NavBar/>} />
           <Route path="/sidebar" element={<SideBar links={links}/>} />
           <Route path="/calendar" element={<ParentCalendar/>} />
-          <Route path="/signuprespo" element={<Signuprespo/>} />
-          <Route path="/signupparti" element={<Signupparti/>} />
+          <Route path="/signuprespo" element={<Sign_up xxx={"responsable"}/>} />
+          <Route path="/signupparti" element={<Sign_up xxx={"utilisateur"}/>} />
           <Route path="/signin" element={<Sign_in/>} />
           <Route path="/stats" element={<Stats/>} />
           <Route path='/responsable' element={<Responsable/>}/>
