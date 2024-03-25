@@ -3,12 +3,14 @@ import Calendar from './calendar';
 import List from './list';
 
 export const ReservationAdd = () => {
-    const [selectedDate, setSelectedDate] = useState(null);
-    const handleDateSelect = (date) => {
+    const [selectedDate, setSelectedDate] = useState();
+    const reservedHours = () => {
+        return [10,11,12]; 
+    }
+    const handleDateSelect = async(date) => {
         setSelectedDate(date);
-        console.log(date);
     };
-
+    
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4 py-8">
             <div className="max-w-xg w-full md:w-1/2 mx-auto "> {/* Adjust width for medium screens and above */}
@@ -23,7 +25,7 @@ export const ReservationAdd = () => {
                         
                         <div className="md:w-1/2 w-full"> {/* Half width on medium screens and above */}
                             <p>select time</p>
-                            <List date={selectedDate} />
+                            <List date={selectedDate} reservedHours={reservedHours()} /> 
                         </div>
                     </div>
                     <div className="flex flex-col md:flex-row md:justify-end mt-4"> {/* Stack vertically on small screens, align to end on medium screens and above */}
