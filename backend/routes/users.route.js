@@ -34,8 +34,6 @@ router.post('/users/add_friend', userController.addFriend);
 router.delete('/users/remove_friend', userController.removeFriend);
 
 
-
-
 router.get('/protected-route', passport.authenticate('jwt', { session: false }), (req, res) => {
     res.send('You are authenticated!');
 });
