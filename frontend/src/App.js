@@ -54,7 +54,7 @@ function App() {
           <Route path='/responsable' element={<Responsable/>}/>
           <Route path='/addterrain' element={<AddTerrain/>}/>
           <Route path='/mesterrains' element={<MesTerrains/>}/>
-          <Route path='/utilisateur' element={<PageUtilisateur/>}/>
+          <Route path='/particulier' element={<PageUtilisateur/>}/> 
           <Route path="/detail" element={<Detail/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/Reservation/add" element={<ReservationAdd/>} />
