@@ -12,6 +12,7 @@ import Responsable from './components/Responsable';
 import MesTerrains from './components/MesTerrains';
 import PageUtilisateur from './components/PageUtilisateur';
 import Detail from './components/Detail';
+import Profile from './components/Profile';
 import Sign_up from './components/sign_up';
 import { ReservationAdd } from './components/ReservationAdd';
 import List from './components/list';
@@ -47,15 +48,17 @@ function App() {
           <Route path="/sidebar" element={<SideBar links={links}/>} />
           <Route path="/calendar" element={<ParentCalendar/>} />
           <Route path="/signuprespo" element={<Sign_up xxx={"responsable"}/>} />
-          <Route path="/signupparti" element={<Sign_up xxx={"utilisateur"}/>} />
+          <Route path="/signupparti" element={<Sign_up xxx={"particulier"}/>} />
           <Route path="/signin" element={<Sign_in/>} />
           <Route path="/stats" element={<Stats/>} />
           <Route path='/responsable' element={<Responsable/>}/>
           <Route path='/addterrain' element={<AddTerrain/>}/>
           <Route path='/mesterrains' element={<MesTerrains/>}/>
           <Route path='/utilisateur' element={<PageUtilisateur/>}/>
-          <Route path="/detail" element={<Detail  />} />
-          <Route path="/reservation/add" element={<ReservationAdd/>} />
+          <Route path="/detail" element={<Detail/>} />
+          <Route path="/profile" element={<Profile/>} />
+          <Route path="/Reservation/add" element={<ReservationAdd/>} />
+          <Route path="/list" element={<List/>} />
           <Route path="/reservation/list" element={<ReservationList/>} />
           <Route path="/reservation/edit" element={<ReservationEdit/>} />
         </Routes>
