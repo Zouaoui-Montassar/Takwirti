@@ -41,7 +41,26 @@ const AddTerrain = () => {
           <h1 className='bold-52'>Add Terrain</h1>
           <form action='get'>
             <div className='w-full h-[300px] items-center justify-center flex flex-row '>
-              {/* Vos éléments de formulaire */}
+            <div className='flex flex-col m-5 w-[40%]'>
+              <h3 className='text-bold text-xl relative right-7'>nom du terrain</h3>
+              <input className='border b-2  m-2 bg-white shadow-md   w-200 p-2 rounded-md' type='text' placeholder='nom du terrain'/>
+              </div>
+
+              <div className='flex flex-col w-[40%]'>
+              <h3 className='text-bold text-xl relative right-11'>prix terrain</h3>
+              <input className='border b-2  m-2 bg-white shadow-md   w-200 p-2 rounded-md' type='text' placeholder='prix terrain'/>
+              </div>
+              
+              </div>
+
+              <div className=' m-6 flex flex-col'>
+              <h3 className='text-bold text-xl relative right-11'>numéro de contact</h3>
+              <input className='border b-2 m-2 bg-white shadow-md  p-2 rounded-md w-full' type='tel' placeholder='contact'/>
+              </div>
+
+              <div className=' m-6 flex flex-col'>
+              <h3 className='text-bold text-xl relative right-11'>Addresse</h3>
+              <input className='border b-2  m-2 bg-white shadow-md   p-2 rounded-md w-full' type='text' placeholder='Adresse'/>
             </div>
 
             <div className='w-full h-[300px] flex flex-row items-center justify-center'>
