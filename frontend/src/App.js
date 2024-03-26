@@ -13,6 +13,7 @@ import Responsable from './components/Responsable';
 import MesTerrains from './components/MesTerrains';
 import PageUtilisateur from './components/PageUtilisateur';
 import Detail from './components/Detail';
+import Profile from './components/Profile';
 
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
@@ -47,7 +48,8 @@ function App() {
           <Route path='/addterrain' element={<AddTerrain/>}/>
           <Route path='/mesterrains' element={<MesTerrains/>}/>
           <Route path='/utilisateur' element={<PageUtilisateur/>}/>
-          <Route path="/detail" element={<Detail  />} />
+          <Route path="/detail" element={<Detail/>} />
+          <Route path="/profile" element={<Profile/>} />
         </Routes>
       </BrowserRouter>
     </div>
