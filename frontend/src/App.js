@@ -47,7 +47,7 @@ function App() {
           <Route path="/sidebar" element={<SideBar links={links}/>} />
           <Route path="/calendar" element={<ParentCalendar/>} />
           <Route path="/signuprespo" element={<Sign_up xxx={"responsable"}/>} />
-          <Route path="/signupparti" element={<Sign_up xxx={"utilisateur"}/>} />
+          <Route path="/signupparti" element={<Sign_up xxx={"particulier"}/>} />
           <Route path="/signin" element={<Sign_in/>} />
           <Route path="/stats" element={<Stats/>} />
           <Route path='/responsable' element={<Responsable/>}/>

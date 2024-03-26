@@ -13,7 +13,7 @@ const Sign_in = () => {
     });
 
     function toSignUp (){
-      navigate('/signup');
+      navigate('/signuprespo');
     }
 
     const handleChange = (event) => {
