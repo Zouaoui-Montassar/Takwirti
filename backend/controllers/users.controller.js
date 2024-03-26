@@ -69,7 +69,7 @@ const login = async (req, res) => {
             return res.status(401).json({ message: "Invalid password" });
         }
         const token = jwt.sign({ userId: user._id, email: user.email }, jwtSecret);
-        res.status(200).json({ message: "Login successful", token: token });
+        res.status(200).json({ message: "Login successful", token: token , __t : user.__t });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Internal server error" });
@@ -155,9 +155,20 @@ const removeFriend = async (req, res) => {
     }
 };
 
-
-
-
+const getUserByQuery = async (req, res) => {
+    const { query } = req.params;
+    try {
+        const users = await UserModel.find({
+            $or: [
+                { nom: { $regex: query, $options: 'i' } }, // Case-insensitive match for 'nom'
+                { tel: { $regex: query, $options: 'i' } }  // Case-insensitive match for 'tel'
+            ]
+        });
+        res.status(200).json({ users });
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+};
 
 module.exports.userController = {
     addResp,
@@ -169,7 +180,8 @@ module.exports.userController = {
     deleteUser,
     getUserById,
     addFriend,
-    removeFriend
+    removeFriend,
+    getUserByQuery
 };
 
 

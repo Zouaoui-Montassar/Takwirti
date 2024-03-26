@@ -196,6 +196,37 @@ const listReservationR = async (req, res) => {
     }
 };
 
+// par encore testé
+const addParticipantsToReservation = async (req, res) => {
+    const { reservationId } = req.params;
+    const { participantsString } = req.body;
+
+    try {
+        const reservation = await reservationModel.findById(reservationId);
+        if (!reservation) {
+            return res.status(404).json({ message: 'Reservation not found' });
+        }
+
+        if (reservation.status !== 'En cours') {
+            return res.status(400).json({ message: 'Cannot edit participants for a reservation that is not in progress' });
+        }
+
+
+        const participantsArray = participantsString.split(/\n/); 
+/*         const participantsArray = participantsString.split(/[ \n]+/); ya binethom espace ya kol wehed new line */
+        
+        reservation.participants.push(...participantsArray);
+        await reservation.save();
+
+        res.status(200).json({ message: 'Participants added successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
+
+
 
 module.exports.reservationController = {
     addReservation,
@@ -204,5 +235,6 @@ module.exports.reservationController = {
     terminerReservation,
     searchReservation,
     listReservationP,
-    listReservationR
+    listReservationR,
+    addParticipantsToReservation
 };
