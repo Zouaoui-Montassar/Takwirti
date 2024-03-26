@@ -6,7 +6,7 @@ import { faGoogle,faApple } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 
-const Sign_up = () => {
+const Sign_up = ({xxx}) => {
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState(new Date());
   const [name, setName] = useState('');
@@ -17,6 +17,7 @@ const Sign_up = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [error, setError] = useState(null);
+  console.log(xxx);
 
   function toSignIn (){
     navigate('/signin');
@@ -46,6 +47,7 @@ const Sign_up = () => {
       console.error('Error:', error);
       // Handle error
     }
+    navigate("/"+xxx)
   };
   
   const validateEmail = (email) => {
