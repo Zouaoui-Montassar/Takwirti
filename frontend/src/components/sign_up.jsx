@@ -23,6 +23,7 @@ const Sign_up = ({xxx}) => {
     navigate('/signin');
   } 
   // bech yadapti asemi les champs selon schema eli fel backend , mahabitch nmess partie el html
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
   
