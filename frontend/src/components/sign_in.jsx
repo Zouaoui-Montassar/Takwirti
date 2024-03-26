@@ -10,7 +10,8 @@ const Sign_in = () => {
     const [formData, setFormData] = useState({
       email: '',
       password: ''
-    });
+  });
+  const [error, setError] = useState('');
 
     function toSignUp (){
       navigate('/signuprespo');
@@ -25,25 +26,35 @@ const Sign_in = () => {
     };
 
     const handleSubmit = async (event) => {
+      event.preventDefault();
       try {
-        event.preventDefault();
-        const response = await fetch('http://localhost:4000/api/users/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        });
-        if (!response.ok) {
-          alert("false");
-        }
-        else {
-          navigate('/dashboard');
-        }
+          const response = await fetch('http://localhost:4000/api/users/login', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ email : formData.email, password : formData.password }),
+          });
+          const data = await response.json();
+          if (!response.ok) {
+              setError(data.message);
+              return;
+          }
+          // Save the token to local storage or state
+          localStorage.setItem('token', data.token);
+          // Redirect or navigate to another page based on user's role
+          console.log(data)
+          if (data.__t === 'Responsable') {
+              navigate('/responsable');
+          } else if (data.__t === 'Particulier') {
+              navigate('/utilisateur');
+          }
       } catch (error) {
-        console.error('Login failed:', error.message);
+          console.error('Error:', error);
+          setError('An error occurred');
       }
-    };
+  };
+  
 
     const handleGoogleSignIn = async() => {
 
