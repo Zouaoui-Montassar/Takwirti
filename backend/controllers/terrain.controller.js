@@ -152,11 +152,22 @@ const updateCalendar = async (req, res, next) => {
     }
 };
 
+const getTerrain = async (req, res) => {
+    try {
+        const data = await terrainModel.find(); // Query MongoDB for data
+        res.json(data); // Send data as JSON response
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 module.exports.terrainController = {
     addTerrain,
     updateTerrain,
     deleteTerrain,
     searchTerrain,
     listTerrain,
-    updateCalendar
+    updateCalendar,
+    getTerrain
 };

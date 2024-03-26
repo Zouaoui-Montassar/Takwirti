@@ -55,13 +55,9 @@ function App() {
           <Route path='/mesterrains' element={<MesTerrains/>}/>
           <Route path='/utilisateur' element={<PageUtilisateur/>}/>
           <Route path="/detail" element={<Detail  />} />
-          <Route path="/Reservation/add" element={<ReservationAdd/>} />
-          <Route path="/list" element={<List/>} />
+          <Route path="/reservation/add" element={<ReservationAdd/>} />
           <Route path="/reservation/list" element={<ReservationList/>} />
-          <Route path="/Reservation/edit" element={<ReservationEdit/>} />
-          <Route path="/Reservation/search" element={<SearchBox/>} />
-          
-
+          <Route path="/reservation/edit" element={<ReservationEdit/>} />
         </Routes>
       </BrowserRouter>
     </div>
