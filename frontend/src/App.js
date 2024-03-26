@@ -1,19 +1,28 @@
 import './App.css';
-import Sign_up from './components/Sign_up';
-import Sign_in from './components/Sign_in';
-import Stats from './components/Stats';
+import Sign_in from './components/sign_in';
+import Stats from './components/stats';
 import MainPage from './components/MainPage';
 import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
 import DashboardRes from './components/DashboardRes';
-import ParentCalendar from './components/Parentcalendar';
+import ParentCalendar from './components/parentcalendar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AddTerrain from './components/AddTerrain';
 import Responsable from './components/Responsable';
 import MesTerrains from './components/MesTerrains';
 import PageUtilisateur from './components/PageUtilisateur';
 import Detail from './components/Detail';
+<<<<<<< HEAD
 import Profile from './components/Profile';
+=======
+import Sign_up from './components/sign_up';
+import { ReservationAdd } from './components/ReservationAdd';
+import List from './components/list';
+import ReservationList from './components/ReservationList';
+import ReservationEdit from './components/ReservationEdit';
+import SearchBox from './components/SearchBox';
+
+>>>>>>> 65e497c210400aebbabccc6fc92ab92d2c3c2f11
 
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
@@ -37,19 +46,31 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/home" element={<MainPage/>} />
+          <Route path="/" element={<MainPage/>} />
           <Route path="/navbar" element={<NavBar/>} />
           <Route path="/sidebar" element={<SideBar links={links}/>} />
           <Route path="/calendar" element={<ParentCalendar/>} />
-          <Route path="/signup" element={<Sign_up/>} />
+          <Route path="/signuprespo" element={<Sign_up xxx={"responsable"}/>} />
+          <Route path="/signupparti" element={<Sign_up xxx={"utilisateur"}/>} />
           <Route path="/signin" element={<Sign_in/>} />
           <Route path="/stats" element={<Stats/>} />
           <Route path='/responsable' element={<Responsable/>}/>
           <Route path='/addterrain' element={<AddTerrain/>}/>
           <Route path='/mesterrains' element={<MesTerrains/>}/>
           <Route path='/utilisateur' element={<PageUtilisateur/>}/>
+<<<<<<< HEAD
           <Route path="/detail" element={<Detail/>} />
           <Route path="/profile" element={<Profile/>} />
+=======
+          <Route path="/detail" element={<Detail  />} />
+          <Route path="/Reservation/add" element={<ReservationAdd/>} />
+          <Route path="/list" element={<List/>} />
+          <Route path="/reservation/list" element={<ReservationList/>} />
+          <Route path="/Reservation/edit" element={<ReservationEdit/>} />
+          <Route path="/Reservation/search" element={<SearchBox/>} />
+          
+
+>>>>>>> 65e497c210400aebbabccc6fc92ab92d2c3c2f11
         </Routes>
       </BrowserRouter>
     </div>

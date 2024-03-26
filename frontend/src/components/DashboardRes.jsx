@@ -5,7 +5,7 @@ import { faHouse } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Calendar from './calendar';
-import Stats from './Stats';
+import Stats from './stats';
 
 
 const links = [
