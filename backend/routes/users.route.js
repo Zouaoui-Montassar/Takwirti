@@ -18,6 +18,11 @@ router.put('/users/update_responsable/:id', userController.updateResponsable);
 // Get user by id 
 router.get('/users/:id', userController.getUserById);
 
+
+// search user bel name / tel  ( case sensitive )
+
+router.get('/users/search/:query', userController.getUserByQuery);
+
 // Get all users (possible lel admin dashboard )
 router.get('/users', userController.getAllUsers);
 
