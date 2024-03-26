@@ -6,6 +6,9 @@
   @apply text-[52px] font-[700] leading-[120%];
 }
 
+.bold-36 {
+  @apply text-[36px] font-[700] leading-[120%];
+}
 
 body {
   margin: 0;
