@@ -12,9 +12,7 @@ import Responsable from './components/Responsable';
 import MesTerrains from './components/MesTerrains';
 import PageUtilisateur from './components/PageUtilisateur';
 import Detail from './components/Detail';
-<<<<<<< HEAD
 import Profile from './components/Profile';
-=======
 import Sign_up from './components/sign_up';
 import { ReservationAdd } from './components/ReservationAdd';
 import List from './components/list';
@@ -22,7 +20,6 @@ import ReservationList from './components/ReservationList';
 import ReservationEdit from './components/ReservationEdit';
 import SearchBox from './components/SearchBox';
 
->>>>>>> 65e497c210400aebbabccc6fc92ab92d2c3c2f11
 
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
@@ -58,11 +55,8 @@ function App() {
           <Route path='/addterrain' element={<AddTerrain/>}/>
           <Route path='/mesterrains' element={<MesTerrains/>}/>
           <Route path='/utilisateur' element={<PageUtilisateur/>}/>
-<<<<<<< HEAD
           <Route path="/detail" element={<Detail/>} />
           <Route path="/profile" element={<Profile/>} />
-=======
-          <Route path="/detail" element={<Detail  />} />
           <Route path="/Reservation/add" element={<ReservationAdd/>} />
           <Route path="/list" element={<List/>} />
           <Route path="/reservation/list" element={<ReservationList/>} />
@@ -70,7 +64,6 @@ function App() {
           <Route path="/Reservation/search" element={<SearchBox/>} />
           
 
->>>>>>> 65e497c210400aebbabccc6fc92ab92d2c3c2f11
         </Routes>
       </BrowserRouter>
     </div>
