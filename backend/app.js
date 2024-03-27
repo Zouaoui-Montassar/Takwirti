@@ -20,10 +20,14 @@ app.use(session({
 
 
 
-app.use(cors({
+{/*app.use(cors({
     origin: 'http://localhost:3000/',     // je pense nhotou cors w khw khater deja el port 4000 fel .env
     methods: ['GET', 'POST', 'PUT', 'DELETE']
   }));
+
+*/}
+
+  app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,8 +38,8 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
     .then(() => console.log('Successfully connected to MongoDB!'))
     .catch(error => console.error("Failed to connect to MongoDB:", error));
 
-    app.listen(4000, () => {
-     console.log(`Server started on port 4000 ....`);
+    app.listen(3000, () => {
+     console.log(`Server started on port 3000 ....`);
   });
 
 app.use("/api", userRouter)
