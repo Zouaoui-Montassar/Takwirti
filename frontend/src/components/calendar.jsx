@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import List from './list';
+import List from './List';
 import { useLocation } from 'react-router-dom';
 
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
