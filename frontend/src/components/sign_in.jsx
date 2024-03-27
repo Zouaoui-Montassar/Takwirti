@@ -10,10 +10,11 @@ const Sign_in = () => {
     const [formData, setFormData] = useState({
       email: '',
       password: ''
-    });
+  });
+  const [error, setError] = useState('');
 
     function toSignUp (){
-      navigate('/signup');
+      navigate('/signuprespo');
     }
 
     const handleChange = (event) => {
@@ -25,25 +26,55 @@ const Sign_in = () => {
     };
 
     const handleSubmit = async (event) => {
+      event.preventDefault();
       try {
-        event.preventDefault();
         const response = await fetch('http://localhost:4000/api/users/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify({ email: formData.email, password: formData.password }),
         });
+        const data = await response.json();
         if (!response.ok) {
-          alert("false");
+          setError(data.message);
+          return;
         }
-        else {
-          navigate('/dashboard');
+    
+        // Save the token to local storage
+        localStorage.setItem('token', data.token);
+    
+        // Determine the redirect URL based on the user's type
+        let redirectUrl;
+        if (data.__t === 'Particulier') {
+          redirectUrl = '/particulier';  // Redirect to the particulier route
+        } else if (data.__t === 'Responsable') {
+          redirectUrl = '/responsable';  // Redirect to the responsable route
+        } else {
+          // Handle other user types or errors
+          return;
         }
+    
+        // Redirect to the determined URL
+        navigate(redirectUrl);
+    
       } catch (error) {
-        console.error('Login failed:', error.message);
+        console.error('Error:', error);
+        setError('An error occurred');
       }
     };
+    
+    
+/*   // Request the user's data using the saved token
+  const token = localStorage.getItem('token');
+  const responseUser = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  const dataUser = await responseUser.json();
+  console.log(dataUser); */
 
     const handleGoogleSignIn = async() => {
 

@@ -39,7 +39,7 @@ const Calendar = ({ onDateSelect }) => {
       calendar.push(
         <div 
           key={day} 
-          className={`${classNames} ${date.toDateString() === selectedDate?.toString() && 'bg-primary-50 text-white'}`} 
+          className={`${classNames} ${date.toDateString() === selectedDate?.toString() && 'bg-primary-50 text-white '}`} 
           onClick={() => {
             if (!isReservationPage) {
               showModal(date.toDateString()); // Show modal if not on reservation page
