@@ -13,21 +13,13 @@ import MesTerrains from './components/MesTerrains';
 import PageUtilisateur from './components/PageUtilisateur';
 import Detail from './components/Detail';
 import Profile from './components/Profile';
-<<<<<<< HEAD
-import Sign_up from './components/Sign_up';
-=======
 import Sign_up from './components/sign_up';
->>>>>>> c06266fec003aa13130ab51d5eedd587db45c8b0
 import { ReservationAdd } from './components/ReservationAdd';
 import ReservationEdit from './components/ReservationEdit';
-<<<<<<< HEAD
-import ProfileModif from './components/ProfileModif';
-import FriendsList from './components/FriendsList';
-import Tachkila from './components/Tachkila';
-=======
+import ReservationList from './components/ReservationList';
+import List from './components/List';
 import SearchBox from './components/SearchBox';
 
->>>>>>> c06266fec003aa13130ab51d5eedd587db45c8b0
 
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
@@ -62,16 +54,6 @@ function App() {
           <Route path='/responsable' element={<Responsable/>}/>
           <Route path='/terrain/add' element={<Terrain func={"add"} id={"9876543210fedcba"}/>}/>
           <Route path='/mesterrains' element={<MesTerrains/>}/>
-<<<<<<< HEAD
-          <Route path='/utilisateur' element={<PageUtilisateur/>}/>
-          <Route path="/detail" element={<Detail/>} />
-          <Route path="/profile" element={<Profile/>} />
-          <Route path="/addreservation" element={<ReservationAdd/>} />
-          <Route path="/editreservation" element={<ReservationEdit iduser={1}/>} />
-          <Route path="/profilemodifier" element={<ProfileModif/>} />
-          <Route path="/friendslist" element={<FriendsList/>} />
-          <Route path="/tachkila" element={<Tachkila/>} />
-=======
           <Route path='/particulier' element={<PageUtilisateur/>}/> 
           <Route path="/detail" element={<Detail/>} />
           <Route path="/profile" element={<Profile/>} />
@@ -80,7 +62,6 @@ function App() {
           <Route path="/reservation/list" element={<ReservationList/>} />
           <Route path="/reservation/edit" element={<ReservationEdit/>} />
           <Route path='/terrain/update' element={<Terrain func={"update"} id={"6603db4d52678b7da651fee7"}/>}/>
->>>>>>> c06266fec003aa13130ab51d5eedd587db45c8b0
         </Routes>
       </BrowserRouter>
     </div>
