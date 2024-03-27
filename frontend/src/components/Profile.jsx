@@ -48,7 +48,7 @@ const Profile = () => {
                                 <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">22</span>
                                 <span className="text-sm text-blueGray-400">Friends</span>
                             </div>
-                            {/* Add more stat components similar to the Friends one */}
+                            
                         </div>
                     </div>
 
@@ -59,7 +59,7 @@ const Profile = () => {
                         </div>
 
                         <div className='border b-2 border-blue-500 bg-blue-500 w-[90px] flex flex-row p-2 items-center justify-center rounded-md shadow-lg shadow-slate-400 mr-2'>
-                          <Link to={`/modifier`} className="mr-2 text-white text-lg">Modify</Link>
+                          <Link to={`/profilemodifier`} className="mr-2 text-white text-lg">Modify</Link>
                           <BsPen className='  text-white' />
                         </div>
 

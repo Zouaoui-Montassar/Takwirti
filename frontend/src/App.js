@@ -1,5 +1,5 @@
 import './App.css';
-import Sign_in from './components/sign_in';
+import Sign_in from './components/Sign_in';
 import Stats from './components/stats';
 import MainPage from './components/MainPage';
 import NavBar from './components/NavBar';
@@ -12,17 +12,13 @@ import Responsable from './components/Responsable';
 import MesTerrains from './components/MesTerrains';
 import PageUtilisateur from './components/PageUtilisateur';
 import Detail from './components/Detail';
-<<<<<<< HEAD
 import Profile from './components/Profile';
-=======
-import Sign_up from './components/sign_up';
+import Sign_up from './components/Sign_up';
 import { ReservationAdd } from './components/ReservationAdd';
-import List from './components/list';
-import ReservationList from './components/ReservationList';
 import ReservationEdit from './components/ReservationEdit';
-import SearchBox from './components/SearchBox';
-
->>>>>>> 65e497c210400aebbabccc6fc92ab92d2c3c2f11
+import ProfileModif from './components/ProfileModif';
+import FriendsList from './components/FriendsList';
+import Tachkila from './components/Tachkila';
 
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
@@ -58,19 +54,13 @@ function App() {
           <Route path='/addterrain' element={<AddTerrain/>}/>
           <Route path='/mesterrains' element={<MesTerrains/>}/>
           <Route path='/utilisateur' element={<PageUtilisateur/>}/>
-<<<<<<< HEAD
           <Route path="/detail" element={<Detail/>} />
           <Route path="/profile" element={<Profile/>} />
-=======
-          <Route path="/detail" element={<Detail  />} />
-          <Route path="/Reservation/add" element={<ReservationAdd/>} />
-          <Route path="/list" element={<List/>} />
-          <Route path="/reservation/list" element={<ReservationList/>} />
-          <Route path="/Reservation/edit" element={<ReservationEdit/>} />
-          <Route path="/Reservation/search" element={<SearchBox/>} />
-          
-
->>>>>>> 65e497c210400aebbabccc6fc92ab92d2c3c2f11
+          <Route path="/addreservation" element={<ReservationAdd/>} />
+          <Route path="/editreservation" element={<ReservationEdit iduser={1}/>} />
+          <Route path="/profilemodifier" element={<ProfileModif/>} />
+          <Route path="/friendslist" element={<FriendsList/>} />
+          <Route path="/tachkila" element={<Tachkila/>} />
         </Routes>
       </BrowserRouter>
     </div>
