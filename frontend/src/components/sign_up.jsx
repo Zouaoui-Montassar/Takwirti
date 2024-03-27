@@ -22,11 +22,10 @@ const Sign_up = ({xxx}) => {
   function toSignIn (){
     navigate('/signin');
   } 
-  // bech yadapti asemi les champs selon schema eli fel backend , mahabitch nmess partie el html
-  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+   // bech yadapti asemi les champs selon schema eli fel backend , mahabitch nmess partie el html
     const formData = new FormData(event.target);
     const formObject = {};
     formData.forEach((value, key) => {
