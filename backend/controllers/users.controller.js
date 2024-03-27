@@ -7,8 +7,12 @@ require('dotenv').config();
 const jwtSecret = process.env.JWT_SECRET;
 const friendService = require('../services/friend.service');
 
+// create token function , parameter houwa object user ( login + sign up fel zouz nest7a9ouha)
+const createToken = (user) => {
+    return jwt.sign({ userId: user._id, email: user.email }, jwtSecret);
+}  // najmou nzidou exprire date (nharin akeka) ka parameter fel .sign method mel jwt , pour le moment mamalthech
 
-
+//lezem token fel sign up zeda madem bech yetredirecta lel home page toul 
 const addResp = async (req, res) => {
     const { email, password, num_tel, ...otherData } = req.body;
     console.log(ResponsableModel);
@@ -22,9 +26,13 @@ const addResp = async (req, res) => {
         }
         const hash = await bcrypt.hash(password, 10);
         const newResp = await ResponsableModel.create({ email: email, password: hash, num_tel: num_tel, ...otherData });
+        token = createToken(newResp);
+        console.log(token);
         res.status(200).json({
             message: "Responsable successfully created",
+            token : token ,
             user: newResp,
+            
         });
     } catch (error) {
         res.status(400).json({
@@ -44,9 +52,11 @@ const addParticulier = async (req, res) => {
             });
         }
         const hash = await bcrypt.hash(password, 10);
+        const token = createToken(newParticulier);
         const newParticulier = await ParticulierModel.create({ email: email, password: hash, ListeAmi: ListeAmi, ...otherData });
         res.status(200).json({
             message: "Particulier successfully created",
+            token : token ,
             user: newParticulier,
         });
     } catch (error) {
@@ -68,7 +78,7 @@ const login = async (req, res) => {
         if (!validPassword) {
             return res.status(401).json({ message: "Invalid password" });
         }
-        const token = jwt.sign({ userId: user._id, email: user.email }, jwtSecret);
+        const token = createToken(user);
         res.status(200).json({ message: "Login successful", token: token , __t : user.__t });
     } catch (error) {
         console.error(error);
