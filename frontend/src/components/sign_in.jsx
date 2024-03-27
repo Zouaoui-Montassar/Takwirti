@@ -28,33 +28,53 @@ const Sign_in = () => {
     const handleSubmit = async (event) => {
       event.preventDefault();
       try {
-          const response = await fetch('http://localhost:4000/api/users/login', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ email : formData.email, password : formData.password }),
-          });
-          const data = await response.json();
-          if (!response.ok) {
-              setError(data.message);
-              return;
-          }
-          // Save the token to local storage or state
-          localStorage.setItem('token', data.token);
-          // Redirect or navigate to another page based on user's role
-          console.log(data)
-          if (data.__t === 'Responsable') {
-              navigate('/responsable');
-          } else if (data.__t === 'Particulier') {
-              navigate('/utilisateur');
-          }
+        const response = await fetch('http://localhost:4000/api/users/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: formData.email, password: formData.password }),
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          setError(data.message);
+          return;
+        }
+    
+        // Save the token to local storage
+        localStorage.setItem('token', data.token);
+    
+        // Determine the redirect URL based on the user's type
+        let redirectUrl;
+        if (data.__t === 'Particulier') {
+          redirectUrl = '/particulier';  // Redirect to the particulier route
+        } else if (data.__t === 'Responsable') {
+          redirectUrl = '/responsable';  // Redirect to the responsable route
+        } else {
+          // Handle other user types or errors
+          return;
+        }
+    
+        // Redirect to the determined URL
+        navigate(redirectUrl);
+    
       } catch (error) {
-          console.error('Error:', error);
-          setError('An error occurred');
+        console.error('Error:', error);
+        setError('An error occurred');
       }
-  };
-  
+    };
+    
+    
+/*   // Request the user's data using the saved token
+  const token = localStorage.getItem('token');
+  const responseUser = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  const dataUser = await responseUser.json();
+  console.log(dataUser); */
 
     const handleGoogleSignIn = async() => {
 
