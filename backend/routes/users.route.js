@@ -2,6 +2,7 @@ const express = require('express');
 const { userController } = require('../controllers/users.controller');
 const router = express.Router();
 const passport = require('../config/passport.config.js');
+const verifyToken = require('../middlewares/verifyToken');
 
 // el register kol had andou route , fel login lzouz nafsha , w c deja yethatou fard collection eli heya users ama kol wehed andou schema lih , tel9a __t edhika teb3a el "heritage" , yetsama discriminant
 // yaani jet kima hachetna bedhabet 
@@ -15,8 +16,8 @@ router.post('/users/login', userController.login);
 router.put('/users/update_particulier/:id', userController.updateParticulier);
 router.put('/users/update_responsable/:id', userController.updateResponsable);
 
-// Get user by id 
-router.get('/users/:id', userController.getUserById);
+/* // Get user by id 
+router.get('/users/:id', userController.getUserById); */
 
 
 // search user bel name / tel  ( case sensitive )
@@ -34,12 +35,20 @@ router.post('/users/add_friend', userController.addFriend);
 router.delete('/users/remove_friend', userController.removeFriend);
 
 
-
-
-router.get('/protected-route', passport.authenticate('jwt', { session: false }), (req, res) => {
-    res.send('You are authenticated!');
+router.get('/users/Particulier', verifyToken, (req, res) => {
+    // If the token is valid, send a success message
+    res.json({ message: "Access to particulier's home page granted" });
+});
+router.get('/users/Responsable', verifyToken, (req, res) => {
+    // If the token is valid, send a success message
+    res.json({ message: "Access to responsable's home page granted" });
 });
 
+
+/* router.get('/protected-route', passport.authenticate('jwt', { session: false }), (req, res) => {
+    res.send('You are authenticated!');
+});
+ */
 
 
 module.exports.userRouter = router;

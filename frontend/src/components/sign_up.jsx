@@ -21,34 +21,61 @@ const Sign_up = ({xxx}) => {
 
   function toSignIn (){
     navigate('/signin');
-  }
+  } 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    navigate('/signin');
+   // bech yadapti asemi les champs selon schema eli fel backend , mahabitch nmess partie el html
+    const formData = new FormData(event.target);
+    const formObject = {};
+    formData.forEach((value, key) => {
+      formObject[key] = value;
+    });
+  
+    const adjustedFormData = {
+      nom: formObject.name,
+      prenom: formObject.lastname,
+      email: formObject.email,
+      password: formObject.password,
+      DN: formObject.birthdate,
+      tel: formObject.phoneNumber,
+    };
+    
+    /* principe : amalt variable bech pagee barka thandeli 2 api , hedhi alternative , sinon nwaliw naamlou component ekher signup respo
+    w sign up particuler w kol wehed interface mokhtalfa jemla lih , pour le moment khedmetli haka , hata nzidou netfehmou */
+    const url_sign= "http://localhost:4000/api/users/register_"+ xxx; 
+    console.log(url_sign);
+    
     try {
       // Make HTTP request to send form data to the server
-      const response = await fetch('/api/signup', {
+
+      const response = await fetch(url_sign, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          name,
-          lastName,
-          email,
-          password,
-          confirmPassword,
-          phoneNumber,
-          birthDate,
-        }),
+        body: JSON.stringify(adjustedFormData),
       });
-      // Handle response
+  
+      // Check if the response was successful
+      if (response.ok) {
+        // Handle successful registration
+        // For example, you might show a success message to the user
+        console.log('Registration successful');
+        alert("jawek behi"); // taw nbadlou nbar9chouha
+        navigate('/signin');
+      } else {
+        // Handle unsuccessful registration
+        // For example, you might show an error message to the user
+        console.error('Registration failed');
+      }
     } catch (error) {
       console.error('Error:', error);
-      // Handle error
+      // Handle other types of errors, such as network errors
     }
-    navigate("/"+xxx)
   };
+  
+  
   
   const validateEmail = (email) => {
     // Add email validation logic here
