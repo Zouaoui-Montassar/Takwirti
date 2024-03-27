@@ -7,7 +7,7 @@ import SideBar from './components/SideBar';
 import DashboardRes from './components/DashboardRes';
 import ParentCalendar from './components/parentcalendar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AddTerrain from './components/AddTerrain';
+import Terrain from './components/Terrain';
 import Responsable from './components/Responsable';
 import MesTerrains from './components/MesTerrains';
 import PageUtilisateur from './components/PageUtilisateur';
@@ -52,7 +52,7 @@ function App() {
           <Route path="/signin" element={<Sign_in/>} />
           <Route path="/stats" element={<Stats/>} />
           <Route path='/responsable' element={<Responsable/>}/>
-          <Route path='/addterrain' element={<AddTerrain/>}/>
+          <Route path='/terrain/add' element={<Terrain func={"add"} id={"9876543210fedcba"}/>}/>
           <Route path='/mesterrains' element={<MesTerrains/>}/>
           <Route path='/utilisateur' element={<PageUtilisateur/>}/>
           <Route path="/detail" element={<Detail/>} />
@@ -61,6 +61,7 @@ function App() {
           <Route path="/list" element={<List/>} />
           <Route path="/reservation/list" element={<ReservationList/>} />
           <Route path="/reservation/edit" element={<ReservationEdit/>} />
+          <Route path='/terrain/update' element={<Terrain func={"update"} id={"6603db4d52678b7da651fee7"}/>}/>
         </Routes>
       </BrowserRouter>
     </div>

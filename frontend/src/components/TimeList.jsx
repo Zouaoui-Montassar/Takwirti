@@ -1,6 +1,6 @@
 import { React , useState } from 'react';
 
-const TimeList = ({ start, end, step }) => {
+const TimeList = ({ start, end, step , sendDataToParent}) => {
   const [selectedTimes, setSelectedTimes] = useState([]); // State to keep track of selected times
   const hs = parseInt(start[0]+start[1])
   const he = parseInt(end[0]+end[1])
@@ -12,16 +12,22 @@ const TimeList = ({ start, end, step }) => {
   
   // Function to handle the selection of a time
   const handleTimeSelection = (time) => {
-    // Check if the time is already selected
+    let updatedSelectedTimes = []; // Create a copy of selectedTimes array
+  
     if (selectedTimes.includes(time)) {
       // If selected, remove it from the selectedTimes array
-      setSelectedTimes(selectedTimes.filter(selectedTime => selectedTime !== time));
+      updatedSelectedTimes = selectedTimes.filter(selectedTime => selectedTime !== time);
     } else {
       // If not selected, add it to the selectedTimes array
-      setSelectedTimes([...selectedTimes, time]);
+      updatedSelectedTimes = [...selectedTimes, time];
     }
+  
+    // Update the state with the new selected times
+    setSelectedTimes(updatedSelectedTimes);
+  
+    // Pass the updated selected times to the parent component
+    sendDataToParent(updatedSelectedTimes);
   };
-  let count = 0;
   while (currentTime < end) {
     const formattedTime = currentTime.toLocaleTimeString('it-IT', {
       hour12: false,
@@ -43,11 +49,6 @@ const TimeList = ({ start, end, step }) => {
       </label>
     </div>
     );
-    count++;
-    // Add a line break after every 6 elements
-    if (count % 6 === 0) {
-      timeList.push(<div key={`break-${count}`} className="flex-wrap" ></div>);
-    }
     currentTime = new Date(currentTime.getTime() + step * 60000); // Increment by step in milliseconds
   }
   

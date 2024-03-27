@@ -2,10 +2,12 @@ const { terrainModel } = require('../models/terrain.model');
 
 // add terrain function
 const addTerrain = async (req, res) => {
+    
     try {
         // Extract data from the request body
-        const { nom, idRes, phone, prix, position, open, close, duree, dayOff, configDayOff } = req.body;
-
+        const { nom, phone, prix, position, open, close, duree, time, date } = req.body;
+        const idRes = req.params.idRes;
+        console.log(idRes);
         // Create a new terrain object
         const newTerrain = {
             nom,
@@ -14,12 +16,13 @@ const addTerrain = async (req, res) => {
             prix,
             position,
             calendrier: {
-                open,
-                close,
-                duree,
-                dayOff: dayOff || [], // Ensure dayOff is an array or provide an empty array as default
-                configDayOff: configDayOff || [] // Ensure configDayOff is an array or provide an empty array as default
-            }
+                open : open,
+                close : close,
+                duree: duree,
+                time : time, 
+                date : date,
+            },
+            status: "Disponible"
         };
 
         // Insert the new terrain object into the collection
@@ -38,28 +41,30 @@ const addTerrain = async (req, res) => {
 // update terrain function
 const updateTerrain = async (req, res, next) => {
     try {
-        // Extract terrain ID and updated data from request body or parameters
         const terrainId = req.params.terrainId;
-        const updatedData = req.body;
-
-        // Find the terrain object by ID
+        const { nom, phone, prix, open, close, duree, time, date, status } = req.body;
         const terrain = await terrainModel.findById(terrainId);
 
         if (!terrain) {
-            // If terrain with the provided ID is not found, return a 404 error
             return res.status(404).json({ message: "Terrain not found" });
         }
-
-        // Update the found terrain object with the provided data
-        Object.assign(terrain, updatedData);
-
-        // Save the updated terrain object to the database
+        const newTerrain = {
+            nom,
+            phone,
+            prix,
+            calendrier: {
+                open : open,
+                close : close,
+                duree: duree,
+                time : time, 
+                date : date,  
+            },
+            status
+        };
+        Object.assign(terrain, newTerrain);
         const updatedTerrain = await terrain.save();
-
-        // Send a success response with the updated terrain object
         res.status(200).json({ message: "Terrain updated successfully", terrain: updatedTerrain });
     } catch (error) {
-        // Handle errors if any
         res.status(500).json({ message: "Failed to update terrain", error: error.message });
     }
 };
