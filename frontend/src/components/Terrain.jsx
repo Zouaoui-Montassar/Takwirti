@@ -6,7 +6,8 @@ import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import Dailog from './Dailog';
 import TimeList from './TimeList';
-
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 const ville = [
   { name: 'Tunis' },
   { name: 'nabeul' },
@@ -20,22 +21,35 @@ const links = [
   { label: 'Page 2', path: '/page2' },
   // Add more links as needed
 ];
-
-const AddTerrain = () => {
-  const [selected, setSelected] = useState(ville);
-  const [show, setShow] = useState(false);
+// id w func mawjoudin fel path (a modifier plus tard)
+const Terrain = ({ func, id }) => {
+  const [img, setImg] = useState("abc")
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [selected, setSelected] = useState(ville);//ville
+  const [data, setData] = useState(90);//duree
+  const [prix, setPrix] = useState(120)
   const [ouverture, setOuverture] = useState('08:00');
   const [fermeture, setFermeture] = useState('00:00');
-  const [data, setData] = useState(90);
+  const [time , setTime] = useState([]);
+  const [date, setDate] = useState([]);
+  const [status, setStatus]=useState();
 
+  const [show, setShow] = useState(false);
+  const handleTime = (time) => {
+    setTime(time);
+  }
+  const handleAddressChange = (event) => {
+    setAddress(event.target.value);
+  };
 
   useEffect(() => {
     setData(data);
   }, [data]);
 
   const handleDurationChange = (e) => {
-    setData(parseInt(e.target.value));
-    console.log(data);
+    setData(e.target.value);
   };
 
   const showDialog = () => {
@@ -46,14 +60,71 @@ const AddTerrain = () => {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      let response;
+      if (func === "add") {
+        response = await axios.post(`http://localhost:4000/ter/terrain/add/${id}`, {
+          nom: name,
+          phone: phone,
+          prix: prix,
+          position: `${address}, ${selected.name}`, // Adjust the position format as needed
+          open: ouverture,
+          close: fermeture,
+          duree: data,
+          time: time,
+          date: date,
+          status: "Disponible",
+        });
+      } else if (func === "update") {
+        console.log(time);
+        response = await axios.put(`http://localhost:4000/ter/terrain/update/${id}`, {
+          nom: name,
+          phone: phone,
+          prix: prix,
+          open: ouverture,
+          close: fermeture,
+          duree: data,
+          time: time,
+          date: date,
+          status: status,
+        });
+      }
+  
+      if (response.data) {
+        console.log(`Terrain ${func}ed successfully`);
+      } else {
+        console.error(`Failed to ${func} terrain`);
+      }
+    } catch (error) {
+      console.error(`Error ${func}ing terrain:`, error);
+    }
+  };
+  
+  const handleDeleteTerrain = async () => {
+    try {
+      const response = await axios.delete(`http://localhost:4000/ter/terrain/delete/${id}`);
+      if (response.status === 200) {
+        console.log('Terrain deleted successfully');
+        // Optionally, perform any other actions after successful deletion
+      } else {
+        console.error('Failed to delete terrain');
+      }
+    } catch (error) {
+      console.error('Error deleting terrain:', error);
+    }
+  };
+  
+
   return (
     <>
       <NavBar copy links={links} />
       <div className='flex flex-row'>
         <SideBar links={links} />
         <div className='p-5  w-full h-full'>
-          <h1 className='bold-52'>Add Terrain</h1>
-          <form action='get'>
+          <h1 className='bold-52'>{func} Terrain</h1>
+          <form onSubmit={handleSubmit}>
             <div className='w-full h-[200px] items-center justify-center flex flex-row '>
               <div className='flex flex-col m-5 w-[40%]'>
                 <h3 className='text-bold text-xl relative right-7'>nom du terrain</h3>
@@ -61,6 +132,7 @@ const AddTerrain = () => {
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
                   type='text'
                   placeholder='NOM DU TERRAIN'
+                  onChange={(e) => {setName(e.target.value)}}
                 />
               </div>
               <div className='flex flex-col m-5 w-[40%]'>
@@ -71,6 +143,7 @@ const AddTerrain = () => {
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
                   type='phone'
                   placeholder='12345678'
+                  onChange={(e) => {setPhone(e.target.value)}}
                 />
               </div>
             </div>
@@ -84,13 +157,16 @@ const AddTerrain = () => {
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
                   type='text'
                   placeholder='adresse'
+                  onChange={handleAddressChange}
+                  disabled={func === 'update'}
+                  title={func === 'update' ? 'Ce champ est inaccessible en mode édition de terrain' : ''}
                 />
               </div>
               <div className='flex flex-col w-[40%] m-5'>
                 <h3 className='text-bold text-xl relative right-1'>
                   Ville
                 </h3>
-                <Listbox value={selected} onChange={setSelected}>
+                <Listbox value={selected.name} onChange={setSelected} disabled={func === 'update'} title={func === 'update' ? 'Ce champ est inaccessible en mode édition de terrain' : ''}>
                   <div className='relative mt-1 bg-white'>
                     <Listbox.Button className='relative w-full h-full cursor-default rounded-md bg-transparent py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
                       <span className='block truncate'>{selected.name}</span>
@@ -155,7 +231,7 @@ const AddTerrain = () => {
                 <select
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
                   value={data}
-                  onChange={handleDurationChange}
+                  onChange={(e) => {handleDurationChange(e)}}
                 >
                   <option value={60}>60 minutes</option>
                   <option value={75}>75 minutes</option>
@@ -171,6 +247,7 @@ const AddTerrain = () => {
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
                   type='number'
                   defaultValue={120}
+                  onChange= {(e) => {setPrix(e.target.value)}}
                 />
               </div>
             </div>
@@ -200,13 +277,41 @@ const AddTerrain = () => {
               />
             </div>
           </div>
+            {func === 'update' && (
+              <div className='w-full h-[200px] items-center justify-center flex flex-row '>
+                <h3 className='text-bold text-xl relative right-11'>
+                  disponibilite de terrain
+                </h3>
+                <input
+                  className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
+                  type="radio"
+                  id="disponible"
+                  name="status"
+                  value="disponible"
+                  checked={status === 'disponible'}
+                  onChange={(e) => setStatus(e.target.value)}
+                />
+                <label htmlFor="disponible">Disponible</label>
+
+                <input
+                  className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
+                  type="radio"
+                  id="indisponible"
+                  name="status"
+                  value="indisponible"
+                  checked={status === 'indisponible'}
+                  onChange={(e) => setStatus(e.target.value)}
+                />
+                <label htmlFor="indisponible">Indisponible</label>
+              </div>
+            )}
           <div className='w-full h-[200px] items-center justify-center flex flex-row '>
             <div className='flex flex-col m-5 w-[40%]'>
               <h3 className='text-bold text-xl relative right-11'>
                 temps bloquer ou reservee
               </h3>
               <br />
-              <TimeList start={ouverture} end={fermeture} step={data} label="Time Slots:"/>
+              <TimeList start={ouverture} end={fermeture} step={data} label="Time Slots:" sendDataToParent={handleTime}/>
             </div>
             <div className='flex flex-col m-5 w-[40%]'>
               <h3 className='text-bold text-xl relative right-11'>
@@ -215,8 +320,8 @@ const AddTerrain = () => {
               <br />
               <select
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
-                  value={data}
-                  onChange={handleDurationChange}
+                  value={date}
+                  onChange={(e) => {setDate(e.target.value)}}
                 >
                   <option value={"Monday"}>Monday</option>
                   <option value={"tuesday"}>tuesday</option>
@@ -229,20 +334,23 @@ const AddTerrain = () => {
                 </select>
             </div>
           </div>
-        </form>
-        <div className='flex flex-row items-center justify-center space-x-2'>
-          <button className='border border-green-500 text-green-500 p-2 rounded-md text-xl' >
-            Annuler
+          <div className='flex flex-row items-center justify-center space-x-2'>
+          <button
+            className='border border-green-500 text-green-500 p-2 rounded-md text-xl'
+            onClick={func === 'update' ? handleDeleteTerrain : null}
+            type={func === 'update' ? 'button' : 'reset'}
+          >
+            {func === 'update' ? 'Supprimer le terrain' : 'Annuler'}
           </button>
-          <button className='p-2 border bg-green-500 text-white rounded-md text-xl'>
+          <button className='p-2 border bg-green-500 text-white rounded-md text-xl' type="submit">
             Soumettre
           </button>
         </div>
-
+        </form>
       </div>
     </div>
   </>
 )
 }
 
-export default AddTerrain
+export default Terrain
