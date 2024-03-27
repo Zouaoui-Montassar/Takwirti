@@ -9,7 +9,7 @@ import ParentCalendar from './components/parentcalendar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Terrain from './components/Terrain';
 import Responsable from './components/Responsable';
-import MesTerrains from './components/MesTerrains';
+import TerrainsResp from './components/TerrainsResp';
 import PageUtilisateur from './components/PageUtilisateur';
 import Detail from './components/Detail';
 import Profile from './components/Profile';
@@ -19,6 +19,7 @@ import ReservationEdit from './components/ReservationEdit';
 import ReservationList from './components/ReservationList';
 import List from './components/List';
 import SearchBox from './components/SearchBox';
+import TerrainList from './components/TerrainList';
 
 
 const data = [
@@ -53,7 +54,7 @@ function App() {
           <Route path="/stats" element={<Stats/>} />
           <Route path='/responsable' element={<Responsable/>}/>
           <Route path='/terrain/add' element={<Terrain func={"add"} id={"9876543210fedcba"}/>}/>
-          <Route path='/mesterrains' element={<MesTerrains/>}/>
+          <Route path='/terrain/responsable' element={<TerrainsResp/>}/>
           <Route path='/particulier' element={<PageUtilisateur/>}/> 
           <Route path="/detail" element={<Detail/>} />
           <Route path="/profile" element={<Profile/>} />

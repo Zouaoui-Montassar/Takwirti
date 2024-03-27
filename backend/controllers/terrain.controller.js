@@ -130,11 +130,6 @@ const listTerrain = async (req, res) => {
     }
 };
 
-//?affiche calendar function
-const calendar = async (req, res, next) => {
-
-};
-
 // update calendar function
 const updateCalendar = async (req, res, next) => {
     try {
