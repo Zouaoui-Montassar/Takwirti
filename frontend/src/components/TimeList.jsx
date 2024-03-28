@@ -54,7 +54,7 @@ const TimeList = ({ start, end, step , sendDataToParent}) => {
   
 
 
-  return <ul className='flex flex-row text-bold text-xl relative right-11'>{timeList}</ul>;
+  return <ul className='flex flex-row flex-wrap *: text-bold text-xl  justify-center'>{timeList}</ul>;
 };
 
 export default TimeList;

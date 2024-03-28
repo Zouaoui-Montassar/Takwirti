@@ -23,9 +23,10 @@ function TerrainsResp() {
         <div className='flex flex-row space-x-5'>
           <SideBar>
                {/* Contenu de la barre latérale */}
-                <SidebarItem icon={<School />} text="Accueil" active={true} />
-                <SidebarItem icon={<Settings />} text="Profil" />
-                <SidebarItem icon={<LogOut />} text="se déconnecter" />
+                <SidebarItem icon={<School />} text="profile responsable"  link={'responsable'} />
+                <SidebarItem icon={<Settings />} text="list terrain" link={'terrain/responsable'} />
+                <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
+                <SidebarItem icon={<LogOut />} text="se déconnecter" link={'/signout'}/>
           </SideBar>
           <TerrainList param={"responsable"} id={"9876543210fedcba"} className="m-8" />
         </div>
