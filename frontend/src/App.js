@@ -58,10 +58,10 @@ function App() {
           <Route path="/signupparti" element={<Sign_up xxx={"particulier"}/>} />
           <Route path="/signin" element={<Sign_in/>} />
           <Route path="/stats" element={<Stats/>} />
-          <Route path='/responsable' element={<Responsable/>}/>
+          <Route path='/responsable' element={<Responsable/>}/>  {/* protected */} 
           <Route path='/terrain/add' element={<Terrain func={"add"} id={"9876543210fedcba"}/>}/>
           <Route path='/terrain/responsable' element={<TerrainsResp/>}/>
-          <Route path='/particulier' element={<PageUtilisateur/>}/> 
+          <Route path='/particulier' element={<PageUtilisateur/>}/> {/* protected */} 
           <Route path="/terrain/detail/:id" element={<Detail/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/profile/modifier" element={<ProfileModif/>} />

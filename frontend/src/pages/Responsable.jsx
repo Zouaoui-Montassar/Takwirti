@@ -31,7 +31,7 @@ const Responsable = () => {
 
   // Check if there is a user and their type is particulier
   
-if (!user && user.userObj.__t !== "Responsable" ) {
+if (!user || user.userObj.__t !== "Responsable" ) {
   return <Navigate to="/signin" />;
 }
 
