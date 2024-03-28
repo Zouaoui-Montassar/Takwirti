@@ -1,16 +1,22 @@
 const express = require('express');
 const { userController } = require('../controllers/users.controller');
 const router = express.Router();
-const passport = require('../config/passport.config.js');
-const verifyToken = require('../middlewares/verifyToken');
+/* const passport = require('../config/passport.config.js');  zeyda for now */
+/* const verifyToken = require('../middlewares/verifyToken'); zeyda for now  */
+const requireAuth = require('../middlewares/requireAuth.js');
 
 // el register kol had andou route , fel login lzouz nafsha , w c deja yethatou fard collection eli heya users ama kol wehed andou schema lih , tel9a __t edhika teb3a el "heritage" , yetsama discriminant
 // yaani jet kima hachetna bedhabet 
 
-// register + login
+
+
+// register + login routes ( lezem ykounou unprotected )
 router.post('/users/register_responsable', userController.addResp);  
 router.post('/users/register_particulier', userController.addParticulier);
 router.post('/users/login', userController.login);
+
+// lezem tet7at lenna bech tprotecti lroutes eli ba3dha lkolhom ken el login w register 
+ router.use(requireAuth); 
 
 // updates
 router.put('/users/update_particulier/:id', userController.updateParticulier);
@@ -35,14 +41,14 @@ router.post('/users/add_friend', userController.addFriend);
 router.delete('/users/remove_friend', userController.removeFriend);
 
 
-router.get('/users/Particulier', verifyToken, (req, res) => {
+/* router.get('/users/Particulier', verifyToken, (req, res) => {
     // If the token is valid, send a success message
     res.json({ message: "Access to particulier's home page granted" });
 });
 router.get('/users/Responsable', verifyToken, (req, res) => {
     // If the token is valid, send a success message
     res.json({ message: "Access to responsable's home page granted" });
-});
+}); */
 
 
 /* router.get('/protected-route', passport.authenticate('jwt', { session: false }), (req, res) => {
