@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NavBar from './NavBar copy';
+import NavBar from './NavBar';
 import SideBar, { SidebarItem } from './SideBar';
 import TerrainList from './TerrainList';
 
@@ -18,7 +18,7 @@ function TerrainsResp() {
 
     return (
         <>
-        <NavBar copy links={links}/>
+        <NavBar links={links}/>
 
         <div className='flex flex-row space-x-5'>
           <SideBar>
@@ -27,7 +27,7 @@ function TerrainsResp() {
                 <SidebarItem icon={<Settings />} text="Profil" />
                 <SidebarItem icon={<LogOut />} text="se déconnecter" />
           </SideBar>
-          <TerrainList param={"responsable"} id={"9876543210fedcba"} />
+          <TerrainList param={"responsable"} id={"9876543210fedcba"} className="m-8" />
         </div>
         </>
     );

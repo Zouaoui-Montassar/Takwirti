@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NavBar from './NavBar copy';
+import NavBar from './NavBar';
 import Sidebar from './SideBar';
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { BsPen } from "react-icons/bs";
@@ -38,9 +38,8 @@ const Tachkila = () => {
 
     return (
         <>
-            <NavBar copy links={links} />
             <div className='flex flex-row'>
-                <Sidebar />
+
                 <div className='mx-[250px] justify-center items-center w-full'>
                     <h1 className='bold-36 my-5'>Tachkila list</h1>
                     <input

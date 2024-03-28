@@ -1,11 +1,11 @@
 import './App.css';
 import Sign_in from './components/Sign_in';
-import Stats from './components/stats';
+import Stats from './components/Stats';
 import MainPage from './components/MainPage';
 import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
 import DashboardRes from './components/DashboardRes';
-import ParentCalendar from './components/parentcalendar';
+import ParentCalendar from './components/Parentcalendar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Terrain from './components/Terrain';
 import Responsable from './components/Responsable';
@@ -13,14 +13,14 @@ import TerrainsResp from './components/TerrainsResp';
 import PageUtilisateur from './components/PageUtilisateur';
 import Detail from './components/Detail';
 import Profile from './components/Profile';
-import Sign_up from './components/sign_up';
+import Sign_up from './components/Sign_up';
 import { ReservationAdd } from './components/ReservationAdd';
 import ReservationEdit from './components/ReservationEdit';
 import ReservationList from './components/ReservationList';
 import List from './components/List';
 import SearchBox from './components/SearchBox';
 import TerrainList from './components/TerrainList';
-
+import ProfileModif from './components/ProfileModif';
 
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
@@ -44,7 +44,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<MainPage/>} />
+          <Route path="/" element={<MainPage HomePage={true}/>} />
           <Route path="/navbar" element={<NavBar/>} />
           <Route path="/sidebar" element={<SideBar links={links}/>} />
           <Route path="/calendar" element={<ParentCalendar/>} />
@@ -58,6 +58,8 @@ function App() {
           <Route path='/particulier' element={<PageUtilisateur/>}/> 
           <Route path="/terrain/detail/:id" element={<Detail/>} />
           <Route path="/profile" element={<Profile/>} />
+          <Route path="/profile/modifier" element={<ProfileModif/>} />
+
           <Route path="/Reservation/add" element={<ReservationAdd/>} />
           <Route path="/list" element={<List/>} />
           <Route path="/reservation/list" element={<ReservationList/>} />

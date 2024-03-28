@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Calendar from './calendar';
+import Calendar from './Calendar';
 import List from './List';
-
+import Tachkila from './Tachkila';
 export const ReservationAdd = () => {
     const [selectedDate, setSelectedDate] = useState();
     const reservedHours = () => {
@@ -27,6 +27,7 @@ export const ReservationAdd = () => {
                             <p>select time</p>
                             <List date={selectedDate} reservedHours={reservedHours()} /> 
                         </div>
+                        <Tachkila/>
                     </div>
                     <div className="flex flex-col md:flex-row md:justify-end mt-4"> {/* Stack vertically on small screens, align to end on medium screens and above */}
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 md:mb-0 md:mr-2 rounded"> {/* Margin on bottom on small screens, margin on right on medium screens and above */}
@@ -34,7 +35,8 @@ export const ReservationAdd = () => {
                         </button>
                         <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                             Reset
-                        </button>   
+                        </button>
+                         
                     </div>
                 </div>
             </div>

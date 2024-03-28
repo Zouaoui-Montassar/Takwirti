@@ -1,6 +1,6 @@
 import React from 'react';
 import { Fragment, useState, useEffect } from 'react';
-import NavBar from './NavBar copy';
+import NavBar from './NavBar';
 import SideBar from './SideBar';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';

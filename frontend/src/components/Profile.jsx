@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from './NavBar copy';
+import NavBar from './NavBar';
 import Sidebar from './SideBar';
 import { MdOutlineAdd } from "react-icons/md";
 import { BsPen } from "react-icons/bs";
@@ -20,7 +20,7 @@ const links = [
 const Profile = () => {
     return (
         <>
-            <NavBar copy links={links} />
+            <NavBar links={links} />
             <div className='flex flex-row'>
                 <Sidebar />
                 <div className='m-2 flex-grow'>
