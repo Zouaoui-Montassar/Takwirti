@@ -21,6 +21,7 @@ import List from './components/List';
 import SearchBox from './components/SearchBox';
 import TerrainList from './components/TerrainList';
 import ProfileModif from './components/ProfileModif';
+import FriendsList from './components/FriendsList';
 
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
@@ -65,6 +66,7 @@ function App() {
           <Route path="/reservation/list" element={<ReservationList/>} />
           <Route path="/reservation/edit" element={<ReservationEdit/>} />
           <Route path='/terrain/update/:id' element={<Terrain func={"update"}/>}/>
+          <Route path='/friendslist' element={<FriendsList/>}/>
         </Routes>
       </BrowserRouter>
     </div>

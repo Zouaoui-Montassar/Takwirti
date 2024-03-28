@@ -7,6 +7,8 @@ import SearchBox from '../components/SearchBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import TerrainList from '../components/TerrainList';
+import { School ,Settings,LogOut} from 'lucide-react';
+
 
 const links = [
     { label: 'Accueil', path: '/' },
@@ -28,6 +30,11 @@ const PageUtilisateur = () => {
         <div className='flex flex-row'>
            <Sidebar>
               <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>}  />
+              <SidebarItem icon={<School />} text="profile "  link={'profile'} />
+              <SidebarItem icon={<Settings />} text="friends list" link={'friendslist'} />
+              <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
+              <SidebarItem icon={<Settings />} text="page utilisateur" link={'particulier'} />
+              <SidebarItem icon={<LogOut />} text="se déconnecter" link={'signout'}/>
            </Sidebar>
            {searchTerm ? <TerrainList param={"search"} searchTerm={searchTerm} /> :(
             <div className='m-3'>
