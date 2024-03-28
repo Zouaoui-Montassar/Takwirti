@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
-import NavBar from './NavBar';
-import Sidebar , { SidebarItem } from './SideBar';
-import Card from './Card';
+import NavBar from '../components/NavBar';
+import Sidebar , { SidebarItem } from '../components/SideBar';
+import Card from '../components/Card';
 import { Link } from 'react-router-dom';
-import SearchBox from './SearchBox';
+import SearchBox from '../components/SearchBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import TerrainList from './TerrainList';
+import TerrainList from '../components/TerrainList';
 
 const links = [
     { label: 'Accueil', path: '/' },
