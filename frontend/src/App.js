@@ -1,5 +1,5 @@
 import './App.css';
-import Sign_in from './components/sign_in';
+import Sign_in from './components/Sign_in';
 import Stats from './components/stats';
 import MainPage from './components/MainPage';
 import NavBar from './components/NavBar';
@@ -9,16 +9,17 @@ import ParentCalendar from './components/parentcalendar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Terrain from './components/Terrain';
 import Responsable from './components/Responsable';
-import MesTerrains from './components/MesTerrains';
+import TerrainsResp from './components/TerrainsResp';
 import PageUtilisateur from './components/PageUtilisateur';
 import Detail from './components/Detail';
 import Profile from './components/Profile';
 import Sign_up from './components/sign_up';
 import { ReservationAdd } from './components/ReservationAdd';
-import List from './components/list';
-import ReservationList from './components/ReservationList';
 import ReservationEdit from './components/ReservationEdit';
+import ReservationList from './components/ReservationList';
+import List from './components/List';
 import SearchBox from './components/SearchBox';
+import TerrainList from './components/TerrainList';
 
 
 const data = [
@@ -53,15 +54,15 @@ function App() {
           <Route path="/stats" element={<Stats/>} />
           <Route path='/responsable' element={<Responsable/>}/>
           <Route path='/terrain/add' element={<Terrain func={"add"} id={"9876543210fedcba"}/>}/>
-          <Route path='/mesterrains' element={<MesTerrains/>}/>
+          <Route path='/terrain/responsable' element={<TerrainsResp/>}/>
           <Route path='/particulier' element={<PageUtilisateur/>}/> 
-          <Route path="/detail" element={<Detail/>} />
+          <Route path="/terrain/detail/:id" element={<Detail/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/Reservation/add" element={<ReservationAdd/>} />
           <Route path="/list" element={<List/>} />
           <Route path="/reservation/list" element={<ReservationList/>} />
           <Route path="/reservation/edit" element={<ReservationEdit/>} />
-          <Route path='/terrain/update' element={<Terrain func={"update"} id={"6603db4d52678b7da651fee7"}/>}/>
+          <Route path='/terrain/update/:id' element={<Terrain func={"update"}/>}/>
         </Routes>
       </BrowserRouter>
     </div>

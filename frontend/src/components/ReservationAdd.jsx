@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Calendar from './calendar';
-import List from './list';
+import List from './List';
 
 export const ReservationAdd = () => {
     const [selectedDate, setSelectedDate] = useState();

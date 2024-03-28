@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Calendar from './calendar';
-import List from './list';
+import List from './List';
 
 const ParentComponent = () => {
   const [selectedDate, setSelectedDate] = useState(null);
