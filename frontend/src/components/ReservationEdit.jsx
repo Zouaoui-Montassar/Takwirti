@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Calendar from './calendar';
-import List from './list';
+import List from './List';
 import { useNavigate } from 'react-router-dom';
 
 

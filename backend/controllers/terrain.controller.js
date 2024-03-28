@@ -97,9 +97,8 @@ const deleteTerrain = async (req, res) => {
 // search terrain function
 const searchTerrain = async (req, res) => {
     try {
-        // Extract search parameters from request body or query parameters
-        const { searchTerm } = req.body; // Assuming searchTerm is the parameter to search for
-
+        // Extract search parameters from query parameters
+        const { searchTerm } = req.query; // Use req.query instead of req.params
         // Use a case-insensitive regular expression for the search term
         const regex = new RegExp(searchTerm, 'i');
 
@@ -115,6 +114,7 @@ const searchTerrain = async (req, res) => {
 };
 
 
+
 // list terrain function of a specific responsable
 const listTerrain = async (req, res) => { 
     try {
@@ -128,11 +128,6 @@ const listTerrain = async (req, res) => {
         // Handle errors if any
         res.status(500).json({ message: "Failed to list terrain", error: error.message });
     }
-};
-
-//?affiche calendar function
-const calendar = async (req, res, next) => {
-
 };
 
 // update calendar function
@@ -159,13 +154,32 @@ const updateCalendar = async (req, res, next) => {
 
 const getTerrain = async (req, res) => {
     try {
-        const data = await terrainModel.find(); // Query MongoDB for data
-        res.json(data); // Send data as JSON response
+        // Query MongoDB for all terrain data, sorted by price in ascending order
+        const data = await terrainModel.find().sort({ prix: 1 });
+        
+        // Send sorted data as JSON response
+        res.status(200).json({ results: data });
     } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
+const getTerrainInfo = async (req, res) => {
+    try {
+        const idTer = req.params.id;
+        // Assuming you have a Mongoose model named terrainModel
+        const terrain = await terrainModel.findById(idTer);
+        if (!terrain) {
+            return res.status(404).json({ message: "Terrain not found" });
+        }
+        res.status(200).json({ terrain });
+    } catch (error) {
+        console.error("Error fetching terrain information:", error);
+        res.status(500).json({ message: "Failed to fetch terrain information" });
+    }
+};
+
 
 module.exports.terrainController = {
     addTerrain,
@@ -174,5 +188,6 @@ module.exports.terrainController = {
     searchTerrain,
     listTerrain,
     updateCalendar,
-    getTerrain
+    getTerrain,
+    getTerrainInfo,
 };
