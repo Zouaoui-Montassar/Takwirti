@@ -3,11 +3,20 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import whitelogo from '../assets/whitelogo.png';
+import { useLogout } from '../hooks/useLogout';
 
 const NavBar = ({ links }) => {
+
   const [isHomePage, setIsHomePage] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
+
+  const { logout } = useLogout()
+
+  const handleClick = () => {
+    logout();
+    alert("logged out successfully");
+  }
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -16,6 +25,8 @@ const NavBar = ({ links }) => {
   const toggleNotificationMenu = () => {
     setIsNotificationMenuOpen(!isNotificationMenuOpen);
   };
+
+
 
   return (
     <nav className='bg-green-500 fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-3 max-container text-white '>
@@ -71,7 +82,7 @@ const NavBar = ({ links }) => {
                       <Link to="/profile/modifier">Settings</Link>
                     </li>
                     <li>
-                      <Link to="/signin">Sign out</Link>
+                      <Link to="/signin" onClick={handleClick}>Sign out</Link>
                     </li>
                   </ul>
                 </div>

@@ -1,8 +1,8 @@
 import React from 'react'
 import NavBar from '../components/NavBar'
 import SideBar from '../components/SideBar'
-import Parentcalendar from '../components/Parentcalendar'
-import Stats from '../components/Stats';
+import Parentcalendar from '../components/parentcalendar'
+import Stats from '../components/stats';
 
 const links = [
     {label: 'Accueil', path: '/'} ,
