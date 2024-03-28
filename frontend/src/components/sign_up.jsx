@@ -56,13 +56,17 @@ const Sign_up = ({xxx}) => {
         },
         body: JSON.stringify(adjustedFormData),
       });
-  
+      
+      const data = await response.json();
+
       // Check if the response was successful
       if (response.ok) {
         // Handle successful registration
+        // saving the user in the LS
+        localStorage.setItem('token', data.token);
         // For example, you might show a success message to the user
         console.log('Registration successful');
-        alert("jawek behi"); // taw nbadlou nbar9chouha
+        
         navigate('/signin');
       } else {
         // Handle unsuccessful registration
