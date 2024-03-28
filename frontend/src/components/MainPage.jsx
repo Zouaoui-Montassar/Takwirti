@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import NavBar from './NavBar copy'
+import NavBar from './NavBar'
 import Footer from './Footer';
 
 const links = [
@@ -54,9 +54,9 @@ const MainPage = () => {
   return (
 
     <>
-    <NavBar copy links={links}/>
+    <NavBar links={links}/>
     <div>
-        <div className='m-7 flex flex-col md:flex-row items-center justify-center'>
+        <div className='m-7 flex flex-col md:flex-row items-center justify-center m-[10%]'>
           <div className='flex flex-col mt-10  px-5 items-center justify-center md:w-1/2 sm:mb-2'>
             <motion.h1 variants={pVariants} initial="hidden" animate="visible" className='bold-52 '>
               {text1.split("").map((char, index) => (

@@ -1,5 +1,5 @@
 import React ,{useState}from 'react'
-import NavBar from './NavBar copy'
+import NavBar from './NavBar'
 import Sidebar from './SideBar';
 import Message from './Message';
 import Image from './Image';
@@ -22,7 +22,7 @@ const ProfileModif = () => {
 
   return (
     <>
-        <NavBar copy links={links} />
+        <NavBar links={links} />
         <div className='flex flex-row'>
             <Sidebar />
              <div className=' ml-[280px] flex items-center justify-center  flex-col'>

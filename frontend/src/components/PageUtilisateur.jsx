@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import NavBar from './NavBar copy';
+import NavBar from './NavBar';
 import Sidebar , { SidebarItem } from './SideBar';
 import Card from './Card';
 import { Link } from 'react-router-dom';
@@ -24,7 +24,7 @@ const PageUtilisateur = () => {
     };
   return (
     <>
-        <NavBar copy links={links} />
+        <NavBar links={links} />
         <div className='flex flex-row'>
            <Sidebar>
               <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>}  />
