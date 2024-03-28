@@ -12,6 +12,7 @@ router.post('/users/register_responsable', userController.addResp);
 router.post('/users/register_particulier', userController.addParticulier);
 router.post('/users/login', userController.login);
 
+
 // updates
 router.put('/users/update_particulier/:id', userController.updateParticulier);
 router.put('/users/update_responsable/:id', userController.updateResponsable);

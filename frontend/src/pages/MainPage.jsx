@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import NavBar from './NavBar copy'
-import Footer from './Footer';
+import NavBar from '../components/NavBar copy'
+import Footer from '../components/Footer';
 
 const links = [
   {label: 'Accueil', path: '/'} ,
