@@ -165,6 +165,21 @@ const getTerrain = async (req, res) => {
     }
 };
 
+const getTerrainInfo = async (req, res) => {
+    try {
+        const idTer = req.params.id;
+        // Assuming you have a Mongoose model named terrainModel
+        const terrain = await terrainModel.findById(idTer);
+        if (!terrain) {
+            return res.status(404).json({ message: "Terrain not found" });
+        }
+        res.status(200).json({ terrain });
+    } catch (error) {
+        console.error("Error fetching terrain information:", error);
+        res.status(500).json({ message: "Failed to fetch terrain information" });
+    }
+};
+
 
 module.exports.terrainController = {
     addTerrain,
@@ -173,5 +188,6 @@ module.exports.terrainController = {
     searchTerrain,
     listTerrain,
     updateCalendar,
-    getTerrain
+    getTerrain,
+    getTerrainInfo,
 };

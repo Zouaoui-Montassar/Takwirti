@@ -53,13 +53,20 @@ return (
         </div>
         <div className='flex flex-wrap'>
             {terrainItems?.map((item) => (
-            <Link to={`/detail/${item.id}`} key={item._id}>
-                <Card view={view} data={item} />
-            </Link>
+                <div key={item._id}>
+                    {param === 'responsable' ? (
+                    <Link to={`/terrain/update/${item._id}`}>
+                        <Card view={view} data={item} />
+                    </Link>
+                    ) : (
+                    <Link to={`/terrain/detail/${item._id}`}>
+                        <Card view={view} data={item} />
+                    </Link>
+                    )}
+                </div>
             ))}
         </div>
     </div>
 );
 }
-
 export default TerrainList;

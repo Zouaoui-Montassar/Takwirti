@@ -9,5 +9,6 @@ router.get(`/terrain/search`, terrainController.searchTerrain);
 router.get('/terrain/list/:respId', terrainController.listTerrain);
 //router.post('/terrain/modifcalendar/:respId',terrainController.updateCalendar);
 router.get('/terrain/get', terrainController.getTerrain);
+router.get('/terrain/getInfo/:id', terrainController.getTerrainInfo);
 
 module.exports.terrainRouter = router;
