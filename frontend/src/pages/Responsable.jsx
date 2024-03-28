@@ -3,7 +3,8 @@ import NavBar from '../components/NavBar'
 import SideBar from '../components/SideBar'
 import Parentcalendar from '../components/parentcalendar'
 import Stats from '../components/stats';
-
+import { Navigate } from 'react-router-dom';
+import { useAuthContext } from '../hooks/useAuthContext';
 const links = [
     {label: 'Accueil', path: '/'} ,
     {label: 'Page 1', path: '/page1'} ,
@@ -25,7 +26,15 @@ const links = [
    // Add more links as needed
   ];
 
-const responsable = () => {
+const Responsable = () => {
+  const { user } = useAuthContext();
+
+  // Check if there is a user and their type is particulier
+  
+if (!user && user.userObj.__t !== "Responsable" ) {
+  return <Navigate to="/signin" />;
+}
+
   return (
     <>
      <NavBar links={links}/>
@@ -72,4 +81,4 @@ const responsable = () => {
   )
 }
 
-export default responsable
+export default Responsable

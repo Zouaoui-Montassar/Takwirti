@@ -21,6 +21,7 @@ import List from './components/List';
 import SearchBox from './components/SearchBox';
 import TerrainList from './components/TerrainList';
 import ProfileModif from './components/ProfileModif';
+import { useAuthContext } from './hooks/useAuthContext';
 
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
@@ -39,6 +40,11 @@ const links = [
 ];
 
 function App() {
+
+    //protection mtaa el routes ( pour le moment particulier w reponsable )
+    const { user } = useAuthContext();
+
+
   return (
     
     <div className="App">
