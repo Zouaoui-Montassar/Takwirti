@@ -56,13 +56,13 @@ function App() {
           <Route path='/terrain/add' element={<Terrain func={"add"} id={"9876543210fedcba"}/>}/>
           <Route path='/terrain/responsable' element={<TerrainsResp/>}/>
           <Route path='/particulier' element={<PageUtilisateur/>}/> 
-          <Route path="/detail" element={<Detail/>} />
+          <Route path="/terrain/detail/:id" element={<Detail/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/Reservation/add" element={<ReservationAdd/>} />
           <Route path="/list" element={<List/>} />
           <Route path="/reservation/list" element={<ReservationList/>} />
           <Route path="/reservation/edit" element={<ReservationEdit/>} />
-          <Route path='/terrain/update' element={<Terrain func={"update"} id={"6603db4d52678b7da651fee7"}/>}/>
+          <Route path='/terrain/update/:id' element={<Terrain func={"update"}/>}/>
         </Routes>
       </BrowserRouter>
     </div>
