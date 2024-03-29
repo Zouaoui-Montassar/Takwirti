@@ -7,7 +7,7 @@ import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 
 const NavBar = ({ links }) => {
-  const { user } = useAuthContext(); 
+  const { user } = useAuthContext(); // bech naffichi el infos fel profile ala jnab
   const [isHomePage, setIsHomePage] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
