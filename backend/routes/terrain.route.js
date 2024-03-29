@@ -2,6 +2,11 @@ const express = require('express');
 const { terrainController } = require('../controllers/terrain.controller');
 const router = express.Router();
 
+/* protection lel les terrains lkol ( lezem ykoun authorized bech yaccessi el API , pour le moment commented bech najmou ntestiw )
+const requireAuth = require('../middlewares/requireAuth.js');
+router.use(requireAuth);  */
+
+
 router.post('/terrain/add/:idRes', terrainController.addTerrain);
 router.put('/terrain/update/:terrainId', terrainController.updateTerrain);
 router.delete('/terrain/delete/:terrainId', terrainController.deleteTerrain);

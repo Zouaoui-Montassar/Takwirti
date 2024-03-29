@@ -31,7 +31,7 @@ const addResp = async (req, res) => {
         res.status(200).json({
             message: "Responsable successfully created",
             token : token ,
-            user: newResp,
+            userObj: newResp,
             
         });
     } catch (error) {
@@ -52,12 +52,12 @@ const addParticulier = async (req, res) => {
             });
         }
         const hash = await bcrypt.hash(password, 10);
-        const token = createToken(newParticulier);
         const newParticulier = await ParticulierModel.create({ email: email, password: hash, ListeAmi: ListeAmi, ...otherData });
+        const token = createToken(newParticulier);
         res.status(200).json({
             message: "Particulier successfully created",
             token : token ,
-            user: newParticulier,
+            userObj: newParticulier,
         });
     } catch (error) {
         res.status(400).json({
@@ -79,7 +79,7 @@ const login = async (req, res) => {
             return res.status(401).json({ message: "Invalid password" });
         }
         const token = createToken(user);
-        res.status(200).json({ message: "Login successful", token: token , __t : user.__t });
+        res.status(200).json({ message: "Login successful", token: token , userObj : user , __t : user.__t });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Internal server error" });

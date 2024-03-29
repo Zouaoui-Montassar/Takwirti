@@ -1,11 +1,11 @@
 import './App.css';
 import Sign_in from './pages/Sign_in';
-import Stats from './components/Stats';
+import Stats from './components/stats';
 import MainPage from './pages/MainPage';
 import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
 import DashboardRes from './components/DashboardRes';
-import ParentCalendar from './components/Parentcalendar';
+import ParentCalendar from './components/parentcalendar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Terrain from './components/Terrain';
 import Responsable from './pages/Responsable';
@@ -21,6 +21,9 @@ import List from './components/List';
 import SearchBox from './components/SearchBox';
 import TerrainList from './components/TerrainList';
 import ProfileModif from './components/ProfileModif';
+import { useAuthContext } from './hooks/useAuthContext';
+import FriendsList from './components/FriendsList';
+
 
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
@@ -39,6 +42,11 @@ const links = [
 ];
 
 function App() {
+
+    //protection mtaa el routes ( pour le moment particulier w reponsable )
+    const { user } = useAuthContext();
+
+
   return (
     
     <div className="App">
@@ -52,10 +60,10 @@ function App() {
           <Route path="/signupparti" element={<Sign_up xxx={"particulier"}/>} />
           <Route path="/signin" element={<Sign_in/>} />
           <Route path="/stats" element={<Stats/>} />
-          <Route path='/responsable' element={<Responsable/>}/>
+          <Route path='/responsable' element={<Responsable/>}/>  {/* protected */} 
           <Route path='/terrain/add' element={<Terrain func={"add"} id={"9876543210fedcba"}/>}/>
           <Route path='/terrain/responsable' element={<TerrainsResp/>}/>
-          <Route path='/particulier' element={<PageUtilisateur/>}/> 
+          <Route path='/particulier' element={<PageUtilisateur/>}/> {/* protected */} 
           <Route path="/terrain/detail/:id" element={<Detail/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/profile/modifier" element={<ProfileModif/>} />
@@ -65,6 +73,7 @@ function App() {
           <Route path="/reservation/list" element={<ReservationList/>} />
           <Route path="/reservation/edit" element={<ReservationEdit/>} />
           <Route path='/terrain/update/:id' element={<Terrain func={"update"}/>}/>
+          <Route path='/friendslist' element={<FriendsList/>}/>
         </Routes>
       </BrowserRouter>
     </div>

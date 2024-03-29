@@ -4,6 +4,7 @@ import backgroundImage from '../assets/background.jpg';
 import { faGoogle,faApple } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const Sign_in = () => {
     const navigate = useNavigate();
@@ -11,7 +12,9 @@ const Sign_in = () => {
       email: '',
       password: ''
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
+  const { dispatch } = useAuthContext();
 
     function toSignUp (){
       navigate('/signuprespo');
@@ -27,6 +30,8 @@ const Sign_in = () => {
 
     const handleSubmit = async (event) => {
       event.preventDefault();
+      setIsLoading(true);
+      setError(null);
       try {
         const response = await fetch('http://localhost:4000/api/users/login', {
           method: 'POST',
@@ -37,13 +42,18 @@ const Sign_in = () => {
         });
         const data = await response.json();
         if (!response.ok) {
-          setError(data.message);
-          return;
+          setIsLoading(false);
+          setError(data.error);
         }
-    
+        if (response.ok){
         // Save the token to local storage
-        localStorage.setItem('token', data.token);
-    
+        localStorage.setItem('user', JSON.stringify(data));
+
+        dispatch({type: 'LOGIN', payload: data})
+
+        // update loading state
+        setIsLoading(false)
+
         // Determine the redirect URL based on the user's type
         let redirectUrl;
         if (data.__t === 'Particulier') {
@@ -57,7 +67,7 @@ const Sign_in = () => {
     
         // Redirect to the determined URL
         navigate(redirectUrl);
-    
+        }
       } catch (error) {
         console.error('Error:', error);
         setError('An error occurred');

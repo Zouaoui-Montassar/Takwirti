@@ -1,7 +1,12 @@
-import React from 'react'
-import NavBar from './NavBar copy'
-import Sidebar from './SideBar';
+import React, { useState } from 'react'
+import NavBar from './NavBar'
+import Sidebar,{SidebarItem} from './SideBar';
 import FriendsCard from './FriendsCard';
+import { School ,Settings,LogOut} from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import SearchBox from './SearchBox';
+
 
 const links = [
     { label: 'Accueil', path: '/' },
@@ -44,11 +49,24 @@ const Friends = [
 ];
 
 const FriendsList = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+
+  const handleSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
+  };
   return (
     <>
-      <NavBar copy links={links} />
+      <NavBar  links={links} />
         <div className='flex flex-row'>
-          <Sidebar />
+            <Sidebar>
+                  <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>}  />
+                  <SidebarItem icon={<School />} text="profile "  link={'profile'} />
+                  <SidebarItem icon={<Settings />} text="friends list" link={'friendslist'} />
+                  <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
+                  <SidebarItem icon={<Settings />} text="page utilisateur" link={'particulier'} />
+                  <SidebarItem icon={<LogOut />} text="se déconnecter" link={'signout'}/>
+              </Sidebar>
           <div className='m-2'>
             <h2 className='text-bold text-2xl m-2'>All friends</h2>
                {Friends.map((friend) => (

@@ -4,8 +4,8 @@ import NavBar from './NavBar'
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Calendar from './Calendar';
-import Stats from './Stats';
+import Calendar from './calendar';
+import Stats from './stats';
 
 
 const links = [

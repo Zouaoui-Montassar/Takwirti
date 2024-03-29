@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Calendar from './Calendar';
+import Calendar from './calendar';
 import List from './List';
 import Tachkila from './Tachkila';
 import axios from 'axios';

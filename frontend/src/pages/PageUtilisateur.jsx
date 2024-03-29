@@ -7,6 +7,11 @@ import SearchBox from '../components/SearchBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import TerrainList from '../components/TerrainList';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { Navigate } from 'react-router-dom';
+import { School ,Settings,LogOut} from 'lucide-react';
+import { useLogout } from '../hooks/useLogout'; 
+
 
 const links = [
     { label: 'Accueil', path: '/' },
@@ -18,6 +23,19 @@ const links = [
 const PageUtilisateur = () => {
     const view = 'board';
     const [searchTerm, setSearchTerm] = useState('');
+    const { logout } = useLogout();
+    const handleClickLogout = () => {
+    logout();
+    alert("logged out successfully");
+  }
+    const { user } = useAuthContext();
+    // Check if there is no user or their type is not Particulier
+if (!user || user.userObj.__t !== "Particulier" ) {
+  return <Navigate to="/signin" />;
+}
+
+
+  
 
     const handleSearch = (searchTerm) => {
       setSearchTerm(searchTerm);
@@ -28,6 +46,11 @@ const PageUtilisateur = () => {
         <div className='flex flex-row'>
            <Sidebar>
               <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>}  />
+              <SidebarItem icon={<School />} text="profile "  link={'profile'} />
+              <SidebarItem icon={<Settings />} text="friends list" link={'friendslist'} />
+              <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
+              <SidebarItem icon={<Settings />} text="page utilisateur" link={'particulier'} />
+              <SidebarItem icon={<LogOut />} text="se déconnecter" onClick={handleClickLogout} link={'signin'}/>
            </Sidebar>
            {searchTerm ? <TerrainList param={"search"} searchTerm={searchTerm} /> :(
             <div className='m-3'>

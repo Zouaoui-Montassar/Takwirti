@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { faGoogle,faApple } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const Sign_up = ({xxx}) => {
   const navigate = useNavigate();
@@ -17,13 +18,16 @@ const Sign_up = ({xxx}) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [error, setError] = useState(null);
-  console.log(xxx);
+  const [isLoading, setIsLoading] = useState(null);
+  const { dispatch } = useAuthContext();
+  
 
   function toSignIn (){
     navigate('/signin');
   } 
 
   const handleSubmit = async (event) => {
+
     event.preventDefault();
    // bech yadapti asemi les champs selon schema eli fel backend , mahabitch nmess partie el html
     const formData = new FormData(event.target);
@@ -41,13 +45,14 @@ const Sign_up = ({xxx}) => {
       tel: formObject.phoneNumber,
     };
     
-    /* principe : amalt variable bech pagee barka thandeli 2 api , hedhi alternative , sinon nwaliw naamlou component ekher signup respo
-    w sign up particuler w kol wehed interface mokhtalfa jemla lih , pour le moment khedmetli haka , hata nzidou netfehmou */
+    // selon el prop eli taadet
     const url_sign= "http://localhost:4000/api/users/register_"+ xxx; 
     console.log(url_sign);
-    
+    // teba3 el AuthContext
+    setIsLoading(true);
+    setError(null);
     try {
-      // Make HTTP request to send form data to the server
+      
 
       const response = await fetch(url_sign, {
         method: 'POST',
@@ -63,18 +68,30 @@ const Sign_up = ({xxx}) => {
       if (response.ok) {
         // Handle successful registration
         // saving the user in the LS
-        localStorage.setItem('token', data.token);
+        console.log(data);
+        localStorage.setItem('user', JSON.stringify(data));
+
+        // update AuthContext
+        
+        dispatch({type: 'LOGIN', payload: data})
+
+        // update loading state
+        setIsLoading(false)
+
         // For example, you might show a success message to the user
         console.log('Registration successful');
         
-        navigate('/signin');
+        navigate('/'+xxx);
       } else {
         // Handle unsuccessful registration
-        // For example, you might show an error message to the user
+        setIsLoading(false);
+        setError(data.error);
         console.error('Registration failed');
       }
     } catch (error) {
       console.error('Error:', error);
+      console.log(error);
+      setError(error);
       // Handle other types of errors, such as network errors
     }
   };
@@ -111,7 +128,11 @@ const Sign_up = ({xxx}) => {
               src={logo}
               alt="Takwirti"
             />
-            <h2 className="text-3xl font-bold text-gray-900 pt-4 pl-5">Get started now!</h2>
+            <h2 className="text-3xl font-bold text-gray-900 pt-4 pl-5">
+  {xxx === "particulier" ? "Get started now and book fields!" : "Get started now as a Responsable!"}
+</h2>
+
+
           </div>
           {/*Form*/}
           <form className="mt-8 space-y-6" action="#" method="POST" onSubmit={handleSubmit}>
@@ -161,6 +182,7 @@ const Sign_up = ({xxx}) => {
                   type="email"
                   autoComplete="email"
                   required
+                  onChange={handleEmailChange}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-50 focus:border-primary-50 sm:text-sm"
                 />
               </div>
@@ -239,11 +261,12 @@ const Sign_up = ({xxx}) => {
             </div>
             <div>
               <button
-                type="submit"
+                type="submit" disabled = {isLoading}
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-50 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
               >
                 Sign up
               </button>
+              {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
             </div>
             <hr className="my-6 border-gray-300" />
             <p className="text-center text-sm text-gray-900">Or sign up with</p>

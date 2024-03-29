@@ -1,8 +1,11 @@
 import React from 'react'
 import NavBar from '../components/NavBar'
-import SideBar from '../components/SideBar'
-import Parentcalendar from '../components/Parentcalendar'
-import Stats from '../components/Stats';
+import Parentcalendar from '../components/parentcalendar'
+import Stats from '../components/stats';
+import { Navigate } from 'react-router-dom';
+import { useAuthContext } from '../hooks/useAuthContext';
+import SideBar,{SidebarItem} from '../components/SideBar'
+import { School ,Settings,LogOut} from 'lucide-react';
 
 const links = [
     {label: 'Accueil', path: '/'} ,
@@ -25,14 +28,27 @@ const links = [
    // Add more links as needed
   ];
 
-const responsable = () => {
+const Responsable = () => {
+  const { user } = useAuthContext();
+
+  // Check if there is a user and their type is particulier
+  
+if (!user || user.userObj.__t !== "Responsable" ) {
+  return <Navigate to="/signin" />;
+}
+
   return (
     <>
      <NavBar links={links}/>
      
      <div className='flex flex-row'>
-     <SideBar links={links}/>
-       
+        <SideBar>
+               {/* Contenu de la barre latérale */}
+                <SidebarItem icon={<School />} text="profile responsable"  link={'responsable'} />
+                <SidebarItem icon={<Settings />} text="list terrain" link={'terrain/responsable'} />
+                <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
+                <SidebarItem icon={<LogOut />} text="se déconnecter" link={'signout'}/>
+          </SideBar>
        <div className='flex flex-row'>
                 <div className='flex flex-col'>
 
@@ -56,9 +72,9 @@ const responsable = () => {
                         
                         </div>
                         <div className='flex flex-col '>
-                        <div className=' w-[950px] items-center justify-center relative right-[20px] bottom-[90px]'><Parentcalendar/></div>
+                        <div className=' w-[950px] items-center justify-center relative right-[20px] '><Parentcalendar/></div>
                         {/*stats sous forme de graphique*/}
-                        <div className='flex flex-col relative right-[50px] bottom-[50px]'><Stats/></div>
+                        <div className='flex flex-col relative right-[50px] top-[70px] my-4'><Stats/></div>
                         </div>
                         
 
@@ -72,4 +88,4 @@ const responsable = () => {
   )
 }
 
-export default responsable
+export default Responsable
