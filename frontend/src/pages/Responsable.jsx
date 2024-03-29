@@ -1,13 +1,10 @@
 import React from 'react'
 import NavBar from '../components/NavBar'
-import SideBar from '../components/SideBar'
 import Parentcalendar from '../components/parentcalendar'
 import Stats from '../components/stats';
 import { Navigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import SideBar,{SidebarItem} from '../components/SideBar'
-import Parentcalendar from '../components/parentcalendar'
-import Stats from '../components/stats';
 import { School ,Settings,LogOut} from 'lucide-react';
 
 const links = [
