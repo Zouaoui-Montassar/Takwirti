@@ -8,7 +8,7 @@ const ImageUploader = () => {
     };
 
     return (
-        <div className='border border-5 border-slate-500 w-[500px] mb-2 rounded-2xl p-2 shadow-md shadow-slate-200'>
+        <div className='border border-5 border-slate-500 w-[500px] mb-2 rounded-2xl p-2 shadow-md shadow-slate-200 '>
             <input 
                 type="file" 
                 accept="image/*" 

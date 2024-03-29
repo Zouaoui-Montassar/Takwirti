@@ -30,7 +30,7 @@ const NavBar = ({ links }) => {
 
 
   return (
-    <nav className='bg-green-500 fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-4 py-3 max-container text-white '>
+    <nav className='bg-green-500  top-0 left-0 right-0  flex justify-between items-center px-4 py-3 max-container text-white '>
       <div className='flex flex-row'>
         <img src={whitelogo} alt="logo" width={74} height={50} />
         <h1 className='text-2xl font-bold pt-4'> Takwirti |</h1> 

@@ -1,13 +1,17 @@
 import React from 'react';
 import { Fragment, useState, useEffect } from 'react';
 import NavBar from './NavBar';
-import SideBar from './SideBar';
+import SideBar ,{SidebarItem}from './SideBar';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import Dailog from './Dailog';
 import TimeList from './TimeList';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Image from './Image';
+import { School ,Settings,LogOut} from 'lucide-react';
+
+
 const ville = [
   { name: 'Tunis' },
   { name: 'nabeul' },
@@ -121,7 +125,13 @@ const Terrain = ({ func, id }) => {
     <>
       <NavBar copy links={links} />
       <div className='flex flex-row'>
-        <SideBar links={links} />
+        <SideBar>
+                {/* Contenu de la barre latérale */}
+                  <SidebarItem icon={<School />} text="profile responsable"  link={'responsable'} />
+                  <SidebarItem icon={<Settings />} text="list terrain" link={'terrain/responsable'} />
+                  <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
+                  <SidebarItem icon={<LogOut />} text="se déconnecter" link={'signout'}/>
+            </SideBar>
         <div className='p-5  w-full h-full'>
           <h1 className='bold-52'>{func} Terrain</h1>
           <form onSubmit={handleSubmit}>
@@ -151,7 +161,7 @@ const Terrain = ({ func, id }) => {
             <div className='w-full h-[200px] flex flex-row items-center justify-center'>
               <div className='flex flex-col w-[40%] m-5'>
                 <h3 className='text-bold text-xl relative right-7'>
-                  adreess
+                  address
                 </h3>
                 <input
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
@@ -305,20 +315,21 @@ const Terrain = ({ func, id }) => {
                 <label htmlFor="indisponible">Indisponible</label>
               </div>
             )}
-          <div className='w-full h-[200px] items-center justify-center flex flex-row '>
-            <div className='flex flex-col m-5 w-[40%]'>
-              <h3 className='text-bold text-xl relative right-11'>
-                temps bloquer ou reservee
-              </h3>
-              <br />
-              <TimeList start={ouverture} end={fermeture} step={data} label="Time Slots:" sendDataToParent={handleTime}/>
-            </div>
-            <div className='flex flex-col m-5 w-[40%]'>
-              <h3 className='text-bold text-xl relative right-11'>
-                date repos
-              </h3>
-              <br />
-              <select
+          <div className='w-full h-auto items-center justify-center flex flex-row'>
+              <div className='flex flex-col m-5 w-[40%] '>
+                <h3 className='text-bold text-xl relative right-11 '>
+                  temps bloquer ou reservee
+                </h3>
+                <br />
+                {/* Placez le composant TimeList ici */}
+                <TimeList start={ouverture} end={fermeture} step={data} label="Time Slots:" sendDataToParent={handleTime} />
+              </div>
+              <div className='flex flex-col m-5 w-[40%]'>
+                <h3 className='text-bold text-xl relative right-11'>
+                  date repos
+                </h3>
+                <br />
+                <select
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
                   value={date}
                   onChange={(e) => {setDate(e.target.value)}}
@@ -332,8 +343,16 @@ const Terrain = ({ func, id }) => {
                   <option value={"sunday"}>sunday</option>
                   <option value={"none"}>none</option>
                 </select>
+              </div>
             </div>
-          </div>
+            
+            <div className=' justify-center items-center m-4 '>
+              <div className='relative left-[350px]  w-[500px]'>
+                <Image />
+              </div>
+            </div>
+           
+
           <div className='flex flex-row items-center justify-center space-x-2'>
           <button
             className='border border-green-500 text-green-500 p-2 rounded-md text-xl'

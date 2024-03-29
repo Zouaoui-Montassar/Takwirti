@@ -1,5 +1,6 @@
 import { MoreVertical, ChevronLast, ChevronFirst } from "lucide-react";
 import { useContext, createContext, useState } from "react";
+import { Link } from "react-router-dom";
 
 const SidebarContext = createContext();
 
@@ -54,11 +55,11 @@ export default function Sidebar({ children }) {
   );
 }
 
-export function SidebarItem({ icon, text, active, alert }) {
+export function SidebarItem({ icon, text, active, alert,link }) {
   const { expanded, setExpanded } = useContext(SidebarContext);
 
   return (
-    <li
+    <Link to={`/${link}`}
       className={`
         relative flex py-2 px-3 my-1
         font-medium rounded-md cursor-pointer
@@ -104,7 +105,7 @@ export function SidebarItem({ icon, text, active, alert }) {
           )}
         </>
       )}
-    </li>
+    </Link>
   );
 }
 

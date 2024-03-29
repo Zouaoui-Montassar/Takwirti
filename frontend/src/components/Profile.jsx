@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NavBar from './NavBar';
-import Sidebar from './SideBar';
+import Sidebar,{SidebarItem} from './SideBar';
 import { MdOutlineAdd } from "react-icons/md";
 import { BsPen } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -9,6 +9,11 @@ import { BsCalendar2Date } from "react-icons/bs";
 import { CgUserList } from "react-icons/cg";
 import { Link } from 'react-router-dom';
 import Invitation from './Invitation';
+import { School ,Settings,LogOut} from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import SearchBox from './SearchBox';
+
 
 const links = [
     { label: 'Accueil', path: '/' },
@@ -18,11 +23,25 @@ const links = [
 ];
 
 const Profile = () => {
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const handleSearch = (searchTerm) => {
+      setSearchTerm(searchTerm);
+    };
+
+
     return (
         <>
             <NavBar links={links} />
             <div className='flex flex-row'>
-                <Sidebar />
+                <Sidebar>
+                    <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>}  />
+                    <SidebarItem icon={<School />} text="profile "  link={'profile'} />
+                    <SidebarItem icon={<Settings />} text="friends list" link={'friendslist'} />
+                    <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
+                    <SidebarItem icon={<Settings />} text="page utilisateur" link={'particulier'} />
+                    <SidebarItem icon={<LogOut />} text="se déconnecter" link={'signout'}/>
+                </Sidebar>
                 <div className='m-2 flex-grow'>
                     <div className="flex justify-center items-center ">
                         <div className="relative">
