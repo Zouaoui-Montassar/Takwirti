@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React, { useState } from 'react';
 
-const List = ({ date , reservedHours}) => {
+const List = ({ date , reservedHours ,isReservationPage }) => {
   
   // Generate hours from 8 am to 8 pm
   const hours = [];
@@ -43,21 +43,22 @@ const List = ({ date , reservedHours}) => {
           {/* Render first half of hours */}
           <ul className="border border-gray-200 rounded overflow-hidden shadow-md flex-1 mr-4">
           {firstHalfHours.map((hour) => (
-  <button
-    key={hour}
-    onClick={() => handleHourClick(hour)}
-    className={`w-full px-4 py-3 bg-white ${
-      selectedHour === hour
-        ? 'bg-sky-100 text-sky-900'
-        : (reservedHours || []).includes(hour)
-        ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
-        : ''
-    } border-b last:border-none border-gray-200 transition-all duration-300 ease-in-out`}
-    disabled={(reservedHours || []).includes(hour)}
-  >
-    {hour}:00
-  </button>
-))}
+              <button
+                key={hour}
+                onClick={() => handleHourClick(hour)}
+                className={`w-full px-4 py-3 bg-white ${
+                  selectedHour === hour
+                    ? 'bg-sky-100 text-sky-900'
+                    : (reservedHours || []).includes(hour)
+                    ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
+                    : ''
+                } border-b last:border-none border-gray-200 transition-all duration-300 ease-in-out
+                cursor-pointer ${isReservationPage && selectedHour === time ? 'bg-green-500 text-white' : ''}`}
+                disabled={(reservedHours || []).includes(hour)}
+              >
+                {hour}:00
+              </button>
+            ))}
           </ul>
           {/* Render second half of hours */}
           <ul className="border border-gray-200 rounded overflow-hidden shadow-md flex-1">
@@ -67,7 +68,8 @@ const List = ({ date , reservedHours}) => {
               onClick={() => handleHourClick(hour)}
               className={`w-full px-4 py-3 bg-white ${
               selectedHour === hour ? 'bg-sky-100 text-sky-900' : (reservedHours || []).includes(hour) ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : ''
-              } border-b last:border-none border-gray-200 transition-all duration-300 ease-in-out`}
+              } border-b last:border-none border-gray-200 transition-all duration-300 ease-in-out
+              cursor-pointer ${isReservationPage && selectedHour === time ? 'bg-green-500 text-white' : ''}`}
               disabled={(reservedHours || []).includes(hour)}
             >
               {hour}:00

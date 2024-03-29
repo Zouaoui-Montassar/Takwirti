@@ -60,7 +60,7 @@ function App() {
           <Route path="/profile" element={<Profile/>} />
           <Route path="/profile/modifier" element={<ProfileModif/>} />
 
-          <Route path="/Reservation/add" element={<ReservationAdd/>} />
+          <Route path="/Reservation/add/:idUser/:idTer" element={<ReservationAdd/>} />
           <Route path="/list" element={<List/>} />
           <Route path="/reservation/list" element={<ReservationList/>} />
           <Route path="/reservation/edit" element={<ReservationEdit/>} />

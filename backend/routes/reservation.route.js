@@ -2,7 +2,7 @@ const express = require('express');
 const { reservationController } = require('../controllers/reservation.controller');
 const router = express.Router();
 
-router.post('/reservation/add/:partId', reservationController.addReservation);
+router.post('/reservation/add/:partId/:terId', reservationController.addReservation);
 router.put('/reservation/update/:reservationId', reservationController.updateReservation);
 router.put('/reservation/annul/:reservationId', reservationController.annulerReservation);
 router.put('/reservation/termin/:reservationId', reservationController.terminerReservation);

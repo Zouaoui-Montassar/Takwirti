@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import List from './List';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useParams } from 'react-router-dom';
 
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -9,9 +9,12 @@ const Calendar = ({ onDateSelect }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [selectedDate, setSelectedDate] = useState(new Date()); // Define setSelectedDate here
   const modalDateRef = useRef(null);
+  const params= useParams();
+  const idUser = params.idUser ;
+  const idTer = params.idTer;
   const location = useLocation(); // Get current location using useLocation hook
-  const isReservationPage = location.pathname === '/reservation/add'; // Assuming reservation page route is '/reservation'
-
+  const isReservationPage = location.pathname === `/reservation/add/${idUser}/${idTer}`; // Assuming reservation page route is '/reservation'
+  console.log(isReservationPage); //
 
   const generateCalendar = () => {
     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -93,7 +96,11 @@ const Calendar = ({ onDateSelect }) => {
 
   const handleDaySelect = (selectedDate) => {
     setSelectedDate(selectedDate); // Update selectedDate state with the selected date
-    // You can perform any additional actions here, such as showing a modal or updating UI based on the selected date
+    console.log(selectedDate); // Log the selected date
+    console.log(selectedDate.getHours() + ":" + selectedDate.getMinutes()); // Log the time
+    if (!isReservationPage) {
+      showModal(selectedDate.toDateString());
+    }
   };
   return (
     <div className="flex justify-center ">
@@ -105,7 +112,7 @@ const Calendar = ({ onDateSelect }) => {
             <button onClick={handleNextMonth} className="text-white">Next</button>
           </div>
           {generateCalendar()}
-          
+          {!isReservationPage && (
           <div id="myModal" className="modal hidden fixed inset-0 flex items-center justify-center z-50">
             <div className="modal-overlay absolute inset-0 bg-black opacity-50"></div>
             <div className="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
@@ -115,10 +122,11 @@ const Calendar = ({ onDateSelect }) => {
                   <p className="text-2xl font-bold" ref={modalDateRef}></p>
                   <button onClick={hideModal} className="modal-close px-3 py-1 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring">✕</button>
                 </div>
-                <List date= {selectedDate}  />
+                <List date={selectedDate} isReservationPage={isReservationPage} />
               </div>
             </div>
           </div>
+           )}
         </div>
       </div>
     </div>

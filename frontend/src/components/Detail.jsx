@@ -79,7 +79,7 @@ const Detail = () => {
                     <div className='mt-3'>
                         <Stars />
                     </div>
-                    <Link to={`/reservation/add`} className='border border-green-400 bg-green-400 w-full md:w-1/6 p-2 rounded-md mt-3 flex items-center justify-center text-white'>
+                    <Link to={`/reservation/add/6602626e608a35e2bf409f56/${terrainInfo._id}`} className='border border-green-400 bg-green-400 w-full md:w-1/6 p-2 rounded-md mt-3 flex items-center justify-center text-white'>
                         <p className='text-bold text-xl mr-1'>Réserver</p>
                         <Calendar className='w-6 h-6' />
                     </Link>

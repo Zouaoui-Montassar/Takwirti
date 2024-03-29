@@ -5,8 +5,8 @@ const { terrainModel } = require('../models/terrain.model');
 // add Reservation function
 const addReservation = async (req, res) => {
     try {
-        const { terrainId, date } = req.body;
-        const userId = req.params.partId;
+        const date  = req.body;
+        const { userId, terrainId } = req.params;
 
         // Check if there is already a reservation for the given terrain at the same time
         const existingReservation = await reservationModel.findOne({ terrain: terrainId, date: { $eq: new Date(date) } });
