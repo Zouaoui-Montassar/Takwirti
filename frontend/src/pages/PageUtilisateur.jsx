@@ -22,7 +22,6 @@ const PageUtilisateur = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const { user } = useAuthContext();
-    console.log(user.userObj.__t);
     // Check if there is no user or their type is not Particulier
 if (!user || user.userObj.__t !== "Particulier" ) {
   return <Navigate to="/signin" />;

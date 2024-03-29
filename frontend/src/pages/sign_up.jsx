@@ -81,7 +81,7 @@ const Sign_up = ({xxx}) => {
         // For example, you might show a success message to the user
         console.log('Registration successful');
         
-        navigate('/signin');
+        navigate('/'+xxx);
       } else {
         // Handle unsuccessful registration
         setIsLoading(false);
@@ -128,7 +128,11 @@ const Sign_up = ({xxx}) => {
               src={logo}
               alt="Takwirti"
             />
-            <h2 className="text-3xl font-bold text-gray-900 pt-4 pl-5">Get started now!</h2>
+            <h2 className="text-3xl font-bold text-gray-900 pt-4 pl-5">
+  {xxx === "particulier" ? "Get started now and book fields!" : "Get started now as a Responsable!"}
+</h2>
+
+
           </div>
           {/*Form*/}
           <form className="mt-8 space-y-6" action="#" method="POST" onSubmit={handleSubmit}>
