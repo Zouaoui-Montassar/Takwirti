@@ -12,28 +12,28 @@ export const ReservationAdd = () => {
     const params = useParams();
     const idUser = params.idUser;
     const idTer = params.idTer; 
-    const [openTime, setOpenTime] = useState();
+    const [openTime, setOpenTime] = useState("");
     const [closeTime, setCloseTime] = useState();
     const [stepDuration, setStepDuration] = useState();
-    
-        const handleHours = async () => {
-            try {
+    const fetchData = async () => {
+        try {
             const response = await axios.get(`http://localhost:4000/ter/terrain/getInfo/${idTer}`);
             console.log(response)
             setReservedHours(response.data.terrain.calendrier.time);
-            setTerrainItems(response.data.terrain);
             setOpenTime(response.data.terrain.calendrier.open);
             setCloseTime(response.data.terrain.calendrier.close);
             setStepDuration(response.data.terrain.calendrier.duree);
-            console.log("Calendrier open " + openTime)
-            console.log("Calendrier close " + closeTime)
-            console.log("Calendrier duree " + stepDuration)
-            console.log(terrainItems)
-            console.log(reservedHours)
-            } catch (error) {
-            console.error('Failed', error);
-            }
-        };
+            setTerrainItems(response.data.terrain);
+        } catch (error) { 
+            console.error('Failed', error); 
+        }
+    };
+    fetchData();
+    console.log(reservedHours)
+    console.log(terrainItems)
+    console.log(openTime);
+    console.log(closeTime);
+    console.log(stepDuration);
 
     const handleDateSelect = (date) => {
         setSelectedDate(date);
@@ -41,7 +41,7 @@ export const ReservationAdd = () => {
     const handleHourSelect = (hour) => {
         setSelectedHour(hour);
       };
-    const handleOnSubmit = async (e) => {
+    const handleOnSubmit = async (e) => { 
         e.preventDefault();
         let combinedDateTime = new Date(selectedDate);
         combinedDateTime.setHours(selectedHour);
@@ -57,7 +57,7 @@ export const ReservationAdd = () => {
     }
       
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4 py-8" >
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4 py-8">
             <div className="max-w-xg w-full md:w-1/2 mx-auto "> {/* Adjust width for medium screens and above */}
                 <div className="bg-white shadow-lg p-8 rounded-lg">
                     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900">Reservation Date and Time</h1>
@@ -76,12 +76,12 @@ export const ReservationAdd = () => {
                                     reservedHours={reservedHours}
                                     isReservationPage={true}
                                     onHourSelect={handleHourSelect}
-                                    /* start={openTime}
+                                    start={openTime}
                                     end={closeTime}
                                     step={stepDuration}
                                 /> */}
                             </div>
-                            <Tachkila/> 
+                            <Tachkila/>  
                         </div>
                         <div className="flex flex-col md:flex-row md:justify-end mt-4"> {/* Stack vertically on small screens, align to end on medium screens and above */}
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 md:mb-0 md:mr-2 rounded" type='submit'> {/* Margin on bottom on small screens, margin on right on medium screens and above */}
