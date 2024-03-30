@@ -13,7 +13,7 @@ import TerrainsResp from './components/TerrainsResp';
 import PageUtilisateur from './pages/PageUtilisateur';
 import Detail from './components/Detail';
 import Profile from './components/Profile';
-import Sign_up from './pages/sign_up';
+import Sign_up from './pages/Sign_up';
 import { ReservationAdd } from './components/ReservationAdd';
 import ReservationEdit from './components/ReservationEdit';
 import ReservationList from './components/ReservationList';
