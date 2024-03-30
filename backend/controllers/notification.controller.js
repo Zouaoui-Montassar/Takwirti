@@ -4,9 +4,12 @@ const { NotifModel } =require('../models/notification.model');
 const GetAllNotifUser  = async (req, res) => {
     console.log("GET ALL NOTI HERE")
     try {
-        const { userId } = req.body; 
+        const { id } = req.params; 
 
-        const notifications = await NotifModel.find({ receiver: userId });
+        const notifications = await NotifModel.find({ receiver: id }).populate({
+            path: 'sender',
+            select: 'nom prenom'
+        });
 
         res.status(200).json({
             message: "Notifications fetched successfully",
@@ -22,11 +25,11 @@ const GetAllNotifUser  = async (req, res) => {
 const SendNotif  = async (req, res) => {
     console.log("send noti here")
     try {
-        const { senderId, receiverId, message } = req.body;
+        const { sender, receiver, message } = req.body;
 
         const notification = await NotifModel.create({
-            sender: senderId,
-            receiver: receiverId,
+            sender: sender,
+            receiver: receiver,
             message: message
         });
 

@@ -26,13 +26,13 @@ const FriendsList = () => {
       try {
         const response = await axios.get(`http://localhost:4000/api/users/${user.userObj._id}/friends`);
         setFriends(response.data);
-        console.log(response.data)
+        console.log(response.data);
       } catch (error) {
         console.error(error);
       }
     };
     fetchFriends();
-  }, [user.userObj_id]);
+  }, [user.userObj._id]);
 
   const handleSearch = (searchTerm) => {
     setSearchTerm(searchTerm);

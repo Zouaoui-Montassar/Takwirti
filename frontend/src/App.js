@@ -23,6 +23,7 @@ import TerrainList from './components/TerrainList';
 import ProfileModif from './components/ProfileModif';
 import { useAuthContext } from './hooks/useAuthContext';
 import FriendsList from './components/FriendsList';
+import Notifications from './components/Notifications';
 
 
 const data = [
@@ -67,7 +68,7 @@ function App() {
           <Route path="/terrain/detail/:id" element={<Detail/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/profile/modifier" element={<ProfileModif/>} />
-
+          <Route path="/notifications" element={<Notifications/>} />
           <Route path="/Reservation/add" element={<ReservationAdd/>} />
           <Route path="/list" element={<List/>} />
           <Route path="/reservation/list" element={<ReservationList/>} />
