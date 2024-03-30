@@ -24,7 +24,6 @@ const Detail = () => {
                 const response = await axios.get(`http://localhost:4000/ter/terrain/getInfo/${terrainId}`);
                 setTerrainInfo(response.data.terrain);
                 setLoading(false);
-                console.log(response);
             } catch (error) {
                 setError(error.message);
                 setLoading(false);

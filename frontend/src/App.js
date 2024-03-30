@@ -1,11 +1,11 @@
 import './App.css';
 import Sign_in from './pages/Sign_in';
-import Stats from './components/stats';
+import Stats from './components/Stats';
 import MainPage from './pages/MainPage';
 import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
 import DashboardRes from './components/DashboardRes';
-import ParentCalendar from './components/parentcalendar';
+import ParentCalendar from './components/Parentcalendar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Terrain from './components/Terrain';
 import Responsable from './pages/Responsable';
@@ -13,7 +13,7 @@ import TerrainsResp from './components/TerrainsResp';
 import PageUtilisateur from './pages/PageUtilisateur';
 import Detail from './components/Detail';
 import Profile from './components/Profile';
-import Sign_up from './pages/sign_up';
+import Sign_up from './pages/Sign_up';
 import { ReservationAdd } from './components/ReservationAdd';
 import ReservationEdit from './components/ReservationEdit';
 import ReservationList from './components/ReservationList';
@@ -67,7 +67,6 @@ function App() {
           <Route path="/terrain/detail/:id" element={<Detail/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/profile/modifier" element={<ProfileModif/>} />
-
           <Route path="/Reservation/add/:idUser/:idTer" element={<ReservationAdd/>} />
           <Route path="/list" element={<List/>} />
           <Route path="/reservation/list" element={<ReservationList/>} />

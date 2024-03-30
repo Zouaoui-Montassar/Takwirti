@@ -1,7 +1,7 @@
 import React from 'react'
 import NavBar from '../components/NavBar'
-import Parentcalendar from '../components/parentcalendar'
-import Stats from '../components/stats';
+import Parentcalendar from '../components/Parentcalendar'
+import Stats from '../components/Stats';
 import { Navigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import SideBar,{SidebarItem} from '../components/SideBar'
@@ -45,7 +45,7 @@ if (!user || user.userObj.__t !== "Responsable" ) {
         <SideBar>
                {/* Contenu de la barre latérale */}
                 <SidebarItem icon={<School />} text="profile responsable"  link={'responsable'} />
-                <SidebarItem icon={<Settings />} text="list terrain" link={'terrain/responsable'} />
+                <SidebarItem icon={<Settings />} text="list terrain" link={'terrain/responsable/:id'} />
                 <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
                 <SidebarItem icon={<LogOut />} text="se déconnecter" link={'signout'}/>
           </SideBar>

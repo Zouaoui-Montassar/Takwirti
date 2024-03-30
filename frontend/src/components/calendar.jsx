@@ -14,7 +14,6 @@ const Calendar = ({ onDateSelect }) => {
   const idTer = params.idTer;
   const location = useLocation(); // Get current location using useLocation hook
   const isReservationPage = location.pathname === `/reservation/add/${idUser}/${idTer}`; // Assuming reservation page route is '/reservation'
-  console.log(isReservationPage); //
 
   const generateCalendar = () => {
     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -36,7 +35,9 @@ const Calendar = ({ onDateSelect }) => {
         'py-2',
         'border',
         'cursor-pointer',
-        date.toDateString() === new Date().toDateString() ? 'bg-blue-500 text-white' : ''
+        date.toDateString() === new Date().toDateString() ? 'bg-sky-500 text-white' : '',
+        date.toDateString() === selectedDate?.toDateString() && isReservationPage ? 'bg-primary-50 text-white' : '', // Conditional class for selected date
+        isReservationPage && date.toDateString() === selectedDate?.toString() ? 'bg-green-500 text-white' : '', // Conditional class for selected date on reservation page
       ].join(' ');
 
       calendar.push(
@@ -95,9 +96,8 @@ const Calendar = ({ onDateSelect }) => {
   };
 
   const handleDaySelect = (selectedDate) => {
-    setSelectedDate(selectedDate); // Update selectedDate state with the selected date
-    console.log(selectedDate); // Log the selected date
-    console.log(selectedDate.getHours() + ":" + selectedDate.getMinutes()); // Log the time
+    setSelectedDate(selectedDate);
+    onDateSelect(selectedDate); // Update selectedDate state with the selected date
     if (!isReservationPage) {
       showModal(selectedDate.toDateString());
     }
