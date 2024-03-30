@@ -1,11 +1,11 @@
 import './App.css';
 import Sign_in from './pages/Sign_in';
-import Stats from './components/stats';
+import Stats from './components/Stats';
 import MainPage from './pages/MainPage';
 import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
 import DashboardRes from './components/DashboardRes';
-import ParentCalendar from './components/parentcalendar';
+import ParentCalendar from './components/Parentcalendar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Terrain from './components/Terrain';
 import Responsable from './pages/Responsable';

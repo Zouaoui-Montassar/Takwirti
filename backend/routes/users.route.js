@@ -1,7 +1,7 @@
 const express = require('express');
 const { userController } = require('../controllers/users.controller');
 const router = express.Router();
-/* const passport = require('../config/passport.config.js');  zeyda for now */
+/* const passport = require('../config/passport.config.js');  zeyda for now , khaleha lel googleoauth*/
 /* const verifyToken = require('../middlewares/verifyToken'); zeyda for now  */
 const requireAuth = require('../middlewares/requireAuth.js');
 
@@ -16,7 +16,7 @@ router.post('/users/register_particulier', userController.addParticulier);
 router.post('/users/login', userController.login);
 
 // lezem tet7at lenna bech tprotecti lroutes eli ba3dha lkolhom ken el login w register 
- router.use(requireAuth); 
+/*  router.use(requireAuth);  */
 
 // updates
 router.put('/users/update_particulier/:id', userController.updateParticulier);
@@ -41,30 +41,5 @@ router.post('/users/add_friend', userController.addFriend);
 router.delete('/users/remove_friend', userController.removeFriend);
 
 
-/* router.get('/users/Particulier', verifyToken, (req, res) => {
-    // If the token is valid, send a success message
-    res.json({ message: "Access to particulier's home page granted" });
-});
-router.get('/users/Responsable', verifyToken, (req, res) => {
-    // If the token is valid, send a success message
-    res.json({ message: "Access to responsable's home page granted" });
-}); */
-
-
-/* router.get('/protected-route', passport.authenticate('jwt', { session: false }), (req, res) => {
-    res.send('You are authenticated!');
-});
- */
-
-
 module.exports.userRouter = router;
 
-// khedma le9dima , ken testit eli zedtou jdid w lkol cv fasakh ala rouhek , el /protected bel verifyToken ab3athha
-/* router.post('/users/signUp', userController.addUser);
-router.post('/users/login', userController.login);
-router.delete('/users/deleteUser', userController.deleteUser); */
-
-/* 
-//Protected route
-router.get('/protected', verifyToken, userController.protectedEndpoint);  // lverification tsir bel jwt
-*/

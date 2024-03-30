@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Calendar from './calendar';
+import Calendar from './Calendar';
 import List from './List';
 import { useNavigate } from 'react-router-dom';
 

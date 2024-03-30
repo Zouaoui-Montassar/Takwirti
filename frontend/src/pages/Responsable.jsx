@@ -1,7 +1,7 @@
 import React from 'react'
 import NavBar from '../components/NavBar'
-import Parentcalendar from '../components/parentcalendar'
-import Stats from '../components/stats';
+import Parentcalendar from '../components/Parentcalendar'
+import Stats from '../components/Stats';
 import { Navigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import SideBar,{SidebarItem} from '../components/SideBar'

@@ -3,11 +3,8 @@ const mongoose = require('mongoose');
 
 const ajoutfriend = async (userId, friendId) => {
     try {
-        console.log("lenna ! !! ");
-        console.log(userId);
         const particulier = await ParticulierModel.findById(userId);
         const friend = await ParticulierModel.findById(friendId);
-        console.log("lenna 2! !! ");
         console.log("particulier", particulier); 
         if (!particulier || !friend) {
             throw new Error('User or friend not found');
