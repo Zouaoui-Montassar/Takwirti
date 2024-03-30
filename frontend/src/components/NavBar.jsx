@@ -32,12 +32,12 @@ const NavBar = ({ links, isHomePage }) => {
   return (
     <nav className='bg-green-500  top-0 left-0 right-0  flex justify-between items-center px-4 py-3 max-container text-white '>
       
-
+      <Link to="/">
     <div className='flex flex-row'>
       <img src={whitelogo} alt="logo" width={74} height={50} />
       <h1 className='text-2xl font-bold pt-4'> Takwirti |</h1>
     </div>
-
+    </Link>
 
       <div className='flex space-x-7 items-center justify-center'>
         {isHomePage ? (
