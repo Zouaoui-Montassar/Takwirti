@@ -7,10 +7,10 @@ const NotificationSchema = new Schema({
     sender: { type: Types.ObjectId, ref: 'User', required: true },
     receiver: { type: Types.ObjectId, ref: 'User', required: true },
     message: { type: String, required: true },
-    read: { type: Boolean, default: false },
+    createdAt: { type: Date, default: Date.now , immutable: true },
 });
 
-const NotificationModel = mongoose.model('Notification', NotificationSchema);
+const NotifModel = mongoose.model('Notification', NotificationSchema);
 
-module.exports = NotificationModel;
+module.exports = NotifModel;
 

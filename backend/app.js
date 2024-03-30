@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const { userRouter } = require('./routes/users.route');
 const { terrainRouter } = require('./routes/terrain.route');
 const { reservationRouter } = require('./routes/reservation.route');
+const { notifRouter } = require('./routes/notification.route');
 const cors = require('cors');
 const session = require('express-session');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -44,4 +45,6 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 app.use("/api", userRouter)
 app.use("/ter", terrainRouter)
 app.use("/res", reservationRouter)
+app.use("/noti", notifRouter) 
+
 module.exports = app;

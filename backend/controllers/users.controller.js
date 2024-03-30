@@ -175,8 +175,7 @@ const GetAllFriends = async (req, res) => {
       }
   
       const friends = user.ListeAmi ; // Assuming 'ListeAmi' is an array of friend IDs
-      console.log(friends);
-  
+      
       // Return only 'nom' and 'prenom' of friends
       const friendsDetails = friends.map(friend => ({ nom: friend.nom, prenom: friend.prenom , tel:friend.tel }));
       console.log(friendsDetails);
