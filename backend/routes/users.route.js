@@ -16,7 +16,7 @@ router.post('/users/register_particulier', userController.addParticulier);
 router.post('/users/login', userController.login);
 
 // lezem tet7at lenna bech tprotecti lroutes eli ba3dha lkolhom ken el login w register 
- router.use(requireAuth); 
+/*  router.use(requireAuth);  */
 
 // updates
 router.put('/users/update_particulier/:id', userController.updateParticulier);
