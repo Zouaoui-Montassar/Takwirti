@@ -1,32 +1,43 @@
 const { NotifModel } =require('../models/notification.model');
-require('dotenv').config();
+
 
 const GetAllNotifUser  = async (req, res) => {
     console.log("GET ALL NOTI HERE")
     try {
-        /* const { id } = req.body */
-        
+        const { userId } = req.body; 
+
+        const notifications = await NotifModel.find({ receiver: userId });
+
         res.status(200).json({
-            message: "get all works",
-            
+            message: "Notifications fetched successfully",
+            notifications: notifications
         });
     } catch (error) {
         res.status(400).json({
-            message: "get all error",
-            error: error.message,
+            message: "Failed to fetch notifications",
+            error: error.message
         });
     }
 };
 const SendNotif  = async (req, res) => {
     console.log("send noti here")
     try {
+        const { senderId, receiverId, message } = req.body;
+
+        const notification = await NotifModel.create({
+            sender: senderId,
+            receiver: receiverId,
+            message: message
+        });
+
         res.status(200).json({
-            message: "send notif works",
+            message: "Notification sent successfully",
+            notification: notification
         });
     } catch (error) {
         res.status(400).json({
-            message: "send notifs error",
-            error: error.message,
+            message: "Failed to send notification",
+            error: error.message
         });
     }
 };

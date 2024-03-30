@@ -44,11 +44,12 @@ const FriendsList = () => {
       <div className='flex flex-row'>
         <Sidebar>
           <SidebarItem icon={<FontAwesomeIcon icon={faSearch} />} text={<SearchBox onSearch={handleSearch} />} />
-          <SidebarItem icon={<School />} text='profile ' link={'profile'} />
-          <SidebarItem icon={<Settings />} text='friends list' link={'friendslist'} />
-          <SidebarItem icon={<Settings />} text='reservation list' link={'reservation/list'} />
-          <SidebarItem icon={<Settings />} text='page utilisateur' link={'particulier'} />
-          <SidebarItem icon={<LogOut />} text='se déconnecter' link={'signout'} />
+          <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
+              <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
+              <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
+              <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
+              <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
+              <SidebarItem icon={<LogOut />} text="Se déconnecter"/>
         </Sidebar>
         <div className='m-2'>
           <h2 className='text-bold text-2xl m-2'>All friends</h2>
