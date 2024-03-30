@@ -31,7 +31,7 @@ router.get('/users/:id', userController.getUserById); */
 router.get('/users/search/:query', userController.getUserByQuery);
 
 // Get all users (possible lel admin dashboard )
-router.get('/users', userController.getAllUsers);
+router.get('/users/all', userController.getAllUsers);
 
 // Delete user ( admin kifkif )
 router.delete('/users/delete_user/:id', userController.deleteUser);
