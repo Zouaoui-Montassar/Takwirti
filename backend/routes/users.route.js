@@ -39,7 +39,7 @@ router.delete('/users/delete_user/:id', userController.deleteUser);
 // add friend w remove jaw
 router.post('/users/add_friend', userController.addFriend);
 router.delete('/users/remove_friend', userController.removeFriend);
-
+router.get('/users/:userId/friends',userController.GetAllFriends);
 
 module.exports.userRouter = router;
 

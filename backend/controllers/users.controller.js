@@ -165,6 +165,33 @@ const removeFriend = async (req, res) => {
     }
 };
 
+const GetAllFriends = async (req, res) => {
+    try {
+      const userId = req.params.userId;
+      const user = await UserModel.findById(userId).populate('ListeAmi', 'nom prenom tel');
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      const friends = user.ListeAmi ; // Assuming 'ListeAmi' is an array of friend IDs
+      console.log(friends);
+  
+      // Return only 'nom' and 'prenom' of friends
+      const friendsDetails = friends.map(friend => ({ nom: friend.nom, prenom: friend.prenom , tel:friend.tel }));
+      console.log(friendsDetails);
+      res.status(200).json(friendsDetails);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  };
+
+
+
+
+
+
 const getUserByQuery = async (req, res) => {
     const { query } = req.params;
     try {
@@ -191,5 +218,6 @@ module.exports.userController = {
     getUserById,
     addFriend,
     removeFriend,
-    getUserByQuery
+    getUserByQuery,
+    GetAllFriends
 };
