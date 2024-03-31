@@ -1,6 +1,7 @@
 import { MoreVertical, ChevronLast, ChevronFirst } from "lucide-react";
 import { useContext, createContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { useLogout } from "../hooks/useLogout";
 
 const SidebarContext = createContext();
 
@@ -55,9 +56,16 @@ export default function Sidebar({ children }) {
   );
 }
 
-export function SidebarItem({ icon, text, active, alert,link }) {
+export function SidebarItem({ icon, text, active, alert,link, onClick }) {
   const { expanded, setExpanded } = useContext(SidebarContext);
+  const { logout } = useLogout();
 
+  const handleClick = () => {
+      logout();
+      window.alert("user successfully logged out");
+      
+    
+  };
   return (
     <Link to={`/${link}`}
       className={`
@@ -70,6 +78,7 @@ export function SidebarItem({ icon, text, active, alert,link }) {
             : "hover:bg-indigo-50 text-gray-600"
         }
     `}
+    onClick={handleClick}
     >
       {expanded ? (
         <>

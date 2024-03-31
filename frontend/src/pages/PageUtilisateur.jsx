@@ -26,7 +26,7 @@ const PageUtilisateur = () => {
     const { logout } = useLogout();
     const handleClickLogout = () => {
     logout();
-    alert("logged out successfully");
+    alert("user successfully logged out");
   }
     const { user } = useAuthContext();
     // Check if there is no user or their type is not Particulier
@@ -51,7 +51,7 @@ if (!user || user.userObj.__t !== "Particulier" ) {
               <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
               <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
               <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
-              <SidebarItem icon={<LogOut />} text="Se déconnecter" onClick={handleClickLogout} link={'signin'}/>
+              <SidebarItem icon={<LogOut />} text="Se déconnecter" link={'signin'} onClick={handleClickLogout}/>
            </Sidebar>
            {searchTerm ? <TerrainList param={"search"} searchTerm={searchTerm} /> :(
             <div className='m-3'>
