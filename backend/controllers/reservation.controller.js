@@ -197,7 +197,7 @@ const listReservationR = async (req, res) => {
 };
 
 // par encore testé
-const addParticipantsToReservation = async (req, res) => {
+/* const addParticipantsToReservation = async (req, res) => {
     const { reservationId } = req.params;
     const { participantsString } = req.body;
 
@@ -213,7 +213,7 @@ const addParticipantsToReservation = async (req, res) => {
 
 
         const participantsArray = participantsString.split(/\n/); 
-/*         const participantsArray = participantsString.split(/[ \n]+/); ya binethom espace ya kol wehed new line */
+        const participantsArray = participantsString.split(/[ \n]+/); ya binethom espace ya kol wehed new line 
         
         reservation.participants.push(...participantsArray);
         await reservation.save();
@@ -222,7 +222,7 @@ const addParticipantsToReservation = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-};
+}; */
 
 const getReservation = async(req, res) => {
     const terrainId = req.params.terrainId 
@@ -254,6 +254,6 @@ module.exports.reservationController = {
     searchReservation,
     listReservationP,
     listReservationR,
-    addParticipantsToReservation,
+    /* addParticipantsToReservation, */
     getReservation,
 };

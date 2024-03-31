@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SearchBox from './SearchBox';
-
+import { useAuthContext } from '../hooks/useAuthContext';
 const reservation = [
   /*{
     idterrain: 1545644,
@@ -22,10 +22,12 @@ const reservation = [
   },*/
 ];
 
-const ReservationList = ({xxx,id}) => {
+const ReservationList = ({xxx}) => {
 
     const [reservations, setReservations] = useState([]);
-
+    const { user } = useAuthContext();
+    const id = user.userObj._id
+    console.log(id);
     useEffect(() => {
         const fetchData = async () => {
             try {
