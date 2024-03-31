@@ -7,7 +7,9 @@ import { useParams } from 'react-router-dom';
 export const ReservationAdd = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedHour, setSelectedHour] = useState();
-    const [terrainItems, setTerrainItems] = useState([]);
+    const [terrainItems, setTerrainItems] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [reservedHours, setReservedHours] = useState([]);
     const params = useParams();
     const idUser = params.idUser;
@@ -15,25 +17,76 @@ export const ReservationAdd = () => {
     const [openTime, setOpenTime] = useState("");
     const [closeTime, setCloseTime] = useState();
     const [stepDuration, setStepDuration] = useState();
-    const fetchData = async () => {
+    const [timeReserved, setTimeReserved] = useState()
+    const fetchTerrainInfo = async () => {
         try {
-            const response = await axios.get(`http://localhost:4000/ter/terrain/getInfo/${idTer}`);
-            console.log(response)
-            setReservedHours(response.data.terrain.calendrier.time);
-            setOpenTime(response.data.terrain.calendrier.open);
-            setCloseTime(response.data.terrain.calendrier.close);
-            setStepDuration(response.data.terrain.calendrier.duree);
-            setTerrainItems(response.data.terrain);
-        } catch (error) { 
-            console.error('Failed', error); 
+          const response = await axios.get(`http://localhost:4000/ter/terrain/getInfo/${idTer}`);
+          setTerrainItems(response.data.terrain);
+          setCloseTime(response.data.terrain.calendrier.close);
+          setOpenTime(response.data.terrain.calendrier.open);
+          setStepDuration(response.data.terrain.calendrier.duree);
+          setReservedHours(response.data.terrain.calendrier.time);
+          setLoading(false);
+          console.log(selectedDate.toISOString());
+        } catch (error) {
+          setError(error.message);
+          setLoading(false);
+          handleFetchReservations();
         }
-    };
-    fetchData();
+      };
+      
+      const handleFetchReservations = async () => {
+        try {
+          const response = await axios.get(`http://localhost:4000/res/reservation/getInfo/${idTer}/${selectedDate.toISOString()}`, {
+            params: {
+              date: selectedDate.toISOString() // Assuming selectedDate is a valid Date object
+            }
+          });
+          if (response.data.reservations && response.data.reservations.length > 0) {
+            const reservationTimes = response.data.reservations.map(reservation => {
+              const reservationDateTime = new Date(reservation.date);
+              return `${String(reservationDateTime.getHours()).padStart(2, '0')}:${String(reservationDateTime.getMinutes()).padStart(2, '0')}`;
+            });
+      
+            setTimeReserved(reservationTimes);
+            setReservedHours(reservationTimes);
+            console.log(reservedHours);
+          } else {
+            console.log('Aucune réservation trouvée');
+          }
+        } catch (error) {
+          setError(error.message);
+          setLoading(false);
+        }
+      }
+      
+      useEffect(() => {
+        setReservedHours([])
+        setTimeReserved([])
+        fetchTerrainInfo();
+      }, [selectedDate]);
+      
+      // Remove the second useEffect hook
+      // useEffect (() => {
+      //   fetchTerrainInfo();
+      //   handleFetchReservations();
+      //   return () => {
+      //     // Cleanup logic here (if needed)
+      //   };
+      // },[])
     console.log(reservedHours)
-    console.log(terrainItems)
-    console.log(openTime);
-    console.log(closeTime);
-    console.log(stepDuration);
+    console.log(timeReserved)
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    if (!terrainItems) {
+        return <div>Terrain not found.</div>;
+    }
 
     const handleDateSelect = (date) => {
         setSelectedDate(date);
@@ -44,7 +97,7 @@ export const ReservationAdd = () => {
     const handleOnSubmit = async (e) => { 
         e.preventDefault();
         let combinedDateTime = new Date(selectedDate);
-        combinedDateTime.setHours(selectedHour);
+        combinedDateTime.setHours(parseInt(selectedHour), 0, 0, 0);
         combinedDateTime = combinedDateTime.toISOString();
         try {
             const response = await axios.post(`http://localhost:4000/res/reservation/add/${idUser}/${idTer}`,{
@@ -61,17 +114,17 @@ export const ReservationAdd = () => {
             <div className="max-w-xg w-full md:w-1/2 mx-auto "> {/* Adjust width for medium screens and above */}
                 <div className="bg-white shadow-lg p-8 rounded-lg">
                     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900">Reservation Date and Time</h1>
-                    <p>Here you can make your reservation in "nom terrain"</p>
+                    <p>Here you can make your reservation in {terrainItems.nom}</p>
                     <form onSubmit={handleOnSubmit}>
                         <div className='flex flex-col items-center justify-center md:flex-row md:items-start md:justify-between pt-8'>
                             <div className="w-full mb-4 md:mb-0"> {/* Full width on small screens, stack vertically */}
                                 <p className='mb-2'>select date</p>
-                                <Calendar className="w-full " onDateSelect={handleDateSelect} /> {/* Adjust width for small screens and above */}
+                                <Calendar className="w-full " onDateSelect={handleDateSelect} dayBlocked={terrainItems.calendrier.date}/> {/* Adjust width for small screens and above */}
                             </div>
                             
                             <div className="md:w-1/2 w-full"> {/* Half width on medium screens and above */}
                                 <p>select time</p>
-                                {/* <List
+                                <List
                                     date={selectedDate}
                                     reservedHours={reservedHours}
                                     isReservationPage={true}
@@ -79,7 +132,7 @@ export const ReservationAdd = () => {
                                     start={openTime}
                                     end={closeTime}
                                     step={stepDuration}
-                                /> */}
+                                />
                             </div>
                             <Tachkila/>  
                         </div>
