@@ -24,7 +24,7 @@ const reservation = [
 
 const ReservationList = ({xxx,id}) => {
 
-    const [reservations, setReservations] = useState([]);
+    /*const [reservations, setReservations] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -53,7 +53,7 @@ const ReservationList = ({xxx,id}) => {
         };
 
         fetchData();
-    }, []);
+    }, []);*/
 
     const navigate = useNavigate();
     function toReservationEdit (idterrain){
@@ -70,10 +70,10 @@ const ReservationList = ({xxx,id}) => {
                 </div>
 
                     <div className="w-full h-full overflow-auto shadow bg-white" id="journal-scroll">
-                        {reservations.length > 0  ? (
+                        {reservation.length > 0  ? (
                             <table className="w-full">
                                 <tbody>
-                                    {reservations.map((item, index) => (
+                                    {reservation.map((item, index) => (
                                         <tr key={index} onClick={() => toReservationEdit(item.idterrain)} className="relative transform scale-10 text-xs py-1 border-b-2 border-blue-100 cursor-default bg-blue-500 bg-opacity-25">
                                             <td className="pl-5 pr-3 whitespace-no-wrap">
                                                 <div className="text-gray-400">{item.date}</div>
