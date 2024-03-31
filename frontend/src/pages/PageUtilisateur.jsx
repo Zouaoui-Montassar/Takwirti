@@ -51,7 +51,6 @@ if (!user || user.userObj.__t !== "Particulier" ) {
               <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
               <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
               <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
-              <SidebarItem icon={<LogOut />} text="Se déconnecter" onClick={handleClickLogout} link={'signin'}/>
            </Sidebar>
            {searchTerm ? <TerrainList param={"search"} searchTerm={searchTerm} /> :(
             <div className='m-3'>
