@@ -56,19 +56,9 @@ export default function Sidebar({ children }) {
   );
 }
 
-export function SidebarItem({ icon, text, active, alert,link, onClick }) {
+export function SidebarItem({ icon, text, active, alert,link }) {
   const { expanded, setExpanded } = useContext(SidebarContext);
-  const { logout } = useLogout();
 
-  const handleClick = () => {
-    if (onClick && text === "Se déconnecter") {
-      onClick(); // Call the onClick function only for the "Se déconnecter" item
-      window.alert("user successfully logged out");
-      setExpanded(false); // close sidebar after logout
-    } else if (!onClick) {
-      setExpanded((prevExpanded) => !prevExpanded); // Toggle sidebar expansion for other items
-    }
-  };
   return (
     <Link to={`/${link}`}
       className={`
@@ -81,7 +71,6 @@ export function SidebarItem({ icon, text, active, alert,link, onClick }) {
             : "hover:bg-indigo-50 text-gray-600"
         }
     `}
-    onClick={handleClick}
     >
       {expanded ? (
         <>
