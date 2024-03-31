@@ -54,7 +54,7 @@ const MainPage = () => {
   return (
 
     <>
-    <NavBar links={links}/>
+    <NavBar links={links} isHomePage={true} />
     <div>
         <div className='m-7 flex flex-col md:flex-row items-center justify-center m-[10%]'>
           <div className='flex flex-col mt-10  px-5 items-center justify-center md:w-1/2 sm:mb-2'>

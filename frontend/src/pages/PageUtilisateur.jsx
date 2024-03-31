@@ -25,9 +25,9 @@ const PageUtilisateur = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const { logout } = useLogout();
     const handleClickLogout = () => {
-    logout();
-    alert("logged out successfully");
-  }
+      console.log("Logging out...");
+      logout();
+      }
     const { user } = useAuthContext();
     // Check if there is no user or their type is not Particulier
 if (!user || user.userObj.__t !== "Particulier" ) {
@@ -46,11 +46,12 @@ if (!user || user.userObj.__t !== "Particulier" ) {
         <div className='flex flex-row'>
            <Sidebar>
               <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>}  />
-              <SidebarItem icon={<School />} text="profile "  link={'profile'} />
-              <SidebarItem icon={<Settings />} text="friends list" link={'friendslist'} />
-              <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
-              <SidebarItem icon={<Settings />} text="page utilisateur" link={'particulier'} />
-              <SidebarItem icon={<LogOut />} text="se déconnecter" onClick={handleClickLogout} link={'signin'}/>
+              <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
+              <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
+              <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
+              <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
+              <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
+              <SidebarItem icon={<LogOut />} text="Se déconnecter" onClick={handleClickLogout} link={'signin'}/>
            </Sidebar>
            {searchTerm ? <TerrainList param={"search"} searchTerm={searchTerm} /> :(
             <div className='m-3'>

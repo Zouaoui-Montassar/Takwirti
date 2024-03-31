@@ -13,7 +13,7 @@ import { School ,Settings,LogOut} from 'lucide-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import SearchBox from './SearchBox';
-
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const links = [
     { label: 'Accueil', path: '/' },
@@ -28,6 +28,8 @@ const Profile = () => {
     const handleSearch = (searchTerm) => {
       setSearchTerm(searchTerm);
     };
+    const { user } = useAuthContext(); 
+    console.log("mel profile "+user)
 
 
     return (
@@ -36,11 +38,12 @@ const Profile = () => {
             <div className='flex flex-row'>
                 <Sidebar>
                     <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>}  />
-                    <SidebarItem icon={<School />} text="profile "  link={'profile'} />
-                    <SidebarItem icon={<Settings />} text="friends list" link={'friendslist'} />
-                    <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
-                    <SidebarItem icon={<Settings />} text="page utilisateur" link={'particulier'} />
-                    <SidebarItem icon={<LogOut />} text="se déconnecter" link={'signout'}/>
+                    <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
+              <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
+              <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
+              <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
+              <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
+              <SidebarItem icon={<LogOut />} text="Se déconnecter"/>
                 </Sidebar>
                 <div className='m-2 flex-grow'>
                     <div className="flex justify-center items-center ">
@@ -64,7 +67,7 @@ const Profile = () => {
                     <div className="w-full lg:w-4/12 px-4 lg:order-1 ml-[90px] ">
                         <div className="flex justify-center py-4 lg:pt-4 pt-8">
                             <div className="mr-4 p-3 text-center">
-                                <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">22</span>
+                                <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{user.userObj.ListeAmi.length}</span>
                                 <span className="text-sm text-blueGray-400">Friends</span>
                             </div>
                             
@@ -90,17 +93,17 @@ const Profile = () => {
                     </div>
 
                     <div className="items-center mt-[5px] ">
-                       <h3 className="text-4xl font-semibold leading-normal bold-52 text-blueGray-700 mb-4">karim benzou</h3>
-                        <h3 className='text-sm font-bold text-blueGray-400'>elbenzou@gmail.com</h3>
+                       <h3 className="text-4xl font-semibold leading-normal bold-52 text-blueGray-700 mb-4">{user.userObj.nom} {user.userObj.prenom}</h3>
+                        <h3 className='text-sm font-bold text-blueGray-400'>{user.userObj.email}</h3>
 
                        <div className='flex flex-row items-center justify-center mt-5'>
                          <BsTelephone /> 
-                         <span className="text-sm font-bold text-blueGray-400 ml-2">+216 22 333 444</span>                      
+                         <span className="text-sm font-bold text-blueGray-400 ml-2">+216 {user.userObj.tel}</span>                      
                        </div>
 
                        <div className='flex flex-row items-center justify-center my-5'>
                          <BsCalendar2Date /> 
-                         <span className="text-sm font-bold text-blueGray-400 ml-2">01/02/1999</span>                      
+                         <span className="text-sm font-bold text-blueGray-400 ml-2">{new Date(user.userObj.DN).toLocaleDateString("en-US")}</span>                      
                        </div>
                                       
                     </div>

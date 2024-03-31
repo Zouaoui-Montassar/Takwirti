@@ -9,7 +9,7 @@ const FriendsCard = ({ data }) => {
           <div className='flex flex-row items-center'>
             <img src={data.image} alt='Friend' className='w-[100px] h-[100px] rounded-full ' />
             <div className='m-2'>
-              <h3 className='text-bold text-xl'>{data.name}</h3>
+              <h3 className='text-bold text-xl'>{data.nom} {data.prenom}</h3>
               <div className='flex flex-row items-center justify-center mt-2'>
                 <BsTelephone />
                 <span className="text-sm font-bold text-blueGray-400 ml-2">{data.tel}</span>
