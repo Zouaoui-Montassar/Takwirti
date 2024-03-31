@@ -24,14 +24,14 @@ const reservation = [
 
 const ReservationList = ({xxx,id}) => {
 
-    /*const [reservations, setReservations] = useState([]);
+    const [reservations, setReservations] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 if(xxx === "Particulier"){
                 // Make an HTTP GET request to fetch reservations from the backend
-                  const response = await axios.get(`http://localhost:4000/ter/reservation/listP/${id}`);
+                  const response = await axios.get(`http://localhost:4000/res/reservation/listP/${id}`);
                 // Assuming the backend returns data in the format { reservations: [...] }
                   setReservations(response.data.reservations);
                   console.log(response);
@@ -40,7 +40,7 @@ const ReservationList = ({xxx,id}) => {
                 
                 }else if(xxx === "responsable"){
                    // Make an HTTP GET request to fetch reservations from the backend
-                    const response = await axios.get(`http://localhost:4000/ter/reservation/listR/${id}`);
+                    const response = await axios.get(`http://localhost:4000/res/reservation/listR/${id}`);
                     // Assuming the backend returns data in the format { reservations: [...] }
                     setReservations(response.data.reservations);
                     console.log(response);
@@ -53,7 +53,7 @@ const ReservationList = ({xxx,id}) => {
         };
 
         fetchData();
-    }, []);*/
+    }, []);
 
     const navigate = useNavigate();
     function toReservationEdit (idterrain){
@@ -70,10 +70,10 @@ const ReservationList = ({xxx,id}) => {
                 </div>
 
                     <div className="w-full h-full overflow-auto shadow bg-white" id="journal-scroll">
-                        {reservation.length > 0  ? (
+                        {reservations.length > 0  ? (
                             <table className="w-full">
                                 <tbody>
-                                    {reservation.map((item, index) => (
+                                    {reservations.map((item, index) => (
                                         <tr key={index} onClick={() => toReservationEdit(item.idterrain)} className="relative transform scale-10 text-xs py-1 border-b-2 border-blue-100 cursor-default bg-blue-500 bg-opacity-25">
                                             <td className="pl-5 pr-3 whitespace-no-wrap">
                                                 <div className="text-gray-400">{item.date}</div>
