@@ -71,7 +71,7 @@ function App() {
           <Route path="/notifications" element={<Notifications/>} />
           <Route path="/Reservation/add" element={<ReservationAdd/>} />
           <Route path="/list" element={<List/>} />
-          <Route path="/reservation/list" element={<ReservationList/>} />
+          <Route path="/reservation/list/:id" element={<ReservationList xxx={"Particulier"} id={"6602626e608a35e2bf409f56"}/>} />
           <Route path="/reservation/edit" element={<ReservationEdit/>} />
           <Route path='/terrain/update/:id' element={<Terrain func={"update"}/>}/>
           <Route path='/friendslist' element={<FriendsList/>}/>
