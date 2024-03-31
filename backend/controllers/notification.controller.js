@@ -10,7 +10,7 @@ const GetAllNotifUser  = async (req, res) => {
             path: 'sender',
             select: 'nom prenom'
         }).sort({ createdAt: -1 }); // tri bel latest , populate bech tjibli el nom wel prenom mel id mtaa el sender
-
+        
         res.status(200).json({
             message: "Notifications fetched successfully",
             notifications: notifications

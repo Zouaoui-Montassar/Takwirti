@@ -54,7 +54,7 @@ const Notifications = () => {
                     <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
                     <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
                     <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
-                    <SidebarItem icon={<LogOut />} text="Se déconnecter"/>
+
                 </Sidebar>
                 <div className='m-2'>
                     <h2 className='text-bold text-2xl m-2'>All notifications</h2> 

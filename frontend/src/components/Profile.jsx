@@ -29,7 +29,7 @@ const Profile = () => {
       setSearchTerm(searchTerm);
     };
     const { user } = useAuthContext(); 
-    console.log("mel profile "+user)
+    console.log("mel profile "+ user.userObj)
 
 
     return (
@@ -43,7 +43,6 @@ const Profile = () => {
               <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
               <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
               <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
-              <SidebarItem icon={<LogOut />} text="Se déconnecter"/>
                 </Sidebar>
                 <div className='m-2 flex-grow'>
                     <div className="flex justify-center items-center ">
