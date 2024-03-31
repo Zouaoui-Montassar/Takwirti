@@ -4,7 +4,30 @@ import { useLocation,useParams } from 'react-router-dom';
 
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-const Calendar = ({ onDateSelect }) => {
+const Calendar = ({ onDateSelect, dayBlocked}) => {
+  console.log(dayBlocked)
+  const dayNameToNumber = (dayName) => {
+    switch (dayName.toLowerCase()) {
+      case 'sunday':
+        return 0;
+      case 'monday':
+        return 1;
+      case 'tuesday':
+        return 2;
+      case 'wednesday':
+        return 3;
+      case 'thursday':
+        return 4;
+      case 'friday':
+        return 5;
+      case 'saturday':
+        return 6;
+      default:
+        return -1; // Retourne -1 si le nom du jour n'est pas valide
+    }}
+  dayBlocked = dayNameToNumber(dayBlocked)
+  console.log(dayBlocked)
+
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [selectedDate, setSelectedDate] = useState(new Date()); // Define setSelectedDate here
@@ -14,7 +37,6 @@ const Calendar = ({ onDateSelect }) => {
   const idTer = params.idTer;
   const location = useLocation(); // Get current location using useLocation hook
   const isReservationPage = location.pathname === `/reservation/add/${idUser}/${idTer}`; // Assuming reservation page route is '/reservation'
-  console.log(isReservationPage); //
 
   const generateCalendar = () => {
     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -31,31 +53,37 @@ const Calendar = ({ onDateSelect }) => {
 
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(currentYear, currentMonth, day);
+      let isBlocked = (dayBlocked === date.getDay())|| (date < new Date()); // Comparer le jour actuel avec le jour bloqué
       const classNames = [
         'text-center',
         'py-2',
         'border',
         'cursor-pointer',
-        date.toDateString() === new Date().toDateString() ? 'bg-blue-500 text-white' : ''
+        date.toDateString() === new Date().toDateString() ? 'bg-sky-500 text-white' : '',
+        date.toDateString() === selectedDate?.toDateString() && isReservationPage ? 'bg-primary-50 text-white' : '', // Conditional class for selected date
+        isReservationPage && date.toDateString() === selectedDate?.toString() ? 'bg-green-500 text-white' : '', // Conditional class for selected date on reservation page
+        isBlocked ? 'text-gray-400 cursor-not-allowed' : '', // Utilisez isBlocked directement pour désactiver le bouton
       ].join(' ');
-
+    
       calendar.push(
-        <div 
+        <input 
+          type='button'
           key={day} 
           className={`${classNames} ${date.toDateString() === selectedDate?.toString() && 'bg-primary-50 text-white '}`} 
           onClick={() => {
-            if (!isReservationPage) {
-              showModal(date.toDateString()); // Show modal if not on reservation page
-            } else {
-              handleDaySelect(date); // Handle day select if on reservation page
-              setSelectedDate(date); // Set the selected date
+            if (!isReservationPage && !isBlocked) {
+              showModal(date.toDateString()); // Afficher le modal si ce n'est pas une page de réservation et que le jour n'est pas bloqué
+            } else if (!isBlocked) {
+              handleDaySelect(date); // Gérer la sélection du jour si c'est une page de réservation et que le jour n'est pas bloqué
+              setSelectedDate(date); // Définir la date sélectionnée
             }
           }}
-        >
-          {day}
-        </div>
+          value={day}
+          disabled={isBlocked} // Désactiver le bouton si le jour est bloqué
+        />
       );
-      }      
+    }
+    
 
     return (
       <>
@@ -95,9 +123,8 @@ const Calendar = ({ onDateSelect }) => {
   };
 
   const handleDaySelect = (selectedDate) => {
-    setSelectedDate(selectedDate); // Update selectedDate state with the selected date
-    console.log(selectedDate); // Log the selected date
-    console.log(selectedDate.getHours() + ":" + selectedDate.getMinutes()); // Log the time
+    setSelectedDate(selectedDate);
+    onDateSelect(selectedDate); // Update selectedDate state with the selected date
     if (!isReservationPage) {
       showModal(selectedDate.toDateString());
     }
@@ -107,9 +134,9 @@ const Calendar = ({ onDateSelect }) => {
       <div className="p-8">
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
           <div className="flex items-center justify-between px-6 py-3 bg-primary-50">
-            <button onClick={handlePrevMonth} className="text-white">Previous</button>
+            <input type='button' onClick={handlePrevMonth} className="text-white" value={"Previous"}/>
             <h2 id="currentMonth" className="text-white">{`${monthNames[currentMonth]} ${currentYear}`}</h2>
-            <button onClick={handleNextMonth} className="text-white">Next</button>
+            <input type="button" onClick={handleNextMonth} className="text-white" value={"Next"}/>
           </div>
           {generateCalendar()}
           {!isReservationPage && (

@@ -5,9 +5,9 @@ const { terrainModel } = require('../models/terrain.model');
 // add Reservation function
 const addReservation = async (req, res) => {
     try {
-        const date  = req.body;
-        const { userId, terrainId } = req.params;
-
+        const date  = req.body.date;
+        const userId =req.params.partId;
+        const terrainId  = req.params.terId;
         // Check if there is already a reservation for the given terrain at the same time
         const existingReservation = await reservationModel.findOne({ terrain: terrainId, date: { $eq: new Date(date) } });
         if (existingReservation) {
@@ -224,7 +224,25 @@ const addParticipantsToReservation = async (req, res) => {
     }
 };
 
-
+const getReservation = async(req, res) => {
+    const terrainId = req.params.terrainId 
+    const date = req.params.date;
+    try {
+        const startOfDay = new Date(date);
+        console.log(startOfDay)
+        startOfDay.setHours(0, 0, 0, 0);
+        const endOfDay = new Date(date);
+        endOfDay.setHours(23, 59, 59, 999);
+        const reservations = await reservationModel.find({
+            terrain: terrainId,
+            date: { $gte: startOfDay, $lte: endOfDay }
+        });
+        console.log(reservations)
+        res.status(200).json({ reservations });
+    }catch (error) {
+        res.status(500).json({ message: "Failed to search for reservations", error: error.message });
+    }
+}
 
 
 
@@ -236,5 +254,6 @@ module.exports.reservationController = {
     searchReservation,
     listReservationP,
     listReservationR,
-    addParticipantsToReservation
+    addParticipantsToReservation,
+    getReservation,
 };

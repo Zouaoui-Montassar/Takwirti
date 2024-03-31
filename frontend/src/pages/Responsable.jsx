@@ -45,7 +45,7 @@ if (!user || user.userObj.__t !== "Responsable" ) {
         <SideBar>
                {/* Contenu de la barre latérale */}
                 <SidebarItem icon={<School />} text="profile responsable"  link={'responsable'} />
-                <SidebarItem icon={<Settings />} text="list terrain" link={'terrain/responsable'} />
+                <SidebarItem icon={<Settings />} text="list terrain" link={'terrain/responsable/:id'} />
                 <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
                 <SidebarItem icon={<LogOut />} text="se déconnecter" link={'signout'}/>
           </SideBar>
