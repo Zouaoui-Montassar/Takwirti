@@ -61,10 +61,13 @@ export function SidebarItem({ icon, text, active, alert,link, onClick }) {
   const { logout } = useLogout();
 
   const handleClick = () => {
-      logout();
+    if (onClick && text === "Se déconnecter") {
+      onClick(); // Call the onClick function only for the "Se déconnecter" item
       window.alert("user successfully logged out");
-      
-    
+      setExpanded(false); // close sidebar after logout
+    } else if (!onClick) {
+      setExpanded((prevExpanded) => !prevExpanded); // Toggle sidebar expansion for other items
+    }
   };
   return (
     <Link to={`/${link}`}
