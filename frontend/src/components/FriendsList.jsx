@@ -37,6 +37,26 @@ const FriendsList = () => {
   const handleSearch = (searchTerm) => {
     setSearchTerm(searchTerm);
   };
+  const removeFriend = async (friendId) => {
+    try {
+      const response = await fetch('http://localhost:4000/api/users/remove_friend', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId: user.userObj._id, friendId })
+      });
+      
+      const data = await response.json();
+      console.log(data.message);
+      setFriends(friends.filter(friend => friend._id !== friendId));
+    } catch (error) {
+      console.error('Failed to remove friend', error);
+    }
+  };
+
+
+
 
   return (
     <>
@@ -56,7 +76,7 @@ const FriendsList = () => {
           {friends.map((friend) => (
             <ul>
               <li key={friend._id}>
-                <FriendsCard data={friend} />
+                <FriendsCard data={friend} onRemoveFriend={removeFriend} />
               </li>
             </ul>
           ))}

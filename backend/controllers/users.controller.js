@@ -175,10 +175,10 @@ const GetAllFriends = async (req, res) => {
         return res.status(404).json({ message: 'User not found' });
       }
   
-      const friends = user.ListeAmi ; // Assuming 'ListeAmi' is an array of friend IDs
+      const friends = user.ListeAmi ; 
       
-      // Return only 'nom' and 'prenom' of friends
-      const friendsDetails = friends.map(friend => ({ nom: friend.nom, prenom: friend.prenom , tel:friend.tel }));
+      // Return nom prenom tel w _id ( lel remove )
+      const friendsDetails = friends.map(friend => ({ nom: friend.nom, prenom: friend.prenom , tel:friend.tel , _id : friend._id }));
       console.log(friendsDetails);
       res.status(200).json(friendsDetails);
     } catch (error) {
