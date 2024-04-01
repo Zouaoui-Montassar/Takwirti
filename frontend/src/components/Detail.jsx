@@ -53,7 +53,7 @@ const Detail = () => {
     return (
         <>
             <NavBar links={links} className=""/> 
-            <div className='flex flex-col md:flex-row justify-center items-center mt-[10%]'>
+            <div className='flex flex-col md:flex-row justify-center items-center '>
                 <img src="/Section 1 image.jpg" alt="image" width={700} className='mt-3 ml-3 rounded-3xl h-auto md:w-1/2' />
                 <div className='w-full md:w-1/2 flex flex-col items-center p-4'>
                     <h1 className='bold-52 m-3'>{terrainInfo.nom}</h1>

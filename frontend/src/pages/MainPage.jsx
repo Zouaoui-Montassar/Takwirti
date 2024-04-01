@@ -56,7 +56,7 @@ const MainPage = () => {
     <>
     <NavBar links={links} isHomePage={true} />
     <div>
-        <div className='m-7 flex flex-col md:flex-row items-center justify-center m-[10%]'>
+        <div className=' flex flex-col md:flex-row items-center justify-center '>
           <div className='flex flex-col mt-10  px-5 items-center justify-center md:w-1/2 sm:mb-2'>
             <motion.h1 variants={pVariants} initial="hidden" animate="visible" className='bold-52 '>
               {text1.split("").map((char, index) => (

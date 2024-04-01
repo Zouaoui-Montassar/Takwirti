@@ -5,7 +5,7 @@ export default function SearchBox({ onSearch }) {
 
     const handleSearch = () => {
         // Call the onSearch callback function with the search term
-        onSearch(searchTerm);
+        onSearch();
     };
 
     return (
