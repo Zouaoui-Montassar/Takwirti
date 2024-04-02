@@ -149,7 +149,11 @@ const Calendar = ({ onDateSelect, dayBlocked}) => {
                   <p className="text-2xl font-bold" ref={modalDateRef}></p>
                   <button onClick={hideModal} className="modal-close px-3 py-1 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring">✕</button>
                 </div>
-                <List date={selectedDate} isReservationPage={isReservationPage} />
+                <List date={selectedDate} 
+                      isReservationPage={isReservationPage}
+                      start={"08:00:00"}
+                      end={"20:00:00"}
+                      step={120}/>
               </div>
             </div>
           </div>

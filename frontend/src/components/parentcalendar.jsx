@@ -13,11 +13,7 @@ const ParentComponent = () => {
     <div >
       <Calendar onDateSelect={handleDateSelect} />
       {selectedDate && <List
-                date={selectedDate}
-                isReservationPage={false}
-                start={"08:00:00"}
-                end={"20:00:00"}
-                step={120}
+                
             />}
     </div>
   );
