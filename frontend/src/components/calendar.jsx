@@ -5,7 +5,17 @@ import { useLocation,useParams } from 'react-router-dom';
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 const Calendar = ({ onDateSelect, dayBlocked}) => {
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [selectedDate, setSelectedDate] = useState(new Date()); // Define setSelectedDate here
+  const modalDateRef = useRef(null);
+  const params= useParams();
+  const idUser = params.idUser ;
+  const idTer = params.idTer;
+  const location = useLocation(); // Get current location using useLocation hook
+  const isReservationPage = location.pathname === `/reservation/add/${idUser}/${idTer}`; // Assuming reservation page route is '/reservation'
   console.log(dayBlocked)
+
   const dayNameToNumber = (dayName) => {
     switch (dayName.toLowerCase()) {
       case 'sunday':
@@ -25,18 +35,8 @@ const Calendar = ({ onDateSelect, dayBlocked}) => {
       default:
         return -1; // Retourne -1 si le nom du jour n'est pas valide
     }}
-  dayBlocked = dayNameToNumber(dayBlocked)
-  console.log(dayBlocked)
-
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
-  const [selectedDate, setSelectedDate] = useState(new Date()); // Define setSelectedDate here
-  const modalDateRef = useRef(null);
-  const params= useParams();
-  const idUser = params.idUser ;
-  const idTer = params.idTer;
-  const location = useLocation(); // Get current location using useLocation hook
-  const isReservationPage = location.pathname === `/reservation/add/${idUser}/${idTer}`; // Assuming reservation page route is '/reservation'
+  if (isReservationPage)
+    dayBlocked = dayNameToNumber(dayBlocked)
 
   const generateCalendar = () => {
     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -149,7 +149,11 @@ const Calendar = ({ onDateSelect, dayBlocked}) => {
                   <p className="text-2xl font-bold" ref={modalDateRef}></p>
                   <button onClick={hideModal} className="modal-close px-3 py-1 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring">✕</button>
                 </div>
-                <List date={selectedDate} isReservationPage={isReservationPage} />
+                <List date={selectedDate} 
+                      isReservationPage={isReservationPage}
+                      start={"08:00:00"}
+                      end={"20:00:00"}
+                      step={120}/>
               </div>
             </div>
           </div>

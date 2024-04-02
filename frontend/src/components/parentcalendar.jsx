@@ -3,7 +3,7 @@ import Calendar from './Calendar';
 import List from './List';
 
 const ParentComponent = () => {
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleDateSelect = (date) => {
     setSelectedDate(date);
@@ -12,7 +12,6 @@ const ParentComponent = () => {
   return (
     <div >
       <Calendar onDateSelect={handleDateSelect} />
-      {selectedDate && <List date={selectedDate} />}
     </div>
   );
 };

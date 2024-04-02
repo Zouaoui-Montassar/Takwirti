@@ -39,8 +39,8 @@ function TerrainList({ param, searchTerm, id }) {
 
 return (
     <div className='flex flex-col w-full'> {/* Utilisation de w-full pour prendre toute la largeur */}
-        <div className='flex flex-col md:flex-row items-center md:items-start space-y-5 md:space-y-0 md:space-x-5'> {/* Utilisation de classes pour les différents breakpoints */}
-            <div className='flex items-center space-x-2 mt-2'> {/* Utilisation de space-x-2 pour l'espacement horizontal */}
+        <div className='flex flex-col px-[3%] md:flex-row items-center md:items-start space-y-5 md:space-y-0 md:space-x-5'> {/* Utilisation de classes pour les différents breakpoints */}
+            <div className='flex items-center space-x-3 mt-2'> {/* Utilisation de space-x-2 pour l'espacement horizontal */}
                 <div className='bg-gray-200 flex flex-row border b-2 shadow-md p-2 h-[50px]'>
                     <button className="mr-4" onClick={() => setView('list')}>List View</button> 
                     <BsList className='relative top-[9px]' />
@@ -53,7 +53,7 @@ return (
         </div>
         <div className='flex flex-wrap'>
             {terrainItems?.map((item) => (
-                <div key={item._id}>
+                <div key={item._id} className={`px-8 py-5 ${view === 'list' ? 'w-[100%]' : 'w-auto'}`}>
                     {param === 'responsable' ? (
                     <Link to={`/terrain/update/${item._id}`}>
                         <Card view={view} data={item} />

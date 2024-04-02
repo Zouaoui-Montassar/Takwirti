@@ -54,7 +54,7 @@ if (!user || user.userObj.__t !== "Particulier" ) {
            </Sidebar>
            {searchTerm ? <TerrainList param={"search"} searchTerm={searchTerm} /> :(
             <div className='m-3'>
-              <div className=''>
+              <div className='px-[5%]'>
                 <h1 className='text-3xl font-bold my-2'>Cheapest fields</h1>
                 <TerrainList param={"get"}/>
               </div>

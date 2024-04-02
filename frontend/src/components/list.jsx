@@ -13,8 +13,9 @@ const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end
       alert("You cannot reserve this hour as it's already reserved.");
     }
   };
-  const hs = parseInt(start[0] + start[1]);
-  const he = parseInt(end[0] + end[1]);
+  const hs = parseInt(start);
+  console.log(hs)
+  const he = parseInt(end);
   start = new Date(`2024-01-01T${start}`);
   if (hs >= he) {
     end = new Date(`2024-01-02T${end}`);

@@ -8,6 +8,7 @@ const addReservation = async (req, res) => {
         const date  = req.body.date;
         const userId =req.params.partId;
         const terrainId  = req.params.terId;
+        const equipe = req.body.equipe;
         // Check if there is already a reservation for the given terrain at the same time
         const existingReservation = await reservationModel.findOne({ terrain: terrainId, date: { $eq: new Date(date) } });
         if (existingReservation) {
@@ -31,7 +32,8 @@ const addReservation = async (req, res) => {
             user: user,
             terrain: terrain,
             date: new Date(date),
-            status: "En cours"
+            status: "En cours",
+            participants : equipe
         });
         await newReservation.save();
 

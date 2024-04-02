@@ -24,7 +24,9 @@ import ProfileModif from './components/ProfileModif';
 import { useAuthContext } from './hooks/useAuthContext';
 import FriendsList from './components/FriendsList';
 import Notifications from './components/Notifications';
-
+import Tachkila from './components/Tachkila';
+import { TeamProvider } from './context/Teamcontext';
+import ReservationAddParent from './components/ReservationAddParent';
 
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
@@ -68,13 +70,15 @@ function App() {
           <Route path="/terrain/detail/:id" element={<Detail/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/profile/modifier" element={<ProfileModif/>} />
-          <Route path="/notifications" element={<Notifications/>} />          
-          <Route path="/Reservation/add/:idUser/:idTer" element={<ReservationAdd/>} />
+          <Route path="/notifications" element={<Notifications/>} />     
+          <Route path="/Reservation/add/:idUser/:idTer" element={<ReservationAddParent />} />
           <Route path="/list" element={<List/>} />
           <Route path="/reservation/list" element={<ReservationList xxx={"Particulier"}/>} />
-          <Route path="/reservation/edit" element={<ReservationEdit/>} />
+          <Route path="/reservation/edit" element={<ReservationEdit iduser={"6602626e608a35e2bf409f56"}/>} />
           <Route path='/terrain/update/:id' element={<Terrain func={"update"}/>}/>
           <Route path='/friendslist' element={<FriendsList/>}/>
+          <Route path='/tachkila' element={<Tachkila/>}/>
+
         </Routes>
       </BrowserRouter>
     </div>

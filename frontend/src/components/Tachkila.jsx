@@ -1,89 +1,77 @@
-import React, { useState } from 'react';
-import NavBar from './NavBar';
-import Sidebar from './SideBar';
+// Tachkila.js
+
+import React, { useContext, useState } from 'react';
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { BsPen } from "react-icons/bs";
-import { CgUserList } from "react-icons/cg";
-
-
-const links = [
-    { label: 'Accueil', path: '/' },
-    { label: 'Page 1', path: '/page1' },
-    { label: 'Page 2', path: '/page2' },
-    // Add more links as needed
-];
+import { TeamContext } from '../context/Teamcontext';
 
 const Tachkila = () => {
-    const [players, setPlayers] = useState([]);
+    const { team, setTeam } = useContext(TeamContext);
     const [newPlayerName, setNewPlayerName] = useState('');
-
 
     const addPlayer = () => {
         if (newPlayerName.trim() !== '') {
-            setPlayers([...players, newPlayerName]);
+            setTeam([...team, newPlayerName]);
             setNewPlayerName('');
         }
     };
 
     const deletePlayer = (index) => {
-        const updatedPlayers = players.filter((_, i) => i !== index);
-        setPlayers(updatedPlayers);
+        const updatedTeam = team.filter((_, i) => i !== index);
+        setTeam(updatedTeam);
     };
 
     const updatePlayer = (index, newName) => {
-        const updatedPlayers = [...players];
-        updatedPlayers[index] = newName;
-        setPlayers(updatedPlayers);
+        const updatedTeam = [...team];
+        updatedTeam[index] = newName;
+        setTeam(updatedTeam);
     };
 
     return (
-        <>
-            <div className='flex flex-row'>
-
-                <div className='mx-[250px] justify-center items-center w-full'>
-                    <h1 className='bold-36 my-5'>Tachkila list</h1>
-                    <input
-                        type="text"
-                        value={newPlayerName}
-                        onChange={(e) => setNewPlayerName(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                addPlayer();
-                            }
-                        }}
-                        placeholder="Add player"
-                        className='border-2 border-gray-300 p-2 w-1/2 my-5 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent'
-                    />
-                    <ul className=' border border-5 border-gray-200 p-2 rounded-xl shadow-2xl bg-white shadow-slate-500 '>
-                        {players.map((player, index) => (
-                            <li key={index} className='space-x-4 flex flex-row items-center justify-between border border-5 border-green-500 my-4 p-2 bg-green-500 rounded-full shadow-md shadow-slate-400 text-white'>
-                                <h1 className='text-2xl text-bold ml-4'>{player}</h1>
-                                <div className='flex flex-row'>
-                                    <button onClick={() => deletePlayer(index)} className='flex flex-row border-2 border-red-500 bg-red-500 p-1 rounded-md shadow-md shadow-slate-400 items-center justify-center mx-5'>
-                                        <h1 className=''>Delete</h1>
-                                        <RiDeleteBin6Line className=' w-[25px] h-[25px] text-white' />
-                                    </button>
-                                    <button onClick={() => {
-                                        const newName = prompt('Enter new name:', player);
-                                        if (newName !== null) {
-                                            updatePlayer(index, newName);
-                                        }
-                                    }} className='mx-5 flex flex-row border-2 border-blue-500 bg-blue-500 p-1 rounded-md shadow-md shadow-slate-400 items-center justify-center'>
-                                        <h1 className='mr-1'>Edit</h1>
-                                        <BsPen className='  text-white' />
-                                    </button>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-
-                    <div className='border b-2 border-green-500 bg-green-500 w-[200px] flex flex-row p-2 items-center justify-center rounded-md shadow-lg shadow-slate-400 m-5'>
-                            <button className="mr-2 text-white text-lg">confirm List</button>
-                            <CgUserList className=' w-[25px] h-[25px] text-white' />
-                    </div>
-                </div>
+        <div className="flex flex-col w-full p-4">
+            <h1 className="text-3xl font-bold mb-4">Tachkila list</h1>
+            <div className="flex flex-col md:flex-row w-full mb-4 items-center justify-center">
+                <input
+                    type="text"
+                    value={newPlayerName}
+                    onChange={(e) => setNewPlayerName(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            addPlayer();
+                        }
+                    }}
+                    placeholder="Add player"
+                    className=" border border-gray-300 p-2 w-full md:w-1/2 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent "
+                />
             </div>
-        </>
+            <ul className="border border-5 border-gray-200 p-2 rounded-xl shadow-2xl bg-white shadow-slate-500 w-full">
+                {team.map((player, index) => (
+                    <li key={index} className="flex items-center justify-between border border-5 border-black-500 p-2 bg-primary-50 rounded-full shadow-md shadow-slate-400 text-white">
+                        <h1 className="font-bold mx-4">{player}</h1>
+                        <div className="flex flex-row">
+                            <button
+                                onClick={() => deletePlayer(index)}
+                                className="flex flex-row items-center border-2 border-red-500 bg-red-500 p-1 rounded-md shadow-md shadow-slate-400 mr-2"
+                            >
+                                <RiDeleteBin6Line className="w-4 h-4 text-white" />
+                            </button>
+                            <button
+                                onClick={() => {
+                                    const newName = prompt('Enter new name:', player);
+                                    if (newName !== null) {
+                                        updatePlayer(index, newName);
+                                    }
+                                }}
+                                className="flex flex-row items-center border-2 border-blue-500 bg-blue-500 p-1 rounded-md shadow-md shadow-slate-400"
+                            >
+                                <BsPen className="w-4 h-4 text-white" />
+                            </button>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
 };
 
