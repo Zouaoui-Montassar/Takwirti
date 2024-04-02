@@ -12,9 +12,6 @@ const ParentComponent = () => {
   return (
     <div >
       <Calendar onDateSelect={handleDateSelect} />
-      {selectedDate && <List
-                
-            />}
     </div>
   );
 };
