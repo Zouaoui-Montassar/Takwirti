@@ -4,7 +4,7 @@ import List from './List';
 import axios from 'axios';
 
 
-export const ReservationAdd = ({idTer}, sendselectedDate, sendselectedHour, sendterrainItems) => {
+export const ReservationAdd = ({ idTer, sendselectedDate, sendselectedHour, sendterrainItems} ) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedHour, setSelectedHour] = useState();
     const [terrainItems, setTerrainItems] = useState(null);
@@ -81,9 +81,11 @@ export const ReservationAdd = ({idTer}, sendselectedDate, sendselectedHour, send
 
     const handleDateSelect = (date) => {
         setSelectedDate(date);
+        sendselectedDate(date);
     };
     const handleHourSelect = (hour) => {
         setSelectedHour(hour);
+        sendselectedHour(hour); 
       };
 
     

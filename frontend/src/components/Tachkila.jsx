@@ -37,6 +37,7 @@ const Tachkila = () => {
                     onChange={(e) => setNewPlayerName(e.target.value)}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
+                            e.preventDefault();
                             addPlayer();
                         }
                     }}

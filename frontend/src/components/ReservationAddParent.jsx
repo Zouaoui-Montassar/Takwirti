@@ -4,6 +4,14 @@ import { TeamContext, TeamProvider } from '../context/Teamcontext';
 import Tachkila from './Tachkila';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import NavBar from '../components/NavBar';
+import Sidebar , { SidebarItem } from '../components/SideBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { School ,Settings,LogOut} from 'lucide-react';
+import { useLogout } from '../hooks/useLogout'; 
+import SearchBox from '../components/SearchBox';
+
 
 
 const ReservationAddParent = () => {
@@ -14,6 +22,8 @@ const ReservationAddParent = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedHour, setSelectedHour] = useState();
     const [terrainItems, setTerrainItems] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
+
 
     useEffect(() => {
         const initialTeam = [];
@@ -55,35 +65,50 @@ const ReservationAddParent = () => {
     const handleHourSelect = (hour) => {
         setSelectedHour(hour);
     };
+    const handleTerrainItems = (data) => {
+        setTerrainItems(data);
+    };
+    const handleSearch = (searchTerm) => {
+        setSearchTerm(searchTerm);
+      };
       
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4 py-8">
-            <div className="max-w-xg w-full md:w-1/2 mx-auto "> {/* Adjust width for medium screens and above */}
-                <div className="bg-white shadow-lg p-8 rounded-lg">
-                    <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900">Reservation Date and Time</h1>
-                    <p>Here you can make your reservation in {/* {terrainItems.nom} */}</p>
-                    <form onSubmit={handleOnSubmit}>
-                        <TeamProvider value={{ team, setTeam }}>
-                            <ReservationAdd 
-                                idTer={idTer} 
-                                sendselectedDate={selectedDate}
-                                sendselectedHour={selectedHour}
-                                sendterrainItems={terrainItems}
-                            />
-                            <Tachkila/>
-                        </TeamProvider>
-                        <div className="flex flex-col md:flex-row md:justify-end mt-4"> {/* Stack vertically on small screens, align to end on medium screens and above */}
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 md:mb-0 md:mr-2 rounded" type='submit'> {/* Margin on bottom on small screens, margin on right on medium screens and above */}
-                                Submit
-                            </button>
-                            <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" type='reset'>
-                                Reset
-                            </button>
+        <>
+            <NavBar />
+            <div className='flex flex-row'>
+            <Sidebar>
+                <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>}  />
+                <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
+                <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
+                <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
+                <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
+                <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
+            </Sidebar>
+                        <div className="bg-white shadow-lg rounded-lg w-[100%] px-[15%] pt-[2%]">
+                            <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900">Reservation Date and Time</h1>
+                            <p>Here you can make your reservation in {/* {terrainItems.nom} */}</p>
+                            <form onSubmit={handleOnSubmit}>
+                                <TeamProvider value={{ team, setTeam }}>
+                                    <ReservationAdd 
+                                        idTer={idTer} 
+                                        sendselectedDate={handleDateSelect}
+                                        sendselectedHour={handleHourSelect}
+                                        sendterrainItems={handleTerrainItems}
+                                    />
+                                    <Tachkila/>
+                                </TeamProvider>
+                                <div className="flex flex-col md:flex-row md:justify-end mt-4"> {/* Stack vertically on small screens, align to end on medium screens and above */}
+                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 md:mb-0 md:mr-2 rounded" type='submit'> {/* Margin on bottom on small screens, margin on right on medium screens and above */}
+                                        Submit
+                                    </button>
+                                    <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" type='reset'>
+                                        Reset
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+                    </div>
+        </>
     );
 };
 

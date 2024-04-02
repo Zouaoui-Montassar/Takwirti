@@ -30,9 +30,9 @@ const NavBar = ({ links, isHomePage }) => {
 
 
   return (
-    <nav className='bg-green-500  top-0 left-0 right-0  flex justify-between items-center px-4 py-3 max-container text-white '>
+    <nav className={`bg-primary-50 flex justify-between items-center py-3 max-container text-white ${isHomePage ? 'px-[10%]' : 'px-[3%]'}`}>
       
-      <Link to="/">
+      <Link to="#">
     <div className='flex flex-row'>
       <img src={whitelogo} alt="logo" width={74} height={50} />
       <h1 className='text-2xl font-bold pt-4'> Takwirti |</h1>
@@ -47,15 +47,6 @@ const NavBar = ({ links, isHomePage }) => {
           </>
         ) : (
           <>
-          <div className="hidden md:block"> {/* This div will hold the links */}
-            <ul className="flex flex-row">
-              {links.map((link, index) => (
-                <li className="text-white-50 text-xl" key={index}>
-                  <Link to={link.path}>{link.label}</Link> 
-                </li>
-              ))}
-            </ul>
-          </div>
             {/* User Menu */}
             <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
               <button
