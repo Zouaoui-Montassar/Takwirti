@@ -207,6 +207,26 @@ const listReservationR = async (req, res) => {
     }
 };
 
+
+const compterReservation = async (req, res) => {
+    try {
+        const { resId } = req.params;
+        // Find terrains belonging to the specific responsible
+        const terrains = await terrainModel.find({ idRes: resId });
+        // Extract terrain IDs
+        const terrainIds = terrains.map(terrain => terrain._id);
+        // Find reservations associated with the found terrains
+        const reservations = await reservationModel.find({ terrain: { $in: terrainIds } });
+        // Count the number of reservations
+        const reservationCount = reservations.length;
+
+        res.status(200).json({ reservationCount });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to count reservations", error: error.message });
+    }
+};
+
+
 // par encore testé
 /* const addParticipantsToReservation = async (req, res) => {
     const { reservationId } = req.params;
@@ -275,6 +295,7 @@ module.exports.reservationController = {
     searchReservation,
     listReservationP,
     listReservationR,
+    compterReservation,
     /* addParticipantsToReservation, */
     getReservation,
     getReservationInfo,
