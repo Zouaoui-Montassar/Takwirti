@@ -34,7 +34,9 @@ const Tachkila = ({ handleTachkila }) => {
     };
     
 
-    const deletePlayer = (index) => {
+    const deletePlayer = (index,e) => {
+        e.preventDefault(); // lezma makenchi kol delete yab9a yabeeth fi post request lel add reservation
+        // nal9a 27 reservation fel collection naarech ken joret lhaja hedhi 9bal ma nhot e.preventDefault() wala le
         const updatedTeam = [...team.slice(0, index), ...team.slice(index + 1)];
         setTeam(updatedTeam);
     };
@@ -72,7 +74,7 @@ const Tachkila = ({ handleTachkila }) => {
             try {
                 const response = await axios.get(`http://localhost:4000/api/users/${user.userObj._id}/friends`);
                 setFriends(response.data);
-                console.log("meiner friends ", response.data);
+                console.log("Meine Freunde : ", response.data);
             } catch (error) {
                 console.error(error);
             }
@@ -95,7 +97,9 @@ const Tachkila = ({ handleTachkila }) => {
                 />
                 {showSuggestions && (
                     <ul className="mt-1 max-h-40 max-w-1/2 overflow-y-auto bg-white border border-gray-300 rounded-md shadow-md">
-                        {friends.map((friend, index) => (
+                        {friends
+                        .filter((friend) => !team.some((player) => player._id === friend._id)) // ken suggestion deja 7atitha twali maadch todhher
+                        .map((friend, index) => (
                             <li key={index} onClick={() => addPlayerFromSuggestion(friend)} className="cursor-pointer p-2 hover:bg-gray-100">
                                 {friend.nom} {friend.prenom}
                             </li>
@@ -109,7 +113,7 @@ const Tachkila = ({ handleTachkila }) => {
         <h1 className="font-bold mx-4">{player.nom} {player.prenom}</h1>
         <div className="flex flex-row">
             <button
-                onClick={() => deletePlayer(index)}
+                onClick={(e) => deletePlayer(index,e)}
                 className="flex flex-row items-center border-2 border-red-500 bg-red-500 p-1 rounded-md shadow-md shadow-slate-400 mr-2"
             >
                 <RiDeleteBin6Line className="w-4 h-4 text-white" />
