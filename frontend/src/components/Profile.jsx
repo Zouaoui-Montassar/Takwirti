@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import NavBar from './NavBar';
 import Sidebar,{SidebarItem} from './SideBar';
 import { MdOutlineAdd } from "react-icons/md";
@@ -14,6 +14,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import SearchBox from './SearchBox';
 import { useAuthContext } from '../hooks/useAuthContext';
+import axios from 'axios';
+
+
 
 const links = [
     { label: 'Accueil', path: '/' },
@@ -24,12 +27,28 @@ const links = [
 
 const Profile = () => {
     const [searchTerm, setSearchTerm] = useState('');
+    const [pendingRequests, setPendingRequests] = useState([]);
+    const { user } = useAuthContext(); 
+    console.log("mel profile "+ user.userObj)
+    useEffect(() => {
+        const fetchPendingRequests = async () => {
+          try {
+            const response = await axios.get(`http://localhost:4000/api/users/${user.userObj._id}/pending_requests`);
+            setPendingRequests(response.data.pendingRequests);
+            console.log(response.data);
+          } catch (error) {
+            console.error(error);
+          }
+        };
+        fetchPendingRequests();
+      }, [user.userObj._id]);
+
 
     const handleSearch = (searchTerm) => {
       setSearchTerm(searchTerm);
     };
-    const { user } = useAuthContext(); 
-    console.log("mel profile "+ user.userObj)
+    
+    
 
 
     return (
@@ -108,9 +127,14 @@ const Profile = () => {
                     </div>
 
                     <div className='justify-center items-center flex flex-col'>
-                      <h1 className='text-xl font-bold text-blueGray-400 my-2'>Invitation received :</h1>
-                      <Invitation />
-                      <Invitation />
+                        <h1 className='text-xl font-bold text-blueGray-400 my-2'>Friend requests received :</h1>
+                        {pendingRequests.length > 0 ? (
+                            pendingRequests.map((request) => (
+                                <Invitation key={request._id} data={request} />
+                            ))
+                        ) : (
+                            <p>No pending requests</p>
+                        )}
                     </div>
                     
                     <Link to={`/friendslist`}>
