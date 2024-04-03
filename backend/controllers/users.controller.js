@@ -195,7 +195,7 @@ const GetAllFriends = async (req, res) => {
 const getUserByQuery = async (req, res) => {
     const { query } = req.params;
     try {
-        const users = await UserModel.find({
+        const users = await ParticulierModel.find({
             $or: [
                 { nom: { $regex: query, $options: 'i' } }, // Case-insensitive match for 'nom'
                 { tel: { $regex: query, $options: 'i' } }  // Case-insensitive match for 'tel'
