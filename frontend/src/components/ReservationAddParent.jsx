@@ -23,6 +23,7 @@ const ReservationAddParent = () => {
     const [selectedHour, setSelectedHour] = useState();
     const [terrainItems, setTerrainItems] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [tachkila, setTachkila] = useState();
 
 
     useEffect(() => {
@@ -50,7 +51,7 @@ const ReservationAddParent = () => {
         try {
             const response = await axios.post(`http://localhost:4000/res/reservation/add/${idUser}/${idTer}`,{
                 date : new Date(combinedDateTime),
-                participants: team,
+                participants: tachkila,
             });
             console.log(response.data); // Assuming you want to log the response
         } catch (error) {
@@ -71,7 +72,10 @@ const ReservationAddParent = () => {
     const handleSearch = (searchTerm) => {
         setSearchTerm(searchTerm);
       };
-      
+    const handleTachkila = (tachkila) => {
+        setTachkila(tachkila);
+    } 
+    console.log(tachkila);
     return (
         <>
             <NavBar />
@@ -84,30 +88,30 @@ const ReservationAddParent = () => {
                 <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
                 <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
             </Sidebar>
-                        <div className="bg-white shadow-lg rounded-lg w-[100%] px-[15%] pt-[2%]">
-                            <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900">Reservation Date and Time</h1>
-                            <p>Here you can make your reservation in {/* {terrainItems.nom} */}</p>
-                            <form onSubmit={handleOnSubmit}>
-                                <TeamProvider value={{ team, setTeam }}>
-                                    <ReservationAdd 
-                                        idTer={idTer} 
-                                        sendselectedDate={handleDateSelect}
-                                        sendselectedHour={handleHourSelect}
-                                        sendterrainItems={handleTerrainItems}
-                                    />
-                                    <Tachkila/>
-                                </TeamProvider>
-                                <div className="flex flex-col md:flex-row md:justify-end mt-4"> {/* Stack vertically on small screens, align to end on medium screens and above */}
-                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 md:mb-0 md:mr-2 rounded" type='submit'> {/* Margin on bottom on small screens, margin on right on medium screens and above */}
-                                        Submit
-                                    </button>
-                                    <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" type='reset'>
-                                        Reset
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+            <div className="bg-white shadow-lg rounded-lg w-[100%] px-[15%] pt-[2%]">
+                <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900">Reservation Date and Time</h1>
+                <p>Here you can make your reservation in {/* {terrainItems.nom} */}</p>
+                <form onSubmit={handleOnSubmit}>
+                    <TeamProvider value={{ team, setTeam }}>
+                        <ReservationAdd 
+                            idTer={idTer} 
+                            sendselectedDate={handleDateSelect}
+                            sendselectedHour={handleHourSelect}
+                            sendterrainItems={handleTerrainItems}
+                        />
+                        <Tachkila handleTachkila ={handleTachkila}/>
+                    </TeamProvider>
+                    <div className="flex flex-col md:flex-row md:justify-end mt-4"> {/* Stack vertically on small screens, align to end on medium screens and above */}
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 md:mb-0 md:mr-2 rounded" type='submit'> {/* Margin on bottom on small screens, margin on right on medium screens and above */}
+                            Submit
+                        </button>
+                        <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" type='reset'>
+                            Reset
+                        </button>
                     </div>
+                </form>
+            </div>
+        </div>
         </>
     );
 };

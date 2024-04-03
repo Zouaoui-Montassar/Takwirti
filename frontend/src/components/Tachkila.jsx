@@ -1,11 +1,11 @@
 // Tachkila.js
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { BsPen } from "react-icons/bs";
 import { TeamContext } from '../context/Teamcontext';
 
-const Tachkila = () => {
+const Tachkila = ({handleTachkila }) => {
     const { team, setTeam } = useContext(TeamContext);
     const [newPlayerName, setNewPlayerName] = useState('');
 
@@ -26,6 +26,10 @@ const Tachkila = () => {
         updatedTeam[index] = newName;
         setTeam(updatedTeam);
     };
+
+    useEffect(() => {
+        handleTachkila(team);
+      }, [team, handleTachkila]);    
 
     return (
         <div className="flex flex-col w-full p-4">
