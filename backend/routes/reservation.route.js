@@ -9,7 +9,7 @@ router.use(requireAuth);  */
 router.post('/reservation/add/:partId/:terId', reservationController.addReservation);
 router.put('/reservation/update/:reservationId', reservationController.updateReservation);
 router.put('/reservation/annul/:reservationId', reservationController.annulerReservation);
-router.put('/reservation/termin/:reservationId', reservationController.terminerReservation);
+router.put('/reservation/termin', reservationController.terminerReservation);
 router.get('/reservation/search/:partId', reservationController.searchReservation);
 router.get('/reservation/listP/:partId', reservationController.listReservationP);
 router.get('/reservation/listR/:resId', reservationController.listReservationR);

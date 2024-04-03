@@ -118,29 +118,12 @@ const annulerReservation = async (req, res) => {
 // terminer Reservation function
 const terminerReservation = async (req, res) => {
     try {
-        const { reservationId } = req.params;
-
-        // Find the reservation by ID
-        const reservation = await reservationModel.findById(reservationId);
-
-        // Check if the reservation exists
-        if (!reservation) {
-            return res.status(404).json({ message: "Reservation not found" });
-        }
-
-        // Check if the reservation status is "Annulée"
-        if (reservation.status === "Annulée") {
-            return res.status(400).json({ message: "Cannot complete reservation because it is already 'Annulée'" });
-        }
-
-        // Update the reservation status to "Terminée"
-        const updatedReservation = await reservationModel.findByIdAndUpdate(
-            reservationId,
-            { status: "Terminée" },
-            { new: true } // Return the updated reservation
+        const currentDate = new Date();
+        const pastReservations = await reservationModel.updateMany(
+            { date: { $lt: currentDate }, status:'En cours' },
+            { $set: { status: 'Terminée' } }
         );
-
-        res.status(200).json({ message: "Reservation completed successfully", reservation: updatedReservation });
+        console.log(`Updated ${pastReservations.modifiedCount} past reservations.`);
     } catch (error) {
         res.status(500).json({ message: "Failed to complete reservation", error: error.message });
     }
