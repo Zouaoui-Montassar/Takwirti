@@ -4,11 +4,14 @@ import React, { useContext, useState, useEffect } from 'react';
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { BsPen } from "react-icons/bs";
 import { TeamContext } from '../context/Teamcontext';
-
+import { useAuthContext } from '../hooks/useAuthContext';
+import axios from 'axios';
 const Tachkila = ({handleTachkila }) => {
     const { team, setTeam } = useContext(TeamContext);
     const [newPlayerName, setNewPlayerName] = useState('');
-
+    const [friends, setFriends] = useState([]);
+    const [filteredFriends, setFilteredFriends] = useState([]);
+    const { user} = useAuthContext();
     const addPlayer = () => {
         if (newPlayerName.trim() !== '') {
             setTeam([...team, newPlayerName]);
@@ -30,6 +33,22 @@ const Tachkila = ({handleTachkila }) => {
     useEffect(() => {
         handleTachkila(team);
       }, [team, handleTachkila]);    
+
+      useEffect(() => {
+        const fetchFriends = async () => {
+            try {
+                const response = await axios.get(`http://localhost:4000/api/users/${user.userObj._id}/friends`);
+                setFriends(response.data);
+                console.log("meiner friends ",response.data);
+
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchFriends();
+    }, []);
+
+
 
     return (
         <div className="flex flex-col w-full p-4">
