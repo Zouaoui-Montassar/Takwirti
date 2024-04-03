@@ -1,22 +1,31 @@
-// Tachkila.js
-
 import React, { useContext, useState, useEffect } from 'react';
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { BsPen } from "react-icons/bs";
 import { TeamContext } from '../context/Teamcontext';
 import { useAuthContext } from '../hooks/useAuthContext';
 import axios from 'axios';
-const Tachkila = ({handleTachkila }) => {
+
+const Tachkila = ({ handleTachkila }) => {
     const { team, setTeam } = useContext(TeamContext);
     const [newPlayerName, setNewPlayerName] = useState('');
     const [friends, setFriends] = useState([]);
-    const [filteredFriends, setFilteredFriends] = useState([]);
-    const { user} = useAuthContext();
-    const addPlayer = () => {
-        if (newPlayerName.trim() !== '') {
-            setTeam([...team, newPlayerName]);
+    const { user } = useAuthContext();
+    const [showSuggestions, setShowSuggestions] = useState(false);
+
+    const addPlayerFromInput = () => {
+        const nameToAdd = newPlayerName.trim();
+        if (nameToAdd !== '') {
+            setTeam([...team, nameToAdd]);
             setNewPlayerName('');
+            setShowSuggestions(false);
         }
+    };
+
+    const addPlayerFromSuggestion = (friend) => {
+        const nameToAdd = friend.nom + ' ' + friend.prenom;
+        setTeam([...team, nameToAdd]);
+        setNewPlayerName('');
+        setShowSuggestions(false);
     };
 
     const deletePlayer = (index) => {
@@ -30,25 +39,38 @@ const Tachkila = ({handleTachkila }) => {
         setTeam(updatedTeam);
     };
 
+    const handleInputClick = () => {
+        setShowSuggestions(true);
+    };
+
+    const handleInputChange = (e) => {
+        const input = e.target.value;
+        setNewPlayerName(input);
+        setShowSuggestions(true);
+    };
+
+    const handleInputKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            addPlayerFromInput();
+        }
+    };
+
     useEffect(() => {
         handleTachkila(team);
-      }, [team, handleTachkila]);    
+    }, [team, handleTachkila]);
 
-      useEffect(() => {
+    useEffect(() => {
         const fetchFriends = async () => {
             try {
                 const response = await axios.get(`http://localhost:4000/api/users/${user.userObj._id}/friends`);
                 setFriends(response.data);
-                console.log("meiner friends ",response.data);
-
+                console.log("meiner friends ", response.data);
             } catch (error) {
                 console.error(error);
             }
         };
         fetchFriends();
     }, []);
-
-
 
     return (
         <div className="flex flex-col w-full p-4">
@@ -57,16 +79,21 @@ const Tachkila = ({handleTachkila }) => {
                 <input
                     type="text"
                     value={newPlayerName}
-                    onChange={(e) => setNewPlayerName(e.target.value)}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                            e.preventDefault();
-                            addPlayer();
-                        }
-                    }}
+                    onChange={handleInputChange}
+                    onKeyDown={handleInputKeyPress}
                     placeholder="Add player"
-                    className=" border border-gray-300 p-2 w-full md:w-1/2 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent "
+                    className="border border-gray-300 p-2 w-full md:w-1/2 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    onClick={handleInputClick}
                 />
+                {showSuggestions && (
+                    <ul className="mt-1 max-h-40 max-w-1/2 overflow-y-auto bg-white border border-gray-300 rounded-md shadow-md">
+                        {friends.map((friend, index) => (
+                            <li key={index} onClick={() => addPlayerFromSuggestion(friend)} className="cursor-pointer p-2 hover:bg-gray-100">
+                                {friend.nom} {friend.prenom} {friend._id}
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </div>
             <ul className="border border-5 border-gray-200 p-2 rounded-xl shadow-2xl bg-white shadow-slate-500 w-full">
                 {team.map((player, index) => (
