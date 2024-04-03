@@ -128,19 +128,31 @@ const FriendsList = () => {
             <h2 className='text-bold text-2xl m-2 opacity-20'>Find people by their name , or their phone number !</h2>
           </div>
         )}
+        { clicked && (
+          <h2 className='text-bold text-2xl m-2'>Search Results</h2>
+        )}
 
-        {findpeople.length === 0 && clicked &&searchUserTerm.length > 0 && (
+        {findpeople.length === 0 && clicked && searchUserTerm.length > 0 && (
           <div className='m-2'>
             <h2 className='text-bold text-2xl m-2'>No users with the specified input found</h2>
           </div> // lin ntraiti cas enou string fergha
         )}
+        {findpeople.length === 1 && clicked && findpeople[0]._id === user.userObj._id && (
+          <div className='m-2'>
+          <h2 className='text-bold text-2xl m-2'>No users with the specified input found</h2>
+        </div> // yfiltri el current user fi cas enou 7at esmou
+        )
+
+        }
         { findpeople.length > 0 && (
-  <div className='m-2'>
-    <h2 className='text-bold text-2xl m-2'>Search Results</h2>
-    {findpeople.map((person) => (
+          <div className='m-2'>
+  {findpeople
+    .filter(person => person._id !== user.userObj._id)
+    .map((person) => (
       <FriendsCard key={person._id} data={person} onAddFriend={addFriend} showAddButton={true} />
     ))}
-  </div>
+</div>
+
 )}
 
 
