@@ -23,6 +23,7 @@ const FriendsList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [friends, setFriends] = useState([]);
   const [findpeople, setFindpeople] =useState([]);
+  const [clicked, setClicked] =useState(false);
   const { user } = useAuthContext();
   const handleSearchBar = (searchTerm) => {
     // bar ala jnab
@@ -62,6 +63,7 @@ const FriendsList = () => {
       console.log("Search term:", searchUserTerm);
       const response = await axios.get(`http://localhost:4000/api/users/search/${searchUserTerm}`);
       console.log(response.data);
+      setClicked(true);
       setFindpeople(response.data.users);
     } catch (error) {
       console.error('Failed to search for users', error);
@@ -121,6 +123,17 @@ const FriendsList = () => {
                 </button>
             </div>
         </div>
+        {findpeople.length === 0 && searchUserTerm.length === 0 && (
+          <div className='m-2'>
+            <h2 className='text-bold text-2xl m-2 opacity-20'>Find people by their name , or their phone number !</h2>
+          </div>
+        )}
+
+        {findpeople.length === 0 && clicked &&searchUserTerm.length > 0 && (
+          <div className='m-2'>
+            <h2 className='text-bold text-2xl m-2'>No users with the specified input found</h2>
+          </div> // lin ntraiti cas enou string fergha
+        )}
         { findpeople.length > 0 && (
   <div className='m-2'>
     <h2 className='text-bold text-2xl m-2'>Search Results</h2>
@@ -129,6 +142,7 @@ const FriendsList = () => {
     ))}
   </div>
 )}
+
 
      
 
