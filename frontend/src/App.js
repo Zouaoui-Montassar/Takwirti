@@ -64,6 +64,7 @@ function App() {
           <Route path="/signin" element={<Sign_in/>} />
           <Route path="/stats" element={<Stats/>} />
           <Route path='/responsable' element={<Responsable/>}/>  {/* protected */} 
+          <Route path='/responsable/:id' element={<Responsable/>}/>
           <Route path='/terrain/add' element={<Terrain func={"add"} id={"9876543210fedcba"}/>}/>
           <Route path='/terrain/responsable' element={<TerrainsResp/>}/>
           <Route path='/particulier' element={<PageUtilisateur/>}/> {/* protected */} 

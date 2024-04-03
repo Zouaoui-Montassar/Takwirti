@@ -13,7 +13,7 @@ const ReservationList = ({xxx}) => {
 
     const searchReservationsByDate = async (id, date) => {
         try {
-            const response1 = await axios.post(`http://localhost:4000/res/reservation/search/${id}`, { date: date });
+            const response1 = await axios.get(`http://localhost:4000/res/reservation/search/${id}`, { date: date });
             return response1.data.reservations;
             console.log(response1.data.reservations);
         } catch (error) {
@@ -28,7 +28,7 @@ const ReservationList = ({xxx}) => {
                 let response;
                 if(xxx === "Particulier") {
                     response = await axios.get(`http://localhost:4000/res/reservation/listP/${id}`);
-                } else if(xxx === "responsable") {
+                } else if(xxx === "Responsable") {
                     response = await axios.get(`http://localhost:4000/res/reservation/listR/${id}`);
                 }
                 setReservations(response.data.reservations);

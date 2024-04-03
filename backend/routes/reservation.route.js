@@ -13,6 +13,7 @@ router.put('/reservation/termin/:reservationId', reservationController.terminerR
 router.get('/reservation/search/:partId', reservationController.searchReservation);
 router.get('/reservation/listP/:partId', reservationController.listReservationP);
 router.get('/reservation/listR/:resId', reservationController.listReservationR);
+router.get('/reservation/compter/:resId', reservationController.compterReservation);
 /* router.post('/reservation/add-participants', reservationController.addParticipantsToReservation); */
 router.get('/reservation/getInfo/:terrainId/:date', reservationController.getReservation)
 
