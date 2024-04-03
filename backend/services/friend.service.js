@@ -89,9 +89,12 @@ const envoirequest = async (userId, friendId) => {
         if (user.ListeAmi.includes(friendId)) {
             throw new Error('Already friends with this user');
         }
+        if (friend.pending.some(user => user.equals(user._id))) {
+            throw new Error('This user already has a pending friend request from you');
+        }
 
-        user.pending.push(friendId);
-        await user.save();
+        friend.pending.push(user);
+        await friend.save();
 
         return { success: true };
     } catch (error) {

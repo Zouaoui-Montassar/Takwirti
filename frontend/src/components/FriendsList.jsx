@@ -26,7 +26,7 @@ const FriendsList = () => {
   const [clicked, setClicked] =useState(false);
   const { user } = useAuthContext();
   const handleSearchBar = (searchTerm) => {
-    // bar ala jnab
+    // search bar ala jnab
   };
   useEffect(() => {
     const fetchFriends = async () => {
@@ -72,10 +72,19 @@ const FriendsList = () => {
   
   const addFriend = async (friendId) => {
     try {
-      alert(friendId)
+      const response = await fetch('http://localhost:4000/api/users/send_friend_request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId: user.userObj._id, friendId : friendId })
+      });
       
+      const data = await response.json();
+      console.log(data.message);
+      alert(data.message);
     } catch (error) {
-      console.error('Failed to add friend', error);
+      console.error('Failed to sent a friend request', error);
     }
   };
 
