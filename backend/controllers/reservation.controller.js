@@ -55,7 +55,8 @@ const addReservation = async (req, res) => {
 const updateReservation = async (req, res, next) => {
     try {
         const { reservationId } = req.params;
-        const { date } = req.body;
+        const date = req.body.date;
+        const participants = req.body.participants;
 
         // Get the current reservation
         const currentReservation = await reservationModel.findById(reservationId);
@@ -72,7 +73,8 @@ const updateReservation = async (req, res, next) => {
         // Update the reservation
         const updatedReservation = await reservationModel.findByIdAndUpdate(
             reservationId,
-            { date: new Date(date) }
+            { date: new Date(date),
+              participants: participants}
         );
 
         res.status(200).json({ message: "Reservation updated successfully", reservation: updatedReservation });
@@ -116,29 +118,12 @@ const annulerReservation = async (req, res) => {
 // terminer Reservation function
 const terminerReservation = async (req, res) => {
     try {
-        const { reservationId } = req.params;
-
-        // Find the reservation by ID
-        const reservation = await reservationModel.findById(reservationId);
-
-        // Check if the reservation exists
-        if (!reservation) {
-            return res.status(404).json({ message: "Reservation not found" });
-        }
-
-        // Check if the reservation status is "Annulée"
-        if (reservation.status === "Annulée") {
-            return res.status(400).json({ message: "Cannot complete reservation because it is already 'Annulée'" });
-        }
-
-        // Update the reservation status to "Terminée"
-        const updatedReservation = await reservationModel.findByIdAndUpdate(
-            reservationId,
-            { status: "Terminée" },
-            { new: true } // Return the updated reservation
+        const currentDate = new Date();
+        const pastReservations = await reservationModel.updateMany(
+            { date: { $lt: currentDate }, status:'En cours' },
+            { $set: { status: 'Terminée' } }
         );
-
-        res.status(200).json({ message: "Reservation completed successfully", reservation: updatedReservation });
+        console.log(`Updated ${pastReservations.modifiedCount} past reservations.`);
     } catch (error) {
         res.status(500).json({ message: "Failed to complete reservation", error: error.message });
     }
@@ -205,6 +190,26 @@ const listReservationR = async (req, res) => {
     }
 };
 
+
+const compterReservation = async (req, res) => {
+    try {
+        const { resId } = req.params;
+        // Find terrains belonging to the specific responsible
+        const terrains = await terrainModel.find({ idRes: resId });
+        // Extract terrain IDs
+        const terrainIds = terrains.map(terrain => terrain._id);
+        // Find reservations associated with the found terrains
+        const reservations = await reservationModel.find({ terrain: { $in: terrainIds } });
+        // Count the number of reservations
+        const reservationCount = reservations.length;
+
+        res.status(200).json({ reservationCount });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to count reservations", error: error.message });
+    }
+};
+
+
 // par encore testé
 /* const addParticipantsToReservation = async (req, res) => {
     const { reservationId } = req.params;
@@ -253,6 +258,16 @@ const getReservation = async(req, res) => {
     }
 }
 
+const getReservationInfo = async(req, res) => {
+    const idReservation = req.params.idRes ;
+    try {
+        const reservations = await reservationModel.findById(idReservation);
+        console.log(reservations);
+        res.status(200).json({ reservations });
+    }catch (error) {
+        res.status(500).json({ message: "Failed to get reservation info", error: error.message });
+    };
+}
 
 
 module.exports.reservationController = {
@@ -263,6 +278,8 @@ module.exports.reservationController = {
     searchReservation,
     listReservationP,
     listReservationR,
+    compterReservation,
     /* addParticipantsToReservation, */
     getReservation,
+    getReservationInfo,
 };

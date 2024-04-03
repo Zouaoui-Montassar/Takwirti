@@ -4,7 +4,6 @@ import Stats from './components/Stats';
 import MainPage from './pages/MainPage';
 import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
-import DashboardRes from './components/DashboardRes';
 import ParentCalendar from './components/Parentcalendar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Terrain from './components/Terrain';
@@ -14,20 +13,17 @@ import PageUtilisateur from './pages/PageUtilisateur';
 import Detail from './components/Detail';
 import Profile from './components/Profile';
 import Sign_up from './pages/Sign_up';
-import { ReservationAdd } from './components/ReservationAdd';
 import ReservationEdit from './components/ReservationEdit';
 import ReservationList from './components/ReservationList';
 import List from './components/List';
-import SearchBox from './components/SearchBox';
-import TerrainList from './components/TerrainList';
 import ProfileModif from './components/ProfileModif';
 import { useAuthContext } from './hooks/useAuthContext';
 import FriendsList from './components/FriendsList';
 import Notifications from './components/Notifications';
 import Tachkila from './components/Tachkila';
-import { TeamProvider } from './context/Teamcontext';
 import ReservationAddParent from './components/ReservationAddParent';
-
+import React , {useState, useEffect} from 'react';
+import axios from 'axios';
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
   { id: 2, name: 'Item 2', image:'/Section 2 image.png' },
@@ -45,10 +41,22 @@ const links = [
 ];
 
 function App() {
-
     //protection mtaa el routes ( pour le moment particulier w reponsable )
     const { user } = useAuthContext();
 
+    const updateReservationStatus = async () => {
+      try {
+        const updatedReservation = await axios.put(`http://localhost:4000/res/reservation/termin`);
+        console.log(updatedReservation);
+      } catch (error) {
+        console.error("Failed to update reservation status:", error.message);
+        return null;
+      }
+    };
+
+    useEffect(() => {
+      updateReservationStatus();
+    }, []);
 
   return (
     
@@ -64,6 +72,7 @@ function App() {
           <Route path="/signin" element={<Sign_in/>} />
           <Route path="/stats" element={<Stats/>} />
           <Route path='/responsable' element={<Responsable/>}/>  {/* protected */} 
+          <Route path='/responsable/:id' element={<Responsable/>}/>
           <Route path='/terrain/add' element={<Terrain func={"add"} id={"9876543210fedcba"}/>}/>
           <Route path='/terrain/responsable' element={<TerrainsResp/>}/>
           <Route path='/particulier' element={<PageUtilisateur/>}/> {/* protected */} 
@@ -74,7 +83,7 @@ function App() {
           <Route path="/Reservation/add/:idUser/:idTer" element={<ReservationAddParent />} />
           <Route path="/list" element={<List/>} />
           <Route path="/reservation/list" element={<ReservationList xxx={"Particulier"}/>} />
-          <Route path="/reservation/edit" element={<ReservationEdit iduser={"6602626e608a35e2bf409f56"}/>} />
+          <Route path="/reservation/edit/:idRes" element={<ReservationEdit/>} />
           <Route path='/terrain/update/:id' element={<Terrain func={"update"}/>}/>
           <Route path='/friendslist' element={<FriendsList/>}/>
           <Route path='/tachkila' element={<Tachkila/>}/>

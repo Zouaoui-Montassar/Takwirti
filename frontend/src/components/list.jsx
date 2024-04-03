@@ -53,8 +53,10 @@ const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end
   }
 
   const getDayOfWeek = (date) => {
+    console.log(date);
+    const dateObj = typeof date === 'string' ? new Date(date) : date;
     const options = { weekday: 'long' };
-    return new Intl.DateTimeFormat("fr-CA", { year: "numeric", month: "2-digit", day: "2-digit" }).format(date);
+    return new Intl.DateTimeFormat("fr-CA", options).format(dateObj);
   };
 
   const dayOfWeek = date ? getDayOfWeek(date) : '';

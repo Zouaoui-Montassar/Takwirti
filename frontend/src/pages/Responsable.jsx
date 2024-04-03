@@ -1,90 +1,117 @@
-import React from 'react'
-import NavBar from '../components/NavBar'
-import Parentcalendar from '../components/Parentcalendar'
+import React, { useState, useEffect } from 'react';
+import NavBar from '../components/NavBar';
+import ParentCalendar2 from '../components/ParentCalender2';
 import Stats from '../components/Stats';
 import { Navigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
-import SideBar,{SidebarItem} from '../components/SideBar'
-import { School ,Settings,LogOut} from 'lucide-react';
+import SideBar, { SidebarItem } from '../components/SideBar';
+import { School, Settings } from 'lucide-react';
+import axios from 'axios';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 const links = [
-    {label: 'Accueil', path: '/'} ,
-    {label: 'Page 1', path: '/page1'} ,
-    {label: 'Page 2', path: '/page2' },
-   // Add more links as needed
-  ];
+  { label: 'Accueil', path: '/' },
+  { label: 'Page 1', path: '/page1' },
+  { label: 'Page 2', path: '/page2' },
+];
 
-  const terrain = [
-    {nom: 'Terrain1'} ,
-    {nom: 'Terrain2'} ,
-    {nom: 'Terrain3' },
-   // Add more links as needed
-  ];
+const ResponsableContent = ({ user }) => {
+  const [terrainList, setTerrainList] = useState([]);
+  const [reservationData, setReservationData] = useState([]);
 
-  const todo = [
-    {nom: 'il faut faire ceci'} ,
-    {nom: 'avis favorable sur le terrain2'} ,
-    {nom: 'ce n est pas beau' },
-   // Add more links as needed
-  ];
+  const listTerrain = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:4000/ter/terrain/list/${id}`);
+      const data = response.data;
+      setTerrainList(data.terrainList);
+    } catch (error) {
+      console.error('Failed to fetch terrain list:', error);
+    }
+  };
+
+  const fetchReservationCount = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:4000/res/reservation/compter/${id}`);
+      return response.data.reservationCount;
+    } catch (error) {
+      console.error('Failed to fetch reservation count:', error);
+      throw error; // Propagate the error to the caller
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      listTerrain(user.userObj._id);
+      const count = await fetchReservationCount(user.userObj._id);
+      setReservationData([{ date: 'Today', value: count }]);
+    };
+    fetchData();
+  }, []);
+
+  return (
+    <>
+      <NavBar links={links} />
+      <div className='flex flex-row'>
+        <SideBar>
+          <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
+          <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable/${user.userObj._id}`} />
+          <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
+        </SideBar>
+        <div className='flex flex-row'>
+          <div className='flex flex-col'>
+
+            <div className='border b-2 p-5 m-2 bg-white shadow-md rounded-md w-[250px] h-auto'>
+              <h1 className='text-2xl border-b-2 border-b-black mb-2 '>Terrains</h1>
+              <div className='flex flex-col'>
+                {terrainList.length > 0 ? (
+                  // Render terrain items if there are items in the list
+                  terrainList.map((terrain, index) => (
+                    <a href={`/responsable/${terrain._id}`} key={index} className='m-2 text-xl hover:text-green-500 '>
+                      {terrain.nom}
+                    </a>
+                  ))
+                ) : (
+                  // Render a message if there are no terrain items
+                  <p className='text-green-500 text-xl text-bold'>No terrains found.</p>
+                )}
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+            <h2 className='text-xl text-bold  my-2'>Reservation chart</h2>
+            <LineChart width={800} height={400} data={reservationData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
+            </LineChart>
+            </div>
+
+            <div className="w-[150px] h-[150px]  border border-gray-400 rounded-2xl shadow-md shadow-slate-400 transform transition-transform hover:rotate-360 m-2">
+              <div className="flex flex-col items-center justify-center w-full h-full">
+                <h1 className="text-gray-600 text-2xl text-bold">total reservations:</h1>
+                <h2 className="text-green-500 text-4xl text-bold">{reservationData.length > 0 ? reservationData[0].value : 0}</h2>              
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
 const Responsable = () => {
   const { user } = useAuthContext();
 
-  // Check if there is a user and their type is particulier
-  
-if (!user || user.userObj.__t !== "Responsable" ) {
-  return <Navigate to="/signin" />;
-}
+  if (!user || user.userObj.__t !== "Responsable") {
+    return <Navigate to="/signin" />;
+  }
 
-  return (
-    <>
-     <NavBar links={links}/>
-     
-     <div className='flex flex-row'>
-        <SideBar>
-               {/* Contenu de la barre latérale */}
-                <SidebarItem icon={<School />} text="profile responsable"  link={'responsable'} />
-                <SidebarItem icon={<Settings />} text="list terrain" link={'terrain/responsable/:id'} />
-                <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
-          </SideBar>
-       <div className='flex flex-row'>
-                <div className='flex flex-col'>
+  return <ResponsableContent user={user} />;
+};
 
-                        <div className='border b-2 p-5 m-2 bg-white shadow-md rounded-md w-[250px] h-[250px]'> 
-                        <h1 className='text-2xl border-b-2 border-b-black mb-2 '>Terrains</h1>
-                        <div className='flex flex-col'>{terrain.map((label,index) => (
-                            <a href='/' key={index} className='m-2 text-xl hover:text-green-500 '>
-                                {label.nom}
-                            </a>
-                        ))}</div>
-                        </div>
-
-                        <div className='border b-2 p-5 m-2 bg-white shadow-md rounded-md w-[250px] h-[250px]'> 
-                        <h1 className='text-2xl border-b-2 border-b-black mb-2 '>To-Do/Feedback </h1>
-                        <div>{todo.map((label,index) => (
-                            <h2 key={index} className='m-2 text-xl hover:text-green-500 line-clamp-1'>
-                                {label.nom}
-                            </h2>
-                        ))}</div>
-                        </div>
-                        
-                        </div>
-                        <div className='flex flex-col '>
-                        <div className=' w-[950px] items-center justify-center relative right-[20px] '><Parentcalendar/></div>
-                        {/*stats sous forme de graphique*/}
-                        <div className='flex flex-col relative right-[50px] top-[70px] my-4'><Stats/></div>
-                        </div>
-                        
-
-                                        
-       </div>
-       
-       
-     </div>
-     
-    </>
-  )
-}
-
-export default Responsable
+export default Responsable;

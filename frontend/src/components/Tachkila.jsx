@@ -5,7 +5,7 @@ import { TeamContext } from '../context/Teamcontext';
 import { useAuthContext } from '../hooks/useAuthContext';
 import axios from 'axios';
 
-const Tachkila = ({ handleTachkila }) => {
+const Tachkila = ({handleTachkila , tachkila}) => {
     const { team, setTeam } = useContext(TeamContext);
     const [newPlayerName, setNewPlayerName] = useState('');
     const [friends, setFriends] = useState([]);
