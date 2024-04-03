@@ -178,7 +178,7 @@ const FriendsList = () => {
                 <FriendsCard data={friend} onRemoveFriend={removeFriend} />
               </li>
             </ul>
-          ))}
+          ))   }
         </div>
       </div>
     </>

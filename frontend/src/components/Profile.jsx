@@ -35,7 +35,6 @@ const Profile = () => {
           try {
             const response = await axios.get(`http://localhost:4000/api/users/${user.userObj._id}/pending_requests`);
             setPendingRequests(response.data.pendingRequests);
-            console.log(response.data);
           } catch (error) {
             console.error(error);
           }

@@ -3,14 +3,39 @@ import axios from 'axios';
 import { BsTelephone } from 'react-icons/bs';
 import { ImCancelCircle } from 'react-icons/im';
 import { GrValidate } from 'react-icons/gr';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const Invitation = ({ data }) => {
+    const { user } = useAuthContext();
+
     const handleAccept = async () => {
-        alert("accept")
+        const response = await fetch('http://localhost:4000/api/users/confirm_friend_request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId: user.userObj._id, friendId : data._id })
+      });
+      
+      const responseData = await response.json();
+        console.log(responseData.message);
+        alert(responseData.message);
+        window.location.reload();
     };
 
     const handleDecline = async () => {
-        alert("decline ");
+        const response = await fetch('http://localhost:4000/api/users/reject_friend_request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId: user.userObj._id, friendId : data._id })
+      });
+      
+      const responseData = await response.json();
+        console.log(responseData.message);
+        alert(responseData.message);
+        window.location.reload();
     };
 
     return (
@@ -18,7 +43,7 @@ const Invitation = ({ data }) => {
           <div className='flex flex-row'>
               <img src="/taswira.jpg" alt="taswira" width={90} height={90} className='m-7 rounded-full' />
               <div className='items-center justify-center mt-11 ml-[20px]'>
-                  <h1 className='text-xl font-bold text-blueGray-400'>{data.nom}</h1>
+                  <h1 className='text-xl font-bold text-blueGray-400'>{data.nom} {data.prenom}</h1>
                   <div className='flex flex-row items-center justify-center mt-2'>
                       <BsTelephone />
                       <span className='text-sm font-bold text-blueGray-400 ml-2'>{data.tel}</span>
