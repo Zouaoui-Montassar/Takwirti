@@ -55,7 +55,8 @@ const addReservation = async (req, res) => {
 const updateReservation = async (req, res, next) => {
     try {
         const { reservationId } = req.params;
-        const { date } = req.body;
+        const date = req.body.date;
+        const participants = req.body.participants;
 
         // Get the current reservation
         const currentReservation = await reservationModel.findById(reservationId);
@@ -72,7 +73,8 @@ const updateReservation = async (req, res, next) => {
         // Update the reservation
         const updatedReservation = await reservationModel.findByIdAndUpdate(
             reservationId,
-            { date: new Date(date) }
+            { date: new Date(date),
+              participants: participants}
         );
 
         res.status(200).json({ message: "Reservation updated successfully", reservation: updatedReservation });
@@ -253,6 +255,16 @@ const getReservation = async(req, res) => {
     }
 }
 
+const getReservationInfo = async(req, res) => {
+    const idReservation = req.params.idRes ;
+    try {
+        const reservations = await reservationModel.findById(idReservation);
+        console.log(reservations);
+        res.status(200).json({ reservations });
+    }catch (error) {
+        res.status(500).json({ message: "Failed to get reservation info", error: error.message });
+    };
+}
 
 
 module.exports.reservationController = {
@@ -265,4 +277,5 @@ module.exports.reservationController = {
     listReservationR,
     /* addParticipantsToReservation, */
     getReservation,
+    getReservationInfo,
 };

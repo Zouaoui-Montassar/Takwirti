@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import SearchBox from './SearchBox';
 import { useAuthContext } from '../hooks/useAuthContext';
 
 const ReservationList = ({xxx}) => {
-
     const [reservations, setReservations] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const { user } = useAuthContext();
     const id = user.userObj._id;
 
-    const searchReservationsByDate = async (id, date) => {
+    const searchReservationsByDate = async (date) => {
         try {
             const response1 = await axios.get(`http://localhost:4000/res/reservation/search/${id}`, { date: date });
             console.log(response1.data.reservations);
@@ -22,17 +21,17 @@ const ReservationList = ({xxx}) => {
             return [];
         }
     };
-
+    console.log(id);
     useEffect(() => {
         const fetchData = async () => {
             try {
-                let response;
                 if(xxx === "Particulier") {
-                    response = await axios.get(`http://localhost:4000/res/reservation/listP/${id}`);
+                    const response = await axios.get(`http://localhost:4000/res/reservation/listP/${id}`);
+                    setReservations(response.data.reservations);
                 } else if(xxx === "responsable") {
-                    response = await axios.get(`http://localhost:4000/res/reservation/listR/${id}`);
+                    const response = await axios.get(`http://localhost:4000/res/reservation/listR/${id}`);
+                    setReservations(response.data.reservations);
                 }
-                setReservations(response.data.reservations);
             } catch (error) {
                 console.error('Error fetching reservations:', error);
             }

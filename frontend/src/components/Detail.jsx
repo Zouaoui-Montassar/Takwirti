@@ -4,6 +4,7 @@ import NavBar from './NavBar';
 import { LockOpen , CircleX , Calendar } from 'lucide-react';
 import Stars from './Stars';
 import { Link, useParams } from 'react-router-dom';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const links = [
     {label: 'Accueil', path: '/'} ,
@@ -18,6 +19,8 @@ const Detail = () => {
     const [error, setError] = useState(null);
     const params = useParams();
     const terrainId = params.id
+    const { user } = useAuthContext();
+    const idUser = user.userObj._id;
     useEffect(() => {
         const fetchTerrainInfo = async () => {
             try {
@@ -78,7 +81,7 @@ const Detail = () => {
                     <div className='mt-3'>
                         <Stars />
                     </div>
-                    <Link to={`/reservation/add/6602626e608a35e2bf409f56/${terrainInfo._id}`} className='border border-green-400 bg-green-400 w-full md:w-1/6 p-2 rounded-md mt-3 flex items-center justify-center text-white'>
+                    <Link to={`/reservation/add/${idUser}/${terrainInfo._id}`} className='border border-green-400 bg-green-400 w-full md:w-1/6 p-2 rounded-md mt-3 flex items-center justify-center text-white'>
                         <p className='text-bold text-xl mr-1'>Réserver</p>
                         <Calendar className='w-6 h-6' />
                     </Link>

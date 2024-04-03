@@ -74,7 +74,7 @@ function App() {
           <Route path="/Reservation/add/:idUser/:idTer" element={<ReservationAddParent />} />
           <Route path="/list" element={<List/>} />
           <Route path="/reservation/list" element={<ReservationList xxx={"Particulier"}/>} />
-          <Route path="/reservation/edit" element={<ReservationEdit iduser={"6602626e608a35e2bf409f56"}/>} />
+          <Route path="/reservation/edit/:idRes" element={<ReservationEdit/>} />
           <Route path='/terrain/update/:id' element={<Terrain func={"update"}/>}/>
           <Route path='/friendslist' element={<FriendsList/>}/>
           <Route path='/tachkila' element={<Tachkila/>}/>

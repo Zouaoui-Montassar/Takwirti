@@ -5,7 +5,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { BsPen } from "react-icons/bs";
 import { TeamContext } from '../context/Teamcontext';
 
-const Tachkila = ({handleTachkila }) => {
+const Tachkila = ({handleTachkila , tachkila}) => {
     const { team, setTeam } = useContext(TeamContext);
     const [newPlayerName, setNewPlayerName] = useState('');
 

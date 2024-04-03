@@ -2,14 +2,13 @@ import React, { useState, useEffect, useContext } from 'react';
 import {ReservationAdd} from './ReservationAdd';
 import { TeamContext, TeamProvider } from '../context/Teamcontext';
 import Tachkila from './Tachkila';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import NavBar from '../components/NavBar';
 import Sidebar , { SidebarItem } from '../components/SideBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { School ,Settings,LogOut} from 'lucide-react';
-import { useLogout } from '../hooks/useLogout'; 
 import SearchBox from '../components/SearchBox';
 
 
@@ -24,6 +23,7 @@ const ReservationAddParent = () => {
     const [terrainItems, setTerrainItems] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [tachkila, setTachkila] = useState();
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -46,6 +46,7 @@ const ReservationAddParent = () => {
     const handleOnSubmit = async (e) => { 
         e.preventDefault();
         let combinedDateTime = new Date(selectedDate);
+        console.log(selectedDate)
         combinedDateTime.setHours(parseInt(selectedHour), 0, 0, 0);
         combinedDateTime = combinedDateTime.toISOString();
         try {
@@ -54,6 +55,7 @@ const ReservationAddParent = () => {
                 participants: tachkila,
             });
             console.log(response.data); // Assuming you want to log the response
+            navigate('/reservation/list');
         } catch (error) {
             console.error('Failed to add reservation:', error);
         }

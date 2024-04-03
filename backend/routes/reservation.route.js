@@ -15,7 +15,7 @@ router.get('/reservation/listP/:partId', reservationController.listReservationP)
 router.get('/reservation/listR/:resId', reservationController.listReservationR);
 /* router.post('/reservation/add-participants', reservationController.addParticipantsToReservation); */
 router.get('/reservation/getInfo/:terrainId/:date', reservationController.getReservation)
-
+router.get('/reservation/getReservationInfo/:idRes', reservationController.getReservationInfo);
 
 
 module.exports.reservationRouter = router;
