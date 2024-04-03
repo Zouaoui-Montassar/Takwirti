@@ -10,7 +10,7 @@ const addReservation = async (req, res) => {
         const terrainId  = req.params.terId;
         const participants = req.body.participants;
         // Check if there is already a reservation for the given terrain at the same time
-        const existingReservation = await reservationModel.findOne({ terrain: terrainId, date: { $eq: new Date(date) } });
+        const existingReservation = await reservationModel.findOne({ terrain: terrainId, date: { $eq: new Date(date) }, status: 'En cours'});
         if (existingReservation) {
             return res.status(400).json({ message: 'There is already a reservation for the given terrain at the same time' });
         }
@@ -65,7 +65,7 @@ const updateReservation = async (req, res, next) => {
         }
 
         // Check if there is already a reservation for the same terrain at the updated time
-        const existingReservation = await reservationModel.findOne({ terrain: currentReservation.terrain, date: { $eq: new Date(date) } });
+        const existingReservation = await reservationModel.findOne({ terrain: currentReservation.terrain, date: { $eq: new Date(date) } , status : "En cours" });
         if (existingReservation && existingReservation._id.toString() !== reservationId) {
             return res.status(400).json({ message: 'There is already a reservation for the given terrain at the updated time' });
         }
