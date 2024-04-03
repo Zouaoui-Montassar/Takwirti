@@ -30,16 +30,25 @@ router.get('/users/:id', userController.getUserById);
 
 router.get('/users/search/:query', userController.getUserByQuery);
 
-// Get all users (possible lel admin dashboard )
-router.get('/users/all', userController.getAllUsers);
 
-// Delete user ( admin kifkif )
-router.delete('/users/delete_user/:id', userController.deleteUser);
-
-// add friend w remove jaw
-router.post('/users/add_friend', userController.addFriend);
+// FRIENDS 
+router.post('/users/add_friend', userController.addFriend); // walet zeyda for now
 router.delete('/users/remove_friend', userController.removeFriend);
 router.get('/users/:userId/friends',userController.GetAllFriends);
+
+router.post('/users/send_friend_request', userController.sendFriendRequest);
+
+router.post('/users/reject_friend_request', userController.rejectFriendRequest);
+
+router.post('/users/confirm_friend_request', userController.confirmFriendRequest);
+
+router.get('/users/:userId/pending_requests', userController.getPendingFriends);
+
+
+
+ /* // ADMIN STUFF ( optional )
+router.get('/users/all', userController.getAllUsers);
+ router.delete('/users/delete_user/:id', userController.deleteUser); khalehom comment sa3at lserver ycrashi  */
 
 module.exports.userRouter = router;
 

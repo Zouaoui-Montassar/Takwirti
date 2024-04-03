@@ -1,5 +1,6 @@
 const { ResponsableModel } = require('../models/responsable.model');
 const { ParticulierModel } = require('../models/particulier.model');
+const { NotifModel} =require('../models/notification.model')
 const UserModel = require('../models/user.model');
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
@@ -187,6 +188,80 @@ const GetAllFriends = async (req, res) => {
     }
   };
 
+const sendFriendRequest = async (req, res) => {
+    const { userId, friendId } = req.body;
+    try {
+        console.log(`Sending friend request from user with ID ${userId} to user with ID ${friendId}`);
+        const result = await friendService.envoirequest(userId, friendId);
+        if (result.success) {
+            console.log(`Friend request sent successfully from user with ID ${userId} to user with ID ${friendId}`);
+            const sender = await UserModel.findById(userId);
+            const senderName = sender ? `${sender.nom} ${sender.prenom}` : 'Unknown user';
+            const notification = new NotifModel({
+                sender: userId,
+                receiver: friendId,
+                message: `You have received a friend request from ${senderName}`,
+            });
+            await notification.save();
+
+            res.status(200).json({ message: "Friend request sent successfully" });
+        } else {
+            console.log(`Failed to send friend request from user with ID ${userId} to user with ID ${friendId}`);
+            res.status(400).json({ message: result.message });
+        }
+    } catch (error) {
+        console.error("Error in sendfriendrequest:", error);
+        res.status(500).json({ message: "Failed to send friend request", error: error.message });
+    }
+};
+
+const rejectFriendRequest = async (req, res) => {
+    const { userId, friendId } = req.body;
+    try {
+        console.log(`Rejecting friend request from user with ID ${friendId} to user with ID ${userId}`);
+        const result = await friendService.rejectRequest(userId, friendId);
+        if (result.success) {
+            console.log(`Friend request rejected successfully from user with ID ${friendId} to user with ID ${userId}`);
+            res.status(200).json({ message: "Friend request rejected successfully" });
+        } else {
+            console.log(`Failed to reject friend request from user with ID ${friendId} to user with ID ${userId}`);
+            res.status(400).json({ message: result.message });
+        }
+    } catch (error) {
+        console.error("Error in rejectFriendRequest:", error);
+        res.status(500).json({ message: "Failed to reject friend request", error: error.message });
+    }
+};
+const confirmFriendRequest = async (req, res) => {
+    const { userId, friendId } = req.body;
+    try {
+        console.log(`Confirming friend request from user with ID ${friendId} to user with ID ${userId}`);
+        const result = await friendService.confirmRequest(userId, friendId);
+        if (result.success) {
+            console.log(`Friend request confirmed successfully from user with ID ${friendId} to user with ID ${userId}`);
+            res.status(200).json({ message: "Friend request confirmed successfully" });
+        } else {
+            console.log(`Failed to confirm friend request from user with ID ${friendId} to user with ID ${userId}`);
+            res.status(400).json({ message: result.message });
+        }
+    } catch (error) {
+        console.error("Error in confirmFriendRequest:", error);
+        res.status(500).json({ message: "Failed to confirm friend request", error: error.message });
+    }
+};
+
+const getPendingFriends = async (req, res) => {
+    const { userId } = req.params;
+    try {
+        console.log(`Getting pending friend requests for user with ID ${userId}`);
+        const pendingRequests = await friendService.getPendingRequests(userId);
+        console.log(`Pending friend requests retrieved successfully for user with ID ${userId}`);
+        res.status(200).json({ pendingRequests });
+    } catch (error) {
+        console.error("Error in getPendingFriends:", error);
+        res.status(500).json({ message: "Failed to get pending friend requests", error: error.message });
+    }
+};
 
 
 
@@ -219,5 +294,9 @@ module.exports.userController = {
     addFriend,
     removeFriend,
     getUserByQuery,
-    GetAllFriends
+    GetAllFriends,
+    sendFriendRequest,
+    confirmFriendRequest,
+    rejectFriendRequest,
+    getPendingFriends
 };
