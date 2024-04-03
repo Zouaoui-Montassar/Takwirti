@@ -273,6 +273,7 @@ const getUserByQuery = async (req, res) => {
         const users = await ParticulierModel.find({
             $or: [
                 { nom: { $regex: query, $options: 'i' } }, // Case-insensitive match for 'nom'
+                { prenom: { $regex: query, $options: 'i' } }, // Case-insensitive match for 'prenom'
                 { tel: { $regex: query, $options: 'i' } }  // Case-insensitive match for 'tel'
             ]
         });
