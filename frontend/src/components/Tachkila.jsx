@@ -100,7 +100,7 @@ const Tachkila = ({ handleTachkila }) => {
                     <li key={index} className="flex items-center justify-between border border-5 border-black-500 p-2 bg-primary-50 rounded-full shadow-md shadow-slate-400 text-white">
                         <h1 className="font-bold mx-4">{player}</h1>
                         <div className="flex flex-row">
-                            <button
+                            {/* <button
                                 onClick={() => deletePlayer(index)}
                                 className="flex flex-row items-center border-2 border-red-500 bg-red-500 p-1 rounded-md shadow-md shadow-slate-400 mr-2"
                             >
@@ -116,7 +116,7 @@ const Tachkila = ({ handleTachkila }) => {
                                 className="flex flex-row items-center border-2 border-blue-500 bg-blue-500 p-1 rounded-md shadow-md shadow-slate-400"
                             >
                                 <BsPen className="w-4 h-4 text-white" />
-                            </button>
+                            </button> */}
                         </div>
                     </li>
                 ))}
