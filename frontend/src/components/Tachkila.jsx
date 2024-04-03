@@ -15,21 +15,27 @@ const Tachkila = ({ handleTachkila }) => {
     const addPlayerFromInput = () => {
         const nameToAdd = newPlayerName.trim();
         if (nameToAdd !== '') {
-            setTeam([...team, nameToAdd]);
+            const playerToAdd = { nom: nameToAdd, prenom: '', tel: null, _id: null };
+            // radithom uniforme lkolhom objet w nafs lattributs
+            // _id w tel null ( ken theb thot chaine vide badel kima test7a9 fel verif)
+             // bech mbaed fel submit tmappehom w ken _id null raw mahouch user 7a9ani fel app w ma tabeetch notif lih
+            setTeam([...team, playerToAdd]);
             setNewPlayerName('');
             setShowSuggestions(false);
         }
     };
+    
 
     const addPlayerFromSuggestion = (friend) => {
-        const nameToAdd = friend.nom + ' ' + friend.prenom;
-        setTeam([...team, nameToAdd]);
+        console.log("adding from friends :" , friend);
+        setTeam([...team, friend]);
         setNewPlayerName('');
         setShowSuggestions(false);
     };
+    
 
     const deletePlayer = (index) => {
-        const updatedTeam = team.filter((_, i) => i !== index);
+        const updatedTeam = [...team.slice(0, index), ...team.slice(index + 1)];
         setTeam(updatedTeam);
     };
 
@@ -51,7 +57,9 @@ const Tachkila = ({ handleTachkila }) => {
 
     const handleInputKeyPress = (e) => {
         if (e.key === 'Enter') {
+            e.preventDefault(); // Prevent default behavior (form submission)
             addPlayerFromInput();
+            e.stopPropagation(); // Stop event propagation
         }
     };
 
@@ -89,37 +97,37 @@ const Tachkila = ({ handleTachkila }) => {
                     <ul className="mt-1 max-h-40 max-w-1/2 overflow-y-auto bg-white border border-gray-300 rounded-md shadow-md">
                         {friends.map((friend, index) => (
                             <li key={index} onClick={() => addPlayerFromSuggestion(friend)} className="cursor-pointer p-2 hover:bg-gray-100">
-                                {friend.nom} {friend.prenom} {friend._id}
+                                {friend.nom} {friend.prenom}
                             </li>
                         ))}
                     </ul>
                 )}
             </div>
             <ul className="border border-5 border-gray-200 p-2 rounded-xl shadow-2xl bg-white shadow-slate-500 w-full">
-                {team.map((player, index) => (
-                    <li key={index} className="flex items-center justify-between border border-5 border-black-500 p-2 bg-primary-50 rounded-full shadow-md shadow-slate-400 text-white">
-                        <h1 className="font-bold mx-4">{player}</h1>
-                        <div className="flex flex-row">
-                            {/* <button
-                                onClick={() => deletePlayer(index)}
-                                className="flex flex-row items-center border-2 border-red-500 bg-red-500 p-1 rounded-md shadow-md shadow-slate-400 mr-2"
-                            >
-                                <RiDeleteBin6Line className="w-4 h-4 text-white" />
-                            </button>
-                            <button
-                                onClick={() => {
-                                    const newName = prompt('Enter new name:', player);
-                                    if (newName !== null) {
-                                        updatePlayer(index, newName);
-                                    }
-                                }}
-                                className="flex flex-row items-center border-2 border-blue-500 bg-blue-500 p-1 rounded-md shadow-md shadow-slate-400"
-                            >
-                                <BsPen className="w-4 h-4 text-white" />
-                            </button> */}
-                        </div>
-                    </li>
-                ))}
+            {team.map((player, index) => (
+    <li key={index} className="flex items-center justify-between border border-5 border-black-500 p-2 bg-primary-50 rounded-full shadow-md shadow-slate-400 text-white">
+        <h1 className="font-bold mx-4">{player.nom} {player.prenom}</h1>
+        <div className="flex flex-row">
+            <button
+                onClick={() => deletePlayer(index)}
+                className="flex flex-row items-center border-2 border-red-500 bg-red-500 p-1 rounded-md shadow-md shadow-slate-400 mr-2"
+            >
+                <RiDeleteBin6Line className="w-4 h-4 text-white" />
+            </button>
+            {/*<button
+                onClick={() => {
+                    const newName = prompt('Enter new name:', player.nom);
+                    if (newName !== null) {
+                        updatePlayer(index, newName);
+                    }
+                }}
+                className="flex flex-row items-center border-2 border-blue-500 bg-blue-500 p-1 rounded-md shadow-md shadow-slate-400"
+            >
+                <BsPen className="w-4 h-4 text-white" />
+            </button> */}
+        </div>
+    </li>
+))}
             </ul>
         </div>
     );
