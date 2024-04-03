@@ -145,6 +145,7 @@ const getUserById = async (req, res) => {
     }
 };
 
+// add friend zeyda , mais khaleha for tests
 const addFriend = async (req, res) => {
     const { userId, friendId } = req.body; 
     try {

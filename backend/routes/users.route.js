@@ -32,7 +32,7 @@ router.get('/users/search/:query', userController.getUserByQuery);
 
 
 // FRIENDS 
-router.post('/users/add_friend', userController.addFriend); // walet zeyda for now
+router.post('/users/add_friend', userController.addFriend); // walet zeyda for now ( khaleha for tests)
 router.delete('/users/remove_friend', userController.removeFriend);
 router.get('/users/:userId/friends',userController.GetAllFriends);
 
