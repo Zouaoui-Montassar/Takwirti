@@ -14,8 +14,9 @@ const ReservationList = ({xxx}) => {
     const searchReservationsByDate = async (id, date) => {
         try {
             const response1 = await axios.get(`http://localhost:4000/res/reservation/search/${id}`, { date: date });
-            return response1.data.reservations;
             console.log(response1.data.reservations);
+            return response1.data.reservations;
+            
         } catch (error) {
             console.error('Error searching for reservations by date:', error);
             return [];
@@ -47,7 +48,8 @@ const ReservationList = ({xxx}) => {
 
     const handleSearchByDate = async (date) => {
         try {
-            const reservations = await searchReservationsByDate(id, date);
+            console.log(date);
+            const reservations = await searchReservationsByDate(date);
             setReservations(reservations);
         } catch (error) {
             console.error('Error searching for reservations by date:', error);

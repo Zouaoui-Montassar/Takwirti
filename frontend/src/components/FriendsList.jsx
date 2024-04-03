@@ -16,11 +16,18 @@ const links = [
   // Add more links as needed
 ];
 
+
+
 const FriendsList = () => {
+  const [searchUserTerm, setsearchUserTerm] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [friends, setFriends] = useState([]);
+  const [findpeople, setFindpeople] =useState([]);
+  const [clicked, setClicked] =useState(false);
   const { user } = useAuthContext();
-
+  const handleSearchBar = (searchTerm) => {
+    // search bar ala jnab
+  };
   useEffect(() => {
     const fetchFriends = async () => {
       try {
@@ -34,9 +41,6 @@ const FriendsList = () => {
     fetchFriends();
   }, [user.userObj._id]);
 
-  const handleSearch = (searchTerm) => {
-    setSearchTerm(searchTerm);
-  };
   const removeFriend = async (friendId) => {
     try {
       const response = await fetch('http://localhost:4000/api/users/remove_friend', {
@@ -54,7 +58,35 @@ const FriendsList = () => {
       console.error('Failed to remove friend', error);
     }
   };
-
+  const handleSearchUser = async () => {
+    try {
+      console.log("Search term:", searchUserTerm);
+      const response = await axios.get(`http://localhost:4000/api/users/search/${searchUserTerm}`);
+      console.log(response.data);
+      setClicked(true);
+      setFindpeople(response.data.users);
+    } catch (error) {
+      console.error('Failed to search for users', error);
+    }
+  };
+  
+  const addFriend = async (friendId) => {
+    try {
+      const response = await fetch('http://localhost:4000/api/users/send_friend_request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId: user.userObj._id, friendId : friendId })
+      });
+      
+      const data = await response.json();
+      console.log(data.message);
+      alert(data.message);
+    } catch (error) {
+      console.error('Failed to sent a friend request', error);
+    }
+  };
 
 
 
@@ -63,7 +95,7 @@ const FriendsList = () => {
       <NavBar links={links} />
       <div className='flex flex-row'>
         <Sidebar>
-          <SidebarItem icon={<FontAwesomeIcon icon={faSearch} />} text={<SearchBox onSearch={handleSearch} />} />
+          <SidebarItem icon={<FontAwesomeIcon icon={faSearch} />} text={<SearchBox onSearch={handleSearchBar} />} />
           <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
               <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
               <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
@@ -72,6 +104,73 @@ const FriendsList = () => {
 
         </Sidebar>
         <div className='m-2'>
+        <h2 className='text-bold text-2xl m-2'>Find People</h2>
+        <div className="flex items-center justify-center">
+            <div className="flex space-x-1">
+                <input
+                    type="text"
+                    className="block w-full px-10 py-2 text-green-500 bg-white border rounded-full focus:border-green-500 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    placeholder="Search..."
+                    value={searchUserTerm}
+                    onChange={(e) => setsearchUserTerm(e.target.value)}
+                />
+                <button className="px-4 text-white bg-green-500 rounded-full" onClick={handleSearchUser}>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        {findpeople.length === 0 && searchUserTerm.length === 0 && (
+          <div className='m-2'>
+            <h2 className='text-bold text-2xl m-2 opacity-20'>Find people by their name , or their phone number !</h2>
+          </div>
+        )}
+        { clicked && (
+          <h2 className='text-bold text-2xl m-2'>Search Results</h2>
+        )}
+
+        {findpeople.length === 0 && clicked && searchUserTerm.length > 0 && (
+          <div className='m-2'>
+            <h2 className='text-bold text-2xl m-2'>No users with the specified input found</h2>
+          </div> // lin ntraiti cas enou string fergha
+        )}
+        {findpeople.length === 1 && clicked && findpeople[0]._id === user.userObj._id && (
+          <div className='m-2'>
+          <h2 className='text-bold text-2xl m-2'>No users with the specified input found</h2>
+        </div> // yfiltri el current user fi cas enou 7at esmou
+        )
+
+        }
+        { findpeople.length > 0 && (
+          <div className='m-2'>
+  {findpeople
+    .filter(person => person._id !== user.userObj._id)
+    .map((person) => (
+      <FriendsCard key={person._id} data={person} onAddFriend={addFriend} showAddButton={true} />
+    ))}
+</div>
+
+)}
+
+
+     
+
+
+
+
+
           <h2 className='text-bold text-2xl m-2'>All friends</h2>
           {friends.map((friend) => (
             <ul>
@@ -79,7 +178,7 @@ const FriendsList = () => {
                 <FriendsCard data={friend} onRemoveFriend={removeFriend} />
               </li>
             </ul>
-          ))}
+          ))   }
         </div>
       </div>
     </>

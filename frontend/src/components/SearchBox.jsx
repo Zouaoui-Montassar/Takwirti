@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
 export default function SearchBox({ onSearch }) {
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm, setSearchTerm] = useState();
 
     const handleSearch = () => {
         // Call the onSearch callback function with the search term
-        onSearch();
+        onSearch(searchTerm);
     };
 
     return (

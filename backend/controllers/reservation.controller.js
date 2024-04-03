@@ -8,17 +8,24 @@ const addReservation = async (req, res) => {
         const date  = req.body.date;
         const userId =req.params.partId;
         const terrainId  = req.params.terId;
-        const equipe = req.body.equipe;
+        const participants = req.body.participants;
         // Check if there is already a reservation for the given terrain at the same time
         const existingReservation = await reservationModel.findOne({ terrain: terrainId, date: { $eq: new Date(date) } });
         if (existingReservation) {
             return res.status(400).json({ message: 'There is already a reservation for the given terrain at the same time' });
         }
 
-        // Check if the terrain exists
         const terrain = await terrainModel.findById(terrainId);
         if (!terrain) {
             return res.status(404).json({ message: 'Terrain not found' });
+        }
+        dateObject = new Date(date);
+        const day = dateObject.toLocaleDateString('en-US', { weekday: 'long' }); // Get current day as string
+        console.log(day)
+        console.log(terrain.calendrier.date.toLowerCase())
+        console.log(day.toLowerCase() === terrain.calendrier.date.toLowerCase())
+        if (day.toLowerCase() === terrain.calendrier.date.toLowerCase()) {
+            return res.status(400).json({ message: "You can't reserve on this day, this field is already closed" });
         }
 
         // Check if the user exists
@@ -33,7 +40,7 @@ const addReservation = async (req, res) => {
             terrain: terrain,
             date: new Date(date),
             status: "En cours",
-            participants : equipe
+            participants : participants
         });
         await newReservation.save();
 
@@ -150,7 +157,7 @@ const searchReservation = async (req, res) => {
         if (date) {
             // Convert the date string to a JavaScript Date object
             const searchDate = new Date(date);
-
+            console.log(searchDate);
             // If the searchDate is a valid Date object, add it to the filter
             if (!isNaN(searchDate.getTime())) {
                 // Assuming the date field in the reservationModel is named "date"
@@ -160,7 +167,7 @@ const searchReservation = async (req, res) => {
 
         // Find reservations based on the filter
         const reservations = await reservationModel.find(filter);
-
+        console.log(reservations)
         res.status(200).json({ reservations });
     } catch (error) {
         res.status(500).json({ message: "Failed to search for reservations", error: error.message });
