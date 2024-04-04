@@ -113,6 +113,12 @@ const FriendsList = () => {
                     placeholder="Search..."
                     value={searchUserTerm}
                     onChange={(e) => setsearchUserTerm(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                          e.preventDefault();
+                          handleSearchUser();
+                      }
+                  }}
                 />
                 <button className="px-4 text-white bg-green-500 rounded-full" onClick={handleSearchUser}>
                     <svg

@@ -1,6 +1,7 @@
 const { reservationModel } = require('../models/reservation.model');
 const UserModel = require('../models/user.model');
 const { terrainModel } = require('../models/terrain.model');
+const moment = require("moment");
 
 // add Reservation function
 const addReservation = async (req, res) => {
@@ -10,7 +11,7 @@ const addReservation = async (req, res) => {
         const terrainId  = req.params.terId;
         const participants = req.body.participants;
         // Check if there is already a reservation for the given terrain at the same time
-        const existingReservation = await reservationModel.findOne({ terrain: terrainId, date: { $eq: new Date(date) } });
+        const existingReservation = await reservationModel.findOne({ terrain: terrainId, date: { $eq: new Date(date) }, status: 'En cours'});
         if (existingReservation) {
             return res.status(400).json({ message: 'There is already a reservation for the given terrain at the same time' });
         }
@@ -55,7 +56,8 @@ const addReservation = async (req, res) => {
 const updateReservation = async (req, res, next) => {
     try {
         const { reservationId } = req.params;
-        const { date } = req.body;
+        const date = req.body.date;
+        const participants = req.body.participants;
 
         // Get the current reservation
         const currentReservation = await reservationModel.findById(reservationId);
@@ -64,7 +66,7 @@ const updateReservation = async (req, res, next) => {
         }
 
         // Check if there is already a reservation for the same terrain at the updated time
-        const existingReservation = await reservationModel.findOne({ terrain: currentReservation.terrain, date: { $eq: new Date(date) } });
+        const existingReservation = await reservationModel.findOne({ terrain: currentReservation.terrain, date: { $eq: new Date(date) } , status : "En cours" });
         if (existingReservation && existingReservation._id.toString() !== reservationId) {
             return res.status(400).json({ message: 'There is already a reservation for the given terrain at the updated time' });
         }
@@ -72,7 +74,8 @@ const updateReservation = async (req, res, next) => {
         // Update the reservation
         const updatedReservation = await reservationModel.findByIdAndUpdate(
             reservationId,
-            { date: new Date(date) }
+            { date: new Date(date),
+              participants: participants}
         );
 
         res.status(200).json({ message: "Reservation updated successfully", reservation: updatedReservation });
@@ -116,29 +119,12 @@ const annulerReservation = async (req, res) => {
 // terminer Reservation function
 const terminerReservation = async (req, res) => {
     try {
-        const { reservationId } = req.params;
-
-        // Find the reservation by ID
-        const reservation = await reservationModel.findById(reservationId);
-
-        // Check if the reservation exists
-        if (!reservation) {
-            return res.status(404).json({ message: "Reservation not found" });
-        }
-
-        // Check if the reservation status is "Annulée"
-        if (reservation.status === "Annulée") {
-            return res.status(400).json({ message: "Cannot complete reservation because it is already 'Annulée'" });
-        }
-
-        // Update the reservation status to "Terminée"
-        const updatedReservation = await reservationModel.findByIdAndUpdate(
-            reservationId,
-            { status: "Terminée" },
-            { new: true } // Return the updated reservation
+        const currentDate = new Date();
+        const pastReservations = await reservationModel.updateMany(
+            { date: { $lt: currentDate }, status:'En cours' },
+            { $set: { status: 'Terminée' } }
         );
-
-        res.status(200).json({ message: "Reservation completed successfully", reservation: updatedReservation });
+        console.log(`Updated ${pastReservations.modifiedCount} past reservations.`);
     } catch (error) {
         res.status(500).json({ message: "Failed to complete reservation", error: error.message });
     }
@@ -147,30 +133,22 @@ const terminerReservation = async (req, res) => {
 
 // search Reservation function par le particulier selon une date si la date n est null affiche tous les reservations
 const searchReservation = async (req, res) => {
+    const id = req.params.partId;
+    const date = req.query.searchTerm;
+    console.log(date);
     try {
-        const { partId } = req.params;
-        const { date } = req.body;
-
-        let filter = { user: partId };
-
-        // If date is provided, add it to the filter
-        if (date) {
-            // Convert the date string to a JavaScript Date object
-            const searchDate = new Date(date);
-            console.log(searchDate);
-            // If the searchDate is a valid Date object, add it to the filter
-            if (!isNaN(searchDate.getTime())) {
-                // Assuming the date field in the reservationModel is named "date"
-                filter.date = searchDate;
-            }
-        }
-
-        // Find reservations based on the filter
-        const reservations = await reservationModel.find(filter);
-        console.log(reservations)
-        res.status(200).json({ reservations });
+        const startOfDay = new Date(date);
+        console.log(startOfDay)
+        startOfDay.setHours(0, 0, 0, 0);
+        const endOfDay = new Date(date);
+        endOfDay.setHours(23, 59, 59, 999);
+        const reservations = await reservationModel.find({
+        user: id,
+        date: { $gte: startOfDay, $lte: endOfDay },
+        });
+        res.send(reservations);
     } catch (error) {
-        res.status(500).json({ message: "Failed to search for reservations", error: error.message });
+        res.status(500).send(error);
     }
 };
 
@@ -273,6 +251,16 @@ const getReservation = async(req, res) => {
     }
 }
 
+const getReservationInfo = async(req, res) => {
+    const idReservation = req.params.idRes ;
+    try {
+        const reservations = await reservationModel.findById(idReservation);
+        console.log(reservations);
+        res.status(200).json({ reservations });
+    }catch (error) {
+        res.status(500).json({ message: "Failed to get reservation info", error: error.message });
+    };
+}
 
 
 module.exports.reservationController = {
@@ -286,4 +274,5 @@ module.exports.reservationController = {
     compterReservation,
     /* addParticipantsToReservation, */
     getReservation,
+    getReservationInfo,
 };

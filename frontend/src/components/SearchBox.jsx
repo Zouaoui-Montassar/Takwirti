@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function SearchBox({ onSearch }) {
+export default function SearchBox({ onSearch, isReservation }) {
     const [searchTerm, setSearchTerm] = useState();
 
     const handleSearch = () => {
@@ -12,7 +12,7 @@ export default function SearchBox({ onSearch }) {
         <div className="flex items-center">
             <div className="flex space-x-1">
                 <input
-                    type="text"
+                    type={isReservation ? "date" : "text"}
                     className="block w-full px-4 py-2 text-green-500 bg-white border rounded-full focus:border-green-500 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     placeholder="Search..."
                     value={searchTerm}

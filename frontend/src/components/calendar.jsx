@@ -5,6 +5,7 @@ import { useLocation,useParams } from 'react-router-dom';
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 const Calendar = ({ onDateSelect, dayBlocked}) => {
+  console.log(dayBlocked);
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [selectedDate, setSelectedDate] = useState(new Date()); // Define setSelectedDate here
@@ -12,10 +13,9 @@ const Calendar = ({ onDateSelect, dayBlocked}) => {
   const params= useParams();
   const idUser = params.idUser ;
   const idTer = params.idTer;
+  const idRes = params.idRes ;
   const location = useLocation(); // Get current location using useLocation hook
-  const isReservationPage = location.pathname === `/reservation/add/${idUser}/${idTer}`; // Assuming reservation page route is '/reservation'
-  console.log(dayBlocked)
-
+  const isReservationPage = location.pathname === `/reservation/add/${idUser}/${idTer}` || location.pathname ===`/reservation/edit/${idRes}`; // Assuming reservation page route is '/reservation'
   const dayNameToNumber = (dayName) => {
     switch (dayName.toLowerCase()) {
       case 'sunday':
@@ -50,7 +50,7 @@ const Calendar = ({ onDateSelect, dayBlocked}) => {
     for (let i = 0; i < firstDayOfWeek; i++) {
       calendar.push(<div key={`empty-${i}`} className="text-center py-2 border"></div>);
     }
-
+console.log(selectedDate.toDateString())
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(currentYear, currentMonth, day);
       let isBlocked = (dayBlocked === date.getDay())|| (date < new Date()); // Comparer le jour actuel avec le jour bloqué

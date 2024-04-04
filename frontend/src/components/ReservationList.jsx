@@ -1,72 +1,79 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import SearchBox from './SearchBox';
 import { useAuthContext } from '../hooks/useAuthContext';
+import NavBar from '../components/NavBar';
+import Sidebar , { SidebarItem } from '../components/SideBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { School ,Settings} from 'lucide-react';
 
-const ReservationList = ({xxx}) => {
 
+const ReservationList = () => {
     const [reservations, setReservations] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const { user } = useAuthContext();
     const id = user.userObj._id;
-
-    const searchReservationsByDate = async (id, date) => {
-        try {
-            const response1 = await axios.get(`http://localhost:4000/res/reservation/search/${id}`, { date: date });
-            console.log(response1.data.reservations);
-            return response1.data.reservations;
-            
-        } catch (error) {
-            console.error('Error searching for reservations by date:', error);
-            return [];
-        }
-    };
-
+    const [xxx , setXxx ] = useState(user.userObj.__t);
+    console.log(searchTerm);
+    const date = new Date(searchTerm);
     useEffect(() => {
         const fetchData = async () => {
             try {
-                let response;
                 if(xxx === "Particulier") {
-                    response = await axios.get(`http://localhost:4000/res/reservation/listP/${id}`);
-                } else if(xxx === "Responsable") {
-                    response = await axios.get(`http://localhost:4000/res/reservation/listR/${id}`);
+                    const response = await axios.get(`http://localhost:4000/res/reservation/listP/${id}`);
+                    setReservations(response.data.reservations);
+                } else if(xxx === "responsable") {
+                    const response = await axios.get(`http://localhost:4000/res/reservation/listR/${id}`);
+                    setReservations(response.data.reservations);
                 }
-                setReservations(response.data.reservations);
+                else if(xxx === "search") {
+                    const response = await axios.get(`http://localhost:4000/res/reservation/search/${id}`, { params : { searchTerm : date.toISOString() }});
+                    console.log(response.data);
+                    setReservations(response.data);
+                }else {
+                    console.error('Invalid param value:', xxx);
+                    return;
+                }
             } catch (error) {
                 console.error('Error fetching reservations:', error);
             }
         };
 
         fetchData();
-    }, []);
+    }, [searchTerm]);
 
     const navigate = useNavigate();
     function toReservationEdit (_id){
         navigate(`/reservation/edit/${_id}`);
     }
 
-    const handleSearchByDate = async (date) => {
-        try {
-            console.log(date);
-            const reservations = await searchReservationsByDate(date);
-            setReservations(reservations);
-        } catch (error) {
-            console.error('Error searching for reservations by date:', error);
-        }
-    };
+    const handleSearch = (searchTerm) => {
+        setSearchTerm(searchTerm);
+        setXxx("search")
+      };
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen bg-gray-100 px-4 py-8">
-            <div className="max-w-xg w-full h-3/4 md:w-1/3 mx-auto "> {/* Adjust width for medium screens and above */}
-                <div className="bg-white shadow-lg p-8 rounded-lg">
+        <>
+        <NavBar/>
+            <div className='flex flex-row'>
+                <Sidebar>
+                    <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>}  />
+                    <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
+                    <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
+                    <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
+                    <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
+                    <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
+                </Sidebar>
+                <div className="bg-white shadow-lg p-8 rounded-lg w-screen">
                     <div className="flex flex-row bg-white text-sm text-gray-500 font-bold px-5 py-2 shadow border-b border-gray-300 items-center justify-between">
                         <p className='flex-grow-0'>Reservation list</p>
-                        <SearchBox className="py-4" onSearch={handleSearchByDate} />
+                        <SearchBox className="py-4" onSearch={handleSearch} isReservation={true} />
                     </div>
 
-                    <div className="w-full h-full overflow-auto shadow bg-white" id="journal-scroll">
-                        {reservations.length > 0 ? (
+                    <div className="w-full h-auto overflow-auto shadow bg-white px-12" id="journal-scroll">
+                        {reservations? (
                             <table className="w-full">
                                 <tbody>
                                     {reservations.map((item, index) => (
@@ -92,7 +99,7 @@ const ReservationList = ({xxx}) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

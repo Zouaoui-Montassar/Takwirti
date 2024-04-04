@@ -9,14 +9,14 @@ router.use(requireAuth);  */
 router.post('/reservation/add/:partId/:terId', reservationController.addReservation);
 router.put('/reservation/update/:reservationId', reservationController.updateReservation);
 router.put('/reservation/annul/:reservationId', reservationController.annulerReservation);
-router.put('/reservation/termin/:reservationId', reservationController.terminerReservation);
+router.put('/reservation/termin', reservationController.terminerReservation);
 router.get('/reservation/search/:partId', reservationController.searchReservation);
 router.get('/reservation/listP/:partId', reservationController.listReservationP);
 router.get('/reservation/listR/:resId', reservationController.listReservationR);
 router.get('/reservation/compter/:resId', reservationController.compterReservation);
 /* router.post('/reservation/add-participants', reservationController.addParticipantsToReservation); */
 router.get('/reservation/getInfo/:terrainId/:date', reservationController.getReservation)
-
+router.get('/reservation/getReservationInfo/:idRes', reservationController.getReservationInfo);
 
 
 module.exports.reservationRouter = router;
