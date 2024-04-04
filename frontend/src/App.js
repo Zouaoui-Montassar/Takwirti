@@ -73,8 +73,8 @@ function App() {
           <Route path="/stats" element={<Stats/>} />
           <Route path='/responsable' element={<Responsable/>}/>  {/* protected */} 
           <Route path='/responsable/:id' element={<Responsable/>}/>
-          <Route path='/terrain/add' element={<Terrain func={"add"} id={"9876543210fedcba"}/>}/>
-          <Route path='/terrain/responsable' element={<TerrainsResp/>}/>
+          <Route path='/terrain/add' element={<Terrain func={"add"}/>}/>
+          <Route path='/terrain/responsable/:id' element={<TerrainsResp/>}/>
           <Route path='/particulier' element={<PageUtilisateur/>}/> {/* protected */} 
           <Route path="/terrain/detail/:id" element={<Detail/>} />
           <Route path="/profile" element={<Profile/>} />
@@ -82,7 +82,8 @@ function App() {
           <Route path="/notifications" element={<Notifications/>} />     
           <Route path="/Reservation/add/:idUser/:idTer" element={<ReservationAddParent />} />
           <Route path="/list" element={<List/>} />
-          <Route path="/reservation/list" element={<ReservationList xxx={"Particulier"}/>} />
+          <Route path="/reservation/listP" element={<ReservationList xxx={"Particulier"}/>} />
+          <Route path="/reservation/listR" element={<ReservationList xxx={"responsable"}/>} />
           <Route path="/reservation/edit/:idRes" element={<ReservationEdit/>} />
           <Route path='/terrain/update/:id' element={<Terrain func={"update"}/>}/>
           <Route path='/friendslist' element={<FriendsList/>}/>

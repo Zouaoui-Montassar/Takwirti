@@ -28,7 +28,7 @@ function TerrainsResp() {
                 <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
                 <SidebarItem icon={<LogOut />} text="se déconnecter" link={'/signout'}/>
           </SideBar>
-          <TerrainList param={"responsable"} id={"9876543210fedcba"} className="m-8" />
+          <TerrainList param={"responsable"} className="m-8" />
         </div>
         </>
     );

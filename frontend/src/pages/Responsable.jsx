@@ -55,7 +55,7 @@ const ResponsableContent = ({ user }) => {
         <SideBar>
           <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
           <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable/${user.userObj._id}`} />
-          <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
+          <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
         </SideBar>
         <div className='flex flex-row'>
           <div className='flex flex-col'>

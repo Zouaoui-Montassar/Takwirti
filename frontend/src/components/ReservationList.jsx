@@ -58,14 +58,25 @@ const ReservationList = () => {
         <>
         <NavBar/>
             <div className='flex flex-row'>
-                <Sidebar>
-                    <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>}  />
-                    <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
-                    <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
-                    <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
-                    <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
-                    <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
-                </Sidebar>
+                {
+                (xxx === "particulier") ? (
+                    <Sidebar>
+                        <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>}  />
+                        <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
+                        <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
+                        <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
+                        <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
+                        <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
+                    </Sidebar> 
+                ) : (
+                    <Sidebar>
+                        <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
+                        <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable/${user.userObj._id}`} />
+                        <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
+                    </Sidebar>
+                )
+                }
+
                 <div className="bg-white shadow-lg p-8 rounded-lg w-screen">
                     <div className="flex flex-row bg-white text-sm text-gray-500 font-bold px-5 py-2 shadow border-b border-gray-300 items-center justify-between">
                         <p className='flex-grow-0'>Reservation list</p>
