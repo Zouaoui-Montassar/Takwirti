@@ -1,6 +1,7 @@
 const { reservationModel } = require('../models/reservation.model');
 const UserModel = require('../models/user.model');
 const { terrainModel } = require('../models/terrain.model');
+const moment = require("moment");
 
 // add Reservation function
 const addReservation = async (req, res) => {
@@ -132,30 +133,22 @@ const terminerReservation = async (req, res) => {
 
 // search Reservation function par le particulier selon une date si la date n est null affiche tous les reservations
 const searchReservation = async (req, res) => {
+    const id = req.params.partId;
+    const date = req.query.searchTerm;
+    console.log(date);
     try {
-        const { partId } = req.params;
-        const { date } = req.body;
-
-        let filter = { user: partId };
-
-        // If date is provided, add it to the filter
-        if (date) {
-            // Convert the date string to a JavaScript Date object
-            const searchDate = new Date(date);
-            console.log(searchDate);
-            // If the searchDate is a valid Date object, add it to the filter
-            if (!isNaN(searchDate.getTime())) {
-                // Assuming the date field in the reservationModel is named "date"
-                filter.date = searchDate;
-            }
-        }
-
-        // Find reservations based on the filter
-        const reservations = await reservationModel.find(filter);
-        console.log(reservations)
-        res.status(200).json({ reservations });
+        const startOfDay = new Date(date);
+        console.log(startOfDay)
+        startOfDay.setHours(0, 0, 0, 0);
+        const endOfDay = new Date(date);
+        endOfDay.setHours(23, 59, 59, 999);
+        const reservations = await reservationModel.find({
+        user: id,
+        date: { $gte: startOfDay, $lte: endOfDay },
+        });
+        res.send(reservations);
     } catch (error) {
-        res.status(500).json({ message: "Failed to search for reservations", error: error.message });
+        res.status(500).send(error);
     }
 };
 

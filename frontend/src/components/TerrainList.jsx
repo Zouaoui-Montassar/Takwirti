@@ -23,9 +23,6 @@ function TerrainList({ param, searchTerm, id }) {
         }else if (param === 'responsable') {
             const response = await axios.get(`http://localhost:4000/ter/terrain/list/${id}`);
             setTerrainItems(response.data.terrainList);
-            console.log(response);
-            console.log(response.data)
-            console.log(response.data.terrainList) 
         }else {
             console.error('Invalid param value:', param);
             return;
