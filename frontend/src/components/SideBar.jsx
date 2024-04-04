@@ -1,24 +1,33 @@
 import { MoreVertical, ChevronLast, ChevronFirst } from "lucide-react";
-import { useContext, createContext, useState } from "react";
+import { useContext, createContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useLogout } from "../hooks/useLogout";
 
-const SidebarContext = createContext();
+export const SidebarContext = createContext();
 
 export default function Sidebar({ children }) {
   const [expanded, setExpanded] = useState(true);
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 768px)'); // Adjust the max-width according to your needs
 
+    const handleMediaQueryChange = (mediaQuery) => {
+      setExpanded(!mediaQuery.matches);
+    };
+
+    // Call the function once to set the initial state
+    handleMediaQueryChange(mediaQuery);
+
+    // Listen for media query changes
+    mediaQuery.addEventListener('change', handleMediaQueryChange);
+
+    // Cleanup function
+    return () => {
+      mediaQuery.removeEventListener('change', handleMediaQueryChange);
+    };
+  }, []);
   return (
-    <aside className="h-screen">
-      <nav className="h-full flex flex-col bg-white border-r shadow-sm">
+    <aside className="">
+      <nav className={`h-[calc(100vh-82px)] ${expanded ? 'w-[252px]' : 'w-auto'} fixed top-[82px]  flex flex-col bg-white border-r shadow-sm`}>
         <div className="p-4 pb-2 flex justify-between items-center">
-          <img
-            src="/blacklogo.png"
-            className={`overflow-hidden transition-all ${
-              expanded ? "w-[50px] h-[50px]" : "w-0"
-            }`}
-            alt="logo"
-          />
           <button
             onClick={() => setExpanded((curr) => !curr)}
             className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
