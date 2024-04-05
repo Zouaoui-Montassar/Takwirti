@@ -41,7 +41,7 @@ function TerrainList({ param, searchTerm }) {
 }, [searchTerm]); // Re-run effect whenever searchItem changes
 
 return (
-    <div className='flex flex-col w-full'> {/* Utilisation de w-full pour prendre toute la largeur */}
+    <div className='flex flex-col'> {/* Utilisation de w-full pour prendre toute la largeur */}
         <div className='flex flex-col px-[3%] md:flex-row items-center md:items-start space-y-5 md:space-y-0 md:space-x-5'> {/* Utilisation de classes pour les différents breakpoints */}
             <div className='flex items-center space-x-3 mt-2'> {/* Utilisation de space-x-2 pour l'espacement horizontal */}
                 <div className='bg-gray-200 flex flex-row border b-2 shadow-md p-2 h-[50px]'>

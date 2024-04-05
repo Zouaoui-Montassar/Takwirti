@@ -9,16 +9,60 @@ import { School, Settings } from 'lucide-react';
 import axios from 'axios';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-const links = [
-  { label: 'Accueil', path: '/' },
-  { label: 'Page 1', path: '/page1' },
-  { label: 'Page 2', path: '/page2' },
-];
 
 const ResponsableContent = ({ user }) => {
   const [terrainList, setTerrainList] = useState([]);
   const [reservationData, setReservationData] = useState([]);
+  const [width, setWidth] = useState();
+  const [o,setO] = useState();
+  const [p, setP]= useState();
+  useEffect(() => {
+    const setValuesBasedOnScreenSize = () => {
+      if (window.matchMedia('(max-width: 600px)').matches) {
+        // Small screen
+        setO(250);
+        setP(250);
+      } else if (window.matchMedia('(max-width: 900px)').matches) {
+        // Medium screen
+        setO(400);
+        setP(250);
+      } else if (window.matchMedia('(max-width: 1400px)').matches) {
+        // Large screen
+        setO(600);
+        setP(400);
+      } else {
+        // Extra large screen
+        setO(800);
+        setP(400);
+      }
+    };
 
+    // Call the function initially to set values based on initial screen size
+    setValuesBasedOnScreenSize();
+
+    // Add event listener to update values when screen size changes
+    window.addEventListener('resize', setValuesBasedOnScreenSize);
+
+    // Cleanup function to remove event listener when component unmounts
+    return () => {
+      window.removeEventListener('resize', setValuesBasedOnScreenSize);
+    };
+  }, []);
+  const handleWidth = (width) => {
+    setWidth(width);
+  }
+  useEffect(() => {
+    handleWidth(width);
+  },[width]);
+  const [w, setW] = useState();
+  const handleW = (width) => {
+    if (width === 284){
+    setW(220);}
+    else {setW(width);}
+  }
+  useEffect(() => {
+    handleW(width);
+  },[width]);
   const listTerrain = async (id) => {
     try {
       const response = await axios.get(`http://localhost:4000/ter/terrain/list/${id}`);
@@ -50,14 +94,14 @@ const ResponsableContent = ({ user }) => {
 
   return (
     <>
-      <NavBar links={links} />
+      <NavBar  />
       <div className='flex flex-row'>
-        <SideBar>
+        <SideBar sendWidth={handleWidth}>
           <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
           <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable/${user.userObj._id}`} />
           <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
         </SideBar>
-        <div className='flex flex-row'>
+        <div className={`ml-[50px] flex relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] justify-center`}>
           <div className='flex flex-col'>
 
             <div className='border b-2 p-5 m-2 bg-white shadow-md rounded-md w-[250px] h-auto'>
@@ -80,7 +124,7 @@ const ResponsableContent = ({ user }) => {
           <div>
             <div>
             <h2 className='text-xl text-bold  my-2'>Reservation chart</h2>
-            <LineChart width={800} height={400} data={reservationData}>
+            <LineChart width={o} height={p} data={reservationData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" />
               <YAxis />

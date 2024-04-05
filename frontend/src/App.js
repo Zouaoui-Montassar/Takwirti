@@ -24,7 +24,7 @@ import Tachkila from './components/Tachkila';
 import ReservationAddParent from './components/ReservationAddParent';
 import React , {useState, useEffect} from 'react';
 import axios from 'axios';
-import NavSideBar from './components/NavSideBar';
+
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
   { id: 2, name: 'Item 2', image:'/Section 2 image.png' },
@@ -84,12 +84,11 @@ function App() {
           <Route path="/Reservation/add/:idUser/:idTer" element={<ReservationAddParent />} />
           <Route path="/list" element={<List/>} />
           <Route path="/reservation/listP" element={<ReservationList xxx={"Particulier"}/>} />
-          <Route path="/reservation/listR" element={<ReservationList xxx={"responsable"}/>} />
+          <Route path="/reservation/listR" element={<ReservationList xxx={"Responsable"}/>} />
           <Route path="/reservation/edit/:idRes" element={<ReservationEdit/>} />
           <Route path='/terrain/update/:id' element={<Terrain func={"update"}/>}/>
           <Route path='/friendslist' element={<FriendsList/>}/>
           <Route path='/tachkila' element={<Tachkila/>}/>
-          <Route path='/navside' element={<NavSideBar/>}/>
 
         </Routes>
       </BrowserRouter>

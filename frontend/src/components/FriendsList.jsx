@@ -9,15 +9,6 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import SearchBox from './SearchBox';
 import { useAuthContext } from '../hooks/useAuthContext';
 
-const links = [
-  { label: 'Accueil', path: '/' },
-  { label: 'Page 1', path: '/page1' },
-  { label: 'Page 2', path: '/page2' },
-  // Add more links as needed
-];
-
-
-
 const FriendsList = () => {
   const [searchUserTerm, setsearchUserTerm] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -88,22 +79,38 @@ const FriendsList = () => {
     }
   };
 
-
-
+  const [width, setWidth] = useState();
+  const handleWidth = (width) => {
+    setWidth(width);
+  }
+  useEffect(() => {
+    handleWidth(width);
+  },[width]);
+  const [w, setW] = useState();
+  const handleW = (width) => {
+    if (width === 284){
+    setW(400);}
+    else {setW(width);}
+  }
+  useEffect(() => {
+    handleW(width);
+  },[width]);
+  const handleSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
+  };
   return (
     <>
-      <NavBar links={links} />
+      <NavBar />
       <div className='flex flex-row'>
-        <Sidebar>
-          <SidebarItem icon={<FontAwesomeIcon icon={faSearch} />} text={<SearchBox onSearch={handleSearchBar} />} />
-          <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
+        <Sidebar sendWidth={handleWidth} >
+              <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>} test={true}  />
+              <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
               <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
               <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
-              <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
+              <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
               <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
-
-        </Sidebar>
-        <div className='m-2'>
+           </Sidebar>
+        <div className={`relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] `}>
         <h2 className='text-bold text-2xl m-2'>Find People</h2>
         <div className="flex items-center justify-center">
             <div className="flex space-x-1">

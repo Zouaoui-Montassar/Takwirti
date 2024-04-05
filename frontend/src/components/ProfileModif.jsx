@@ -1,31 +1,54 @@
-import React ,{useState}from 'react'
+import React ,{useState, useEffect}from 'react'
 import NavBar from './NavBar'
-import Sidebar from './SideBar';
+import Sidebar, { SidebarItem } from './SideBar';
 import Message from './Message';
 import Image from './Image';
-
-const links = [{label: 'Accueil', path: '/'} ,
-{label: 'Page 1', path: '/page1'} ,
-{label: 'Page 2', path: '/page2' },
-// Add more links as needed
-];
+import { School, Settings, LogOut } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import SearchBox from './SearchBox';
 
 const ProfileModif = () => {
     const [isSuccess, setIsSuccess] = useState(true);
-
+    const [searchTerm, setSearchTerm] = useState('');
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent form submission
 
     setIsSuccess(true);
   };
-
-
+  const [width, setWidth] = useState();
+  const handleWidth = (width) => {
+    setWidth(width);
+  }
+  useEffect(() => {
+    handleWidth(width);
+  },[width]);
+  const [w, setW] = useState();
+  const handleW = (width) => {
+    if (width === 284){
+    setW(435);}
+    else {setW(100);}
+  }
+  useEffect(() => {
+    handleW(width);
+  },[width]);
+  const handleSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
+  };
   return (
     <>
-        <NavBar links={links} />
+        <NavBar />
         <div className='flex flex-row'>
-            <Sidebar />
-             <div className=' ml-[280px] flex items-center justify-center  flex-col'>
+        <Sidebar sendWidth={handleWidth}>
+          <SidebarItem icon={<FontAwesomeIcon icon={faSearch} />} text={<SearchBox onSearch={handleSearch} test={true}/>} />
+          <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
+              <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
+              <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
+              <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
+              <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
+
+        </Sidebar>
+             <div className= {`relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] flex items-center justify-center  flex-col md:ml-[200px] sm:ml-[50px]`}>
                 <h1 className='bold-52 my-6'>Modfier le profile</h1>
                 <form action="get" className='flex flex-col'>
                     <label htmlFor="nom" className='text-2xl text-bold m-2'>Nom</label>

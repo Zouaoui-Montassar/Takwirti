@@ -15,25 +15,44 @@ const ReservationList = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const { user } = useAuthContext();
     const id = user.userObj._id;
-    const [xxx , setXxx ] = useState(user.userObj.__t);
+    const [yyy , setyyy ] = useState(user.userObj.__t);
+    const [xxx , setxxx ] = useState();
+
     console.log(searchTerm);
     const date = new Date(searchTerm);
+    const [width, setWidth] = useState();
+    const handleWidth = (width) => {
+      setWidth(width);
+    }
+    useEffect(() => {
+      handleWidth(width);
+    },[width]);
+    const [w, setW] = useState();
+    const handleW = (width) => {
+      if (width === 284){
+      setW(400);}
+      else {setW(width);}
+    }
+    useEffect(() => {
+      handleW(width);
+    },[width]);
     useEffect(() => {
         const fetchData = async () => {
             try {
-                if(xxx === "Particulier") {
-                    const response = await axios.get(`http://localhost:4000/res/reservation/listP/${id}`);
-                    setReservations(response.data.reservations);
-                } else if(xxx === "responsable") {
-                    const response = await axios.get(`http://localhost:4000/res/reservation/listR/${id}`);
-                    setReservations(response.data.reservations);
-                }
+                if (xxx === undefined) {
+                    if(yyy === "Particulier") {
+                        const response = await axios.get(`http://localhost:4000/res/reservation/listP/${id}`);
+                        setReservations(response.data.reservations);
+                    } else if(yyy === "responsable") {
+                        const response = await axios.get(`http://localhost:4000/res/reservation/listR/${id}`);
+                        setReservations(response.data.reservations);
+                    }}
                 else if(xxx === "search") {
                     const response = await axios.get(`http://localhost:4000/res/reservation/search/${id}`, { params : { searchTerm : date.toISOString() }});
                     console.log(response.data);
                     setReservations(response.data);
                 }else {
-                    console.error('Invalid param value:', xxx);
+                    console.error('Invalid param value:', yyy , xxx);
                     return;
                 }
             } catch (error) {
@@ -43,7 +62,6 @@ const ReservationList = () => {
 
         fetchData();
     }, [searchTerm]);
-
     const navigate = useNavigate();
     function toReservationEdit (_id){
         navigate(`/reservation/edit/${_id}`);
@@ -51,7 +69,7 @@ const ReservationList = () => {
 
     const handleSearch = (searchTerm) => {
         setSearchTerm(searchTerm);
-        setXxx("search")
+        setxxx("search")
       };
 
     return (
@@ -59,25 +77,24 @@ const ReservationList = () => {
         <NavBar/>
             <div className='flex flex-row'>
                 {
-                (xxx === "particulier") ? (
-                    <Sidebar>
-                        <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>}  />
+                (yyy === "Particulier") ? (
+                    <Sidebar sendWidth={handleWidth} >
+                        <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>} test={true}  />
                         <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
                         <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
                         <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
-                        <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
+                        <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
                         <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
-                    </Sidebar> 
+                    </Sidebar>
                 ) : (
-                    <Sidebar>
-                        <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
+                    <Sidebar sendWidth={handleWidth}>
+                        <SidebarItem icon={<School />} text="profile responsable" link={'responsable'}/>
                         <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable/${user.userObj._id}`} />
                         <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
                     </Sidebar>
                 )
                 }
-
-                <div className="bg-white shadow-lg p-8 rounded-lg w-screen">
+                <div className={` relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] items-center justify-center p-8`}>
                     <div className="flex flex-row bg-white text-sm text-gray-500 font-bold px-5 py-2 shadow border-b border-gray-300 items-center justify-between">
                         <p className='flex-grow-0'>Reservation list</p>
                         <SearchBox className="py-4" onSearch={handleSearch} isReservation={true} />

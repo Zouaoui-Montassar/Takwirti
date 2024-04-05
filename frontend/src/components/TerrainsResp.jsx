@@ -1,34 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import NavBar from './NavBar';
 import SideBar, { SidebarItem } from './SideBar';
 import TerrainList from './TerrainList';
-
+import { useAuthContext } from '../hooks/useAuthContext';
 
 import { School ,Settings,LogOut} from 'lucide-react';
 
-const links = [
-    {label: 'Accueil', path: '/'} ,
-    {label: 'Page 1', path: '/page1'} ,
-    {label: 'Page 2', path: '/page2' },
-   // Add more links as needed
-];
 
 function TerrainsResp() {
     const [view, setView] = useState('list'); // 'list' or 'board'
-
+    const { user } = useAuthContext();
+    const id = user.userObj._id;
+    const [width, setWidth] = useState();
+    const handleWidth = (width) => {
+      setWidth(width);
+    }
+    useEffect(() => {
+      handleWidth(width);
+    },[width]);
+    const [w, setW] = useState();
+    const handleW = (width) => {
+      if (width === 284){
+      setW(400);}
+      else {setW(width);}
+    }
+    useEffect(() => {
+      handleW(width);
+    },[width]);
     return (
         <>
-        <NavBar links={links}/>
-
+        <NavBar/>
         <div className='flex flex-row space-x-5'>
-          <SideBar>
-               {/* Contenu de la barre latérale */}
-                <SidebarItem icon={<School />} text="profile responsable"  link={'responsable'} />
-                <SidebarItem icon={<Settings />} text="list terrain" link={'terrain/responsable'} />
-                <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
-                <SidebarItem icon={<LogOut />} text="se déconnecter" link={'/signout'}/>
-          </SideBar>
+        <SideBar sendWidth={handleWidth}>
+            <SidebarItem icon={<School />} text="profile responsable" link={'responsable'}/>
+            <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable/${user.userObj._id}`} />
+            <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
+        </SideBar>
+        <div className={` relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] items-center justify-center p-8`}>
           <TerrainList param={"responsable"} className="m-8" />
+          </div>
         </div>
         </>
     );
