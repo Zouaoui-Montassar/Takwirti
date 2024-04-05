@@ -23,6 +23,8 @@ import Notifications from './components/Notifications';
 import Tachkila from './components/Tachkila';
 import ReservationAddParent from './components/ReservationAddParent';
 import Responsable2 from './components/Responsable2';
+import axios from 'axios';
+import { useEffect } from 'react';
 
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
