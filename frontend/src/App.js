@@ -22,8 +22,9 @@ import FriendsList from './components/FriendsList';
 import Notifications from './components/Notifications';
 import Tachkila from './components/Tachkila';
 import ReservationAddParent from './components/ReservationAddParent';
-import React , {useState, useEffect} from 'react';
+import Responsable2 from './components/Responsable2';
 import axios from 'axios';
+import { useEffect } from 'react';
 
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
@@ -73,9 +74,9 @@ function App() {
           <Route path="/signin" element={<Sign_in/>} />
           <Route path="/stats" element={<Stats/>} />
           <Route path='/responsable' element={<Responsable/>}/>  {/* protected */} 
-          <Route path='/responsable/:id' element={<Responsable/>}/>
-          <Route path='/terrain/add' element={<Terrain func={"add"}/>}/>
-          <Route path='/terrain/responsable/:id' element={<TerrainsResp/>}/>
+          <Route path='/responsable/:terrainId' element={<Responsable2/>}/>
+          <Route path='/terrain/add' element={<Terrain func={"add"} id={"9876543210fedcba"}/>}/>
+          <Route path='/terrain/responsable' element={<TerrainsResp/>}/>
           <Route path='/particulier' element={<PageUtilisateur/>}/> {/* protected */} 
           <Route path="/terrain/detail/:id" element={<Detail/>} />
           <Route path="/profile" element={<Profile/>} />

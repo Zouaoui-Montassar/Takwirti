@@ -4,7 +4,7 @@ import { useLocation,useParams } from 'react-router-dom';
 
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-const Calendar = ({ onDateSelect, dayBlocked}) => {
+const Calendar2 = ({ onDateSelect, dayBlocked , ouvre , ferme ,duree,hr}) => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [selectedDate, setSelectedDate] = useState(new Date()); // Define setSelectedDate here
@@ -35,7 +35,7 @@ const Calendar = ({ onDateSelect, dayBlocked}) => {
       default:
         return -1; // Retourne -1 si le nom du jour n'est pas valide
     }}
-  if (isReservationPage)
+  
     dayBlocked = dayNameToNumber(dayBlocked)
 
   const generateCalendar = () => {
@@ -150,10 +150,11 @@ const Calendar = ({ onDateSelect, dayBlocked}) => {
                   <button onClick={hideModal} className="modal-close px-3 py-1 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring">✕</button>
                 </div>
                 <List date={selectedDate} 
-                      isReservationPage={isReservationPage}
-                      start={"08:00:00"}
-                      end={"20:00:00"}
-                      step={120}/>
+                      isReservationPage={true}
+                      reservedHours={hr}
+                      start={ouvre}
+                      end={ferme}
+                      step={duree}/>
               </div>
             </div>
           </div>
@@ -164,4 +165,4 @@ const Calendar = ({ onDateSelect, dayBlocked}) => {
   );
 };
 
-export default Calendar;
+export default Calendar2;
