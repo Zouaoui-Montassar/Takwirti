@@ -9,15 +9,6 @@ import SearchBox from './SearchBox';
 import { useAuthContext } from '../hooks/useAuthContext';
 import NotificationCard from './NotificationCard';
 
-const links = [
-    { label: 'Accueil', path: '/' },
-    { label: 'Page 1', path: '/page1' },
-    { label: 'Page 2', path: '/page2' },
-    // Add more links as needed
-  ];
-
-
-
 const Notifications = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [notifications, setNotifications] = useState([]);
@@ -40,23 +31,37 @@ const Notifications = () => {
     const handleSearch = (searchTerm) => {
       setSearchTerm(searchTerm);
     };
-  
+    const [width, setWidth] = useState();
+    const handleWidth = (width) => {
+      setWidth(width);
+    }
+    useEffect(() => {
+      handleWidth(width);
+    },[width]);
+    const [w, setW] = useState();
+    const handleW = (width) => {
+      if (width === 284){
+      setW(400);}
+      else {setW(width);}
+    }
+    useEffect(() => {
+      handleW(width);
+    },[width]);
 
 
     return (
         <>
-            <NavBar links={links} />
-            <div className='flex flex-row'>
-                <Sidebar>
-                    <SidebarItem icon={<FontAwesomeIcon icon={faSearch} />} text={<SearchBox onSearch={handleSearch} />} />
-                    <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
-                    <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
-                    <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
-                    <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
-                    <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
-
-                </Sidebar>
-                <div className='m-2'>
+            <NavBar/>
+            <div className='flex flex-row' >
+                <Sidebar sendWidth={handleWidth} >
+                  <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>} test={true}  />
+                  <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
+                  <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
+                  <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
+                  <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
+                  <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
+               </Sidebar>
+                <div className={`relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] m-2 justify-center items-center`}>
                     <h2 className='text-bold text-2xl m-2'>All notifications</h2> 
                     {notifications.map((notification) => (
                         <NotificationCard key={notification._id} data={notification} />

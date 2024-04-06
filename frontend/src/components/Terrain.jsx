@@ -6,10 +6,11 @@ import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import Dailog from './Dailog';
 import TimeList from './TimeList';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Image from './Image';
 import { School ,Settings,LogOut} from 'lucide-react';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 
 const ville = [
@@ -26,7 +27,9 @@ const links = [
   // Add more links as needed
 ];
 // id w func mawjoudin fel path (a modifier plus tard)
-const Terrain = ({ func, id }) => {
+const Terrain = ({ func }) => {
+  const { user } = useAuthContext();
+  const id = user.userObj._id;
   const [img, setImg] = useState("abc")
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -39,7 +42,7 @@ const Terrain = ({ func, id }) => {
   const [time , setTime] = useState([]);
   const [date, setDate] = useState([]);
   const [status, setStatus]=useState();
-
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleTime = (time) => {
     setTime(time);
@@ -101,6 +104,7 @@ const Terrain = ({ func, id }) => {
       } else {
         console.error(`Failed to ${func} terrain`);
       }
+      navigate(`/responsable/${id}`)
     } catch (error) {
       console.error(`Error ${func}ing terrain:`, error);
     }

@@ -84,7 +84,8 @@ function App() {
           <Route path="/notifications" element={<Notifications/>} />     
           <Route path="/Reservation/add/:idUser/:idTer" element={<ReservationAddParent />} />
           <Route path="/list" element={<List/>} />
-          <Route path="/reservation/list" element={<ReservationList xxx={"Particulier"}/>} />
+          <Route path="/reservation/listP" element={<ReservationList xxx={"Particulier"}/>} />
+          <Route path="/reservation/listR" element={<ReservationList xxx={"Responsable"}/>} />
           <Route path="/reservation/edit/:idRes" element={<ReservationEdit/>} />
           <Route path='/terrain/update/:id' element={<Terrain func={"update"}/>}/>
           <Route path='/friendslist' element={<FriendsList/>}/>

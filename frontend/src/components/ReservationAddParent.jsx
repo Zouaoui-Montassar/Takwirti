@@ -25,7 +25,22 @@ const ReservationAddParent = () => {
     const [tachkila, setTachkila] = useState();
     const navigate = useNavigate();
 
-
+    const [width, setWidth] = useState();
+    const handleWidth = (width) => {
+      setWidth(width);
+    }
+    useEffect(() => {
+      handleWidth(width);
+    },[width]);
+    const [w, setW] = useState();
+    const handleW = (width) => {
+      if (width === 284){
+      setW(435);}
+      else {setW(100);}
+    }
+    useEffect(() => {
+      handleW(width);
+    },[width]);
     useEffect(() => {
         const initialTeam = [];
     }, []);
@@ -55,7 +70,7 @@ const ReservationAddParent = () => {
                 participants: tachkila,
             });
             console.log(response.data); // Assuming you want to log the response
-            navigate('/reservation/list');
+            navigate('/reservation/listP');
         } catch (error) {
             console.error('Failed to add reservation:', error);
         }
@@ -82,15 +97,15 @@ const ReservationAddParent = () => {
         <>
             <NavBar />
             <div className='flex flex-row'>
-            <Sidebar>
-                <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>}  />
-                <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
-                <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
-                <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
-                <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
-                <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
-            </Sidebar>
-            <div className="bg-white shadow-lg rounded-lg w-[100%] px-[15%] pt-[2%]">
+            <Sidebar sendWidth={handleWidth} >
+              <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>} test={true}  />
+              <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
+              <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
+              <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
+              <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
+              <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
+           </Sidebar>
+            <div className={`px-[15%] pt-[2%] relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] `}>
                 <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900">Reservation Date and Time</h1>
                 <p>Here you can make your reservation in {/* {terrainItems.nom} */}</p>
                 <form onSubmit={handleOnSubmit}>

@@ -17,14 +17,6 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import axios from 'axios';
 
 
-
-const links = [
-    { label: 'Accueil', path: '/' },
-    { label: 'Page 1', path: '/page1' },
-    { label: 'Page 2', path: '/page2' },
-    // Add more links as needed
-];
-
 const Profile = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [pendingRequests, setPendingRequests] = useState([]);
@@ -46,24 +38,37 @@ const Profile = () => {
     const handleSearch = (searchTerm) => {
       setSearchTerm(searchTerm);
     };
-    
-    
-
-
+    const [width, setWidth] = useState();
+    const handleWidth = (width) => {
+      setWidth(width);
+    }
+    useEffect(() => {
+      handleWidth(width);
+    },[width]);
+    const [w, setW] = useState();
+    const handleW = (width) => {
+      if (width === 284){
+      setW(400);}
+      else {setW(width);}
+    }
+    useEffect(() => {
+      handleW(width);
+    },[width]);
     return (
         <>
-            <NavBar links={links} />
-            <div className='flex flex-row'>
-                <Sidebar>
-                    <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>}  />
-                    <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
-              <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
-              <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
-              <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
-              <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
-                </Sidebar>
+            <NavBar />
+            <div className='flex flex-row '>
+              <Sidebar sendWidth={handleWidth} >
+                <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>} test={true}  />
+                <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
+                <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
+                <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
+                <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
+                <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
+            </Sidebar>
+              <div className={`relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)]`}>
                 <div className='m-2 flex-grow'>
-                    <div className="flex justify-center items-center ">
+                    <div className=" justify-center items-center ">
                         <div className="relative">
                             {/* Cover Image */}
                             <img
@@ -91,7 +96,7 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    <div className="flex flex-row justify-center m-2 relative left-[850px] bottom-[100px]  w-[350px]">
+                    <div className="flex flex-row justify-center m-2 relative left-[65%] bottom-[100px]  w-[350px]">
                         <div className='border b-2 border-green-500 bg-green-500 w-[90px] flex flex-row p-2 items-center justify-center rounded-md shadow-lg shadow-slate-400 mr-2'>
                           <button className="mr-2 text-white text-lg">Add friend</button>
                           <MdOutlineAdd className=' w-[25px] h-[25px] text-white' />
@@ -145,6 +150,7 @@ const Profile = () => {
 
                 </div>
             </div>
+          </div>
         </>
     );
 };
