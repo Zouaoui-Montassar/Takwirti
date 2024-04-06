@@ -20,12 +20,6 @@ const ville = [
   { name: 'gafsa' },
 ];
 
-const links = [
-  { label: 'Accueil', path: '/' },
-  { label: 'Page 1', path: '/page1' },
-  { label: 'Page 2', path: '/page2' },
-  // Add more links as needed
-];
 // id w func mawjoudin fel path (a modifier plus tard)
 const Terrain = ({ func }) => {
   const { user } = useAuthContext();
@@ -44,6 +38,22 @@ const Terrain = ({ func }) => {
   const [status, setStatus]=useState();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const [width, setWidth] = useState();
+    const handleWidth = (width) => {
+      setWidth(width);
+    }
+    useEffect(() => {
+      handleWidth(width);
+    },[width]);
+    const [w, setW] = useState();
+    const handleW = (width) => {
+      if (width === 284){
+      setW(400);}
+      else {setW(width);}
+    }
+    useEffect(() => {
+      handleW(width);
+    },[width]);
   const handleTime = (time) => {
     setTime(time);
   }
@@ -104,7 +114,7 @@ const Terrain = ({ func }) => {
       } else {
         console.error(`Failed to ${func} terrain`);
       }
-      navigate(`/responsable/${id}`)
+      navigate(`/terrain/responsable`)
     } catch (error) {
       console.error(`Error ${func}ing terrain:`, error);
     }
@@ -127,15 +137,13 @@ const Terrain = ({ func }) => {
 
   return (
     <>
-      <NavBar copy links={links} />
+      <NavBar />
       <div className='flex flex-row'>
-        <SideBar>
-                {/* Contenu de la barre latérale */}
-                  <SidebarItem icon={<School />} text="profile responsable"  link={'responsable'} />
-                  <SidebarItem icon={<Settings />} text="list terrain" link={'terrain/responsable'} />
-                  <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
-                  <SidebarItem icon={<LogOut />} text="se déconnecter" link={'signout'}/>
-            </SideBar>
+        <SideBar sendWidth={handleWidth}>
+          <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
+          <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable`} />
+          <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
+        </SideBar>
         <div className='p-5  w-full h-full'>
           <h1 className='bold-52'>{func} Terrain</h1>
           <form onSubmit={handleSubmit}>

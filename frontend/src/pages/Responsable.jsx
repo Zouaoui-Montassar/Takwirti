@@ -11,6 +11,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'r
 
 
 const ResponsableContent = ({ user }) => {
+  
   const [terrainList, setTerrainList] = useState([]);
   const [reservationData, setReservationData] = useState([]);
   const [width, setWidth] = useState();
@@ -98,7 +99,7 @@ const ResponsableContent = ({ user }) => {
       <div className='flex flex-row'>
         <SideBar sendWidth={handleWidth}>
           <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
-          <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable/${user.userObj._id}`} />
+          <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable`} />
           <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
         </SideBar>
         <div className={`ml-[50px] flex relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] justify-center`}>
