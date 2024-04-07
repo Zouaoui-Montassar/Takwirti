@@ -101,6 +101,15 @@ const updateParticulier = async (req, res) => {
             return res.status(500).json({ message: "Failed to check email uniqueness", error: error.message });
         }
     }
+    // password encryption ( ken yetupdata )
+    if (updatedFields.password) {
+        try {
+            const hash = await bcrypt.hash(updatedFields.password, 10);
+            updatedFields.password = hash;
+        } catch (error) {
+            return res.status(500).json({ message: "Failed to encrypt the new password", error: error.message });
+        }
+    }
     try {
         const updatedParticulier = await ParticulierModel.findByIdAndUpdate(id, updatedFields, { new: true });
         res.status(200).json({ message: "Particulier updated successfully", user: updatedParticulier });
@@ -120,6 +129,14 @@ const updateResponsable = async (req, res) => {
             }
         } catch (error) {
             return res.status(500).json({ message: "Failed to check email uniqueness", error: error.message });
+        }
+    }
+    if (updatedFields.password) {
+        try {
+            const hash = await bcrypt.hash(updatedFields.password, 10);
+            updatedFields.password = hash;
+        } catch (error) {
+            return res.status(500).json({ message: "Failed to encrypt the new password", error: error.message });
         }
     }
     try {
