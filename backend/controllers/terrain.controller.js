@@ -48,6 +48,7 @@ const updateTerrain = async (req, res, next) => {
         const terrainId = req.params.terrainId;
         const { img, nom, phone, prix, open, close, duree, time, date, status } = req.body;
         const terrain = await terrainModel.findById(terrainId);
+        
 
         if (!terrain) {
             return res.status(404).json({ message: "Terrain not found" });
