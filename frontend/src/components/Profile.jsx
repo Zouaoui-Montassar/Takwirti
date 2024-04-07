@@ -21,7 +21,7 @@ const Profile = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [pendingRequests, setPendingRequests] = useState([]);
     const { user } = useAuthContext(); 
-    console.log("mel profile "+ user.userObj)
+    console.log("mel profile ", user.userObj)
     useEffect(() => {
         const fetchPendingRequests = async () => {
           try {
@@ -79,7 +79,7 @@ const Profile = () => {
                             
                             {/* Profile Image */}
                             <img
-                                src="/taswira.jpg"
+                                src={user.userObj.image}
                                 alt="Profile"
                                 className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-[250px] h-[250px] rounded-full border-4 border-white"
                             />
@@ -103,7 +103,7 @@ const Profile = () => {
                         </div>
 
                         <div className='border b-2 border-blue-500 bg-blue-500 w-[90px] flex flex-row p-2 items-center justify-center rounded-md shadow-lg shadow-slate-400 mr-2'>
-                          <Link to={`/profilemodifier`} className="mr-2 text-white text-lg">Modify</Link>
+                          <Link to={`/profile/modifier`} className="mr-2 text-white text-lg">Modify</Link>
                           <BsPen className='  text-white' />
                         </div>
 

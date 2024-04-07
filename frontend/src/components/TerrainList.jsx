@@ -22,7 +22,8 @@ function TerrainList({ param, searchTerm }) {
       try {
         if (param === "search") {
             const response = await axios.get(`http://localhost:4000/ter/terrain/search`, { params: { searchTerm: searchTerm } });
-            setTerrainItems(response.data.results); 
+            setTerrainItems(response.data.results);
+            console.log(response.data.results); 
         }else if (param === 'get') {
             const response = await axios.get(`http://localhost:4000/ter/terrain/get`);
             setTerrainItems(response.data.results); 

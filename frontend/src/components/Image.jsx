@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 
-const ImageUploader = () => {
+const ImageUploader = ( { onImageUpload }) => {
     const [image, setImage] = useState(null);
 
     const handleImageUpload = event => {
-        setImage(URL.createObjectURL(event.target.files[0]));
+        const file = event.target.files[0];
+        setImage(file);
+        onImageUpload(file);
     };
 
     return (
@@ -22,7 +24,7 @@ const ImageUploader = () => {
             >
                 Sélectionner une image
             </label>
-            {image && <img src={image} alt="Selected" className='w-[200px] h-[200px] mx-[140px]' />}
+            {image && <img src={URL.createObjectURL(image)} alt="Selected" className='w-[200px] h-[200px] mx-[140px]' />}
         </div>
     );
 };

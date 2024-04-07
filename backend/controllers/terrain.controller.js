@@ -5,11 +5,13 @@ const addTerrain = async (req, res) => {
     
     try {
         // Extract data from the request body
-        const { nom, phone, prix, position, open, close, duree, time, date } = req.body;
+        const { img ,nom, phone, prix, position, open, close, duree, time, date } = req.body;
+        console.log("image url : ",img);
         const idRes = req.params.idRes;
         console.log(idRes);
         // Create a new terrain object
         const newTerrain = {
+            img,
             nom,
             idRes,
             phone,
@@ -22,14 +24,16 @@ const addTerrain = async (req, res) => {
                 time : time, 
                 date : date,
             },
-            status: "Disponible"
+            status: "Disponible",
+
         };
-
-        // Insert the new terrain object into the collection
-        const result = await terrainModel.create(newTerrain);
-
-        // Send a success response with the inserted terrain object
-        res.status(201).json({ message: "Terrain added successfully", terrain: result });
+        try {
+            const result = await terrainModel.create(newTerrain);
+            res.status(201).json({ message: "Terrain added successfully", terrain: result });
+        } catch (error) {
+            console.error("Error adding terrain:", error);
+            res.status(500).json({ message: "Failed to add terrain", error: error.message });
+        }
     } catch (error) {
         // Handle errors if any
         res.status(500).json({ message: "Failed to add terrain", error: error.message });
@@ -42,13 +46,15 @@ const addTerrain = async (req, res) => {
 const updateTerrain = async (req, res, next) => {
     try {
         const terrainId = req.params.terrainId;
-        const { nom, phone, prix, open, close, duree, time, date, status } = req.body;
+        const { img, nom, phone, prix, open, close, duree, time, date, status } = req.body;
         const terrain = await terrainModel.findById(terrainId);
+        
 
         if (!terrain) {
             return res.status(404).json({ message: "Terrain not found" });
         }
         const newTerrain = {
+            img,
             nom,
             phone,
             prix,

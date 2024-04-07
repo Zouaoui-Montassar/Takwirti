@@ -11,7 +11,14 @@ import axios from 'axios';
 import Image from './Image';
 import { School ,Settings,LogOut} from 'lucide-react';
 import { useAuthContext } from '../hooks/useAuthContext';
-
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+  list,
+} from "firebase/storage";
+import { storage } from "../firebase";
 
 const ville = [
   { name: 'Tunis' },
@@ -54,6 +61,11 @@ const Terrain = ({ func }) => {
     useEffect(() => {
       handleW(width);
     },[width]);
+  const [image, setImage] = useState(null); // State to hold the uploaded image
+
+  const handleImageUpload = async (file) => {
+    setImage(file); // Set the uploaded image in state
+  };
   const handleTime = (time) => {
     setTime(time);
   }
@@ -81,8 +93,16 @@ const Terrain = ({ func }) => {
     e.preventDefault();
     try {
       let response;
+      let imageUrl;
+      if (image) {
+        const storageRef = ref(storage, `terrainpictures/${user.userObj._id}`);
+        const imageSnapshot = await uploadBytes(storageRef, image);
+        imageUrl = await getDownloadURL(imageSnapshot.ref);
+        console.log(imageUrl);
+      }
       if (func === "add") {
         response = await axios.post(`http://localhost:4000/ter/terrain/add/${id}`, {
+          img: imageUrl,
           nom: name,
           phone: phone,
           prix: prix,
@@ -97,6 +117,7 @@ const Terrain = ({ func }) => {
       } else if (func === "update") {
         console.log(time);
         response = await axios.put(`http://localhost:4000/ter/terrain/update/${id}`, {
+          img: imageUrl,
           nom: name,
           phone: phone,
           prix: prix,
@@ -360,7 +381,7 @@ const Terrain = ({ func }) => {
             
             <div className=' justify-center items-center m-4 '>
               <div className='relative left-[350px]  w-[500px]'>
-                <Image />
+                <Image onImageUpload={handleImageUpload} />
               </div>
             </div>
            

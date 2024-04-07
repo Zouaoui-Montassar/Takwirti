@@ -59,7 +59,7 @@ const NavBar = ({ isHomePage }) => {
                 <span className="sr-only">Open user menu</span>
                 <img
                   className="w-8 h-8 rounded-full"
-                  src={whitelogo}
+                  src={user.userObj.image}
                   alt="user photo"
                 />
               </button>
