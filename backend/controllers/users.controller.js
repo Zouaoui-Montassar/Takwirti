@@ -90,6 +90,17 @@ const login = async (req, res) => {
 const updateParticulier = async (req, res) => {
     const { id } = req.params;
     const updatedFields = req.body;
+
+    if (updatedFields.email) {
+        try {
+            const existingUser = await ParticulierModel.findOne({ email: updatedFields.email });
+            if (existingUser && existingUser._id.toString() !== id) {
+                return res.status(400).json({ message: "Email already taken" });
+            }
+        } catch (error) {
+            return res.status(500).json({ message: "Failed to check email uniqueness", error: error.message });
+        }
+    }
     try {
         const updatedParticulier = await ParticulierModel.findByIdAndUpdate(id, updatedFields, { new: true });
         res.status(200).json({ message: "Particulier updated successfully", user: updatedParticulier });
@@ -101,6 +112,16 @@ const updateParticulier = async (req, res) => {
 const updateResponsable = async (req, res) => {
     const { id } = req.params;
     const updatedFields = req.body;
+    if (updatedFields.email) {
+        try {
+            const existingUser = await ResponsableModel.findOne({ email: updatedFields.email });
+            if (existingUser && existingUser._id.toString() !== id) {
+                return res.status(400).json({ message: "Email already taken" });
+            }
+        } catch (error) {
+            return res.status(500).json({ message: "Failed to check email uniqueness", error: error.message });
+        }
+    }
     try {
         const updatedResponsable = await ResponsableModel.findByIdAndUpdate(id, updatedFields, { new: true });
         res.status(200).json({ message: "Responsable updated successfully", user: updatedResponsable });
