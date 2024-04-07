@@ -126,9 +126,8 @@ const ProfileModif = () => {
 
   return (
     <>
-      <NavBar links={links} />
+      <NavBar />
       <div className='flex flex-row'>
-        <Sidebar />
         <div className='ml-[280px] flex items-center justify-center flex-col'>
           <h1 className='bold-52 my-6'>Modifier le profil</h1>
           <form className='flex flex-col'>
