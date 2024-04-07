@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import NavBar from './NavBar';
-import Sidebar from './SideBar';
+import Sidebar ,{SidebarItem}from './SideBar';
+import { School ,Settings,LogOut} from 'lucide-react';
 import Message from './Message';
 import Image from './Image';
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -31,6 +32,22 @@ const ProfileModif = () => {
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [image, setImage] = useState(null); // State to hold the uploaded image
+  const [width, setWidth] = useState();
+    const handleWidth = (width) => {
+      setWidth(width);
+    }
+    useEffect(() => {
+      handleWidth(width);
+    },[width]);
+    const [w, setW] = useState();
+    const handleW = (width) => {
+      if (width === 284){
+      setW(400);}
+      else {setW(width);}
+    }
+    useEffect(() => {
+      handleW(width);
+    },[width]);
 
   const handleImageUpload = async (file) => {
     setImage(file); // Set the uploaded image in state
@@ -151,7 +168,11 @@ const ProfileModif = () => {
     <>
       <NavBar />
       <div className='flex flex-row'>
-{/*         <Sidebar /> */}
+        <Sidebar sendWidth={handleWidth}>
+          <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
+          <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable`} />
+          <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
+        </Sidebar>
         <div className='ml-[280px] flex items-center justify-center flex-col'>
           <h1 className='bold-52 my-6'>Modifier le profil</h1>
           <form className='flex flex-col'>
