@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const terrainSchema = new schema({
-    img : { type: Object},
+    img : { type: String ,required: true },
     nom: { type: String, required: true },
     idRes: { type: Object, required: true },
     phone: { type: Number, required: true },
@@ -19,7 +19,7 @@ const terrainSchema = new schema({
         required: true 
     },
     status : { type: String, required: true },
-    note : {type : Object}
+    note : {type : Object},
 });
 
 module.exports.terrainModel = mongoose.model('Terrain', terrainSchema);
