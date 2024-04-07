@@ -5,6 +5,14 @@ import Message from './Message';
 import Image from './Image';
 import { useAuthContext } from '../hooks/useAuthContext';
 import axios from 'axios';
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+  list,
+} from "firebase/storage";
+import { storage } from "../firebase";
 
 const links = [
   { label: 'Accueil', path: '/' },
@@ -22,6 +30,11 @@ const ProfileModif = () => {
   const [tel, setTel] = useState(user.userObj.tel);
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
+  const [image, setImage] = useState(null); // State to hold the uploaded image
+
+  const handleImageUpload = async (file) => {
+    setImage(file); // Set the uploaded image in state
+  };
 
   const getPasswordStrength = (password) => {
     // Define your password strength criteria here
@@ -75,8 +88,16 @@ const ProfileModif = () => {
         email: email,
         tel: tel,
         password: password,
+        image :user.userObj.image,
         // Add other fields as necessary
       };
+      if (image) {
+        const storageRef = ref(storage, `profilepictures/${user.userObj._id}`);
+        const imageSnapshot = await uploadBytes(storageRef, image);
+        const imageUrl = await getDownloadURL(imageSnapshot.ref);
+        updatedFields.image = imageUrl;
+        console.log(imageUrl);
+      }
 
       if (user.userObj.__t === 'Particulier') {
         url = `http://localhost:4000/api/users/update_particulier/${user.userObj._id}`;
@@ -86,8 +107,10 @@ const ProfileModif = () => {
 
       const response = await axios.put(url, updatedFields);
       if (response.status === 200) {
+        console.log(response);
         setIsSuccess(true);
       }
+      console.log(response);
     } catch (error) {
       console.error('Failed to update profile:', error);
       // Handle profile update errors
@@ -189,7 +212,7 @@ const ProfileModif = () => {
               }}
             />
             <label htmlFor="Photo" className='text-2xl text-bold m-2'>Photo</label>
-            <Image />
+            <Image onImageUpload={handleImageUpload} />
             <label htmlFor='password' className='text-2xl text-bold m-2'>
               Mot de passe
             </label>
