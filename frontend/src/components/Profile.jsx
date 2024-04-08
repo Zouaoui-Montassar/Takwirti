@@ -21,7 +21,6 @@ const Profile = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [pendingRequests, setPendingRequests] = useState([]);
     const { user } = useAuthContext(); 
-    console.log("mel profile ", user.userObj)
     useEffect(() => {
         const fetchPendingRequests = async () => {
           try {
