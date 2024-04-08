@@ -105,7 +105,7 @@ const ReservationAddParent = () => {
               <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
               <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
            </Sidebar>
-            <div className={`px-[15%] pt-[2%] relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] `}>
+            <div className={`px-[15%] p-[2%] ml-[${w}px] mt-[82px] w-auto justify-between items-center`}>
                 <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900">Reservation Date and Time</h1>
                 <p>Here you can make your reservation in {/* {terrainItems.nom} */}</p>
                 <form onSubmit={handleOnSubmit}>

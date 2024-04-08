@@ -1,7 +1,5 @@
 import React from 'react';
 import { Fragment, useState, useEffect } from 'react';
-import NavBar from './NavBar';
-import SideBar ,{SidebarItem}from './SideBar';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import Dailog from './Dailog';
@@ -45,22 +43,6 @@ const Terrain = ({ func }) => {
   const [status, setStatus]=useState();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const [width, setWidth] = useState();
-    const handleWidth = (width) => {
-      setWidth(width);
-    }
-    useEffect(() => {
-      handleWidth(width);
-    },[width]);
-    const [w, setW] = useState();
-    const handleW = (width) => {
-      if (width === 284){
-      setW(400);}
-      else {setW(width);}
-    }
-    useEffect(() => {
-      handleW(width);
-    },[width]);
   const [image, setImage] = useState(null); // State to hold the uploaded image
 
   const handleImageUpload = async (file) => {
@@ -158,16 +140,9 @@ const Terrain = ({ func }) => {
 
   return (
     <>
-      <NavBar />
-      <div className='flex flex-row'>
-        <SideBar sendWidth={handleWidth}>
-          <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
-          <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable`} />
-          <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
-        </SideBar>
-        <div className='p-5  w-full h-full'>
-          <h1 className='bold-52'>{func} Terrain</h1>
-          <form onSubmit={handleSubmit}>
+      <div className='p-5  w-full h-full'>
+        <h1 className='bold-52'>{func} Terrain</h1>
+        <form onSubmit={handleSubmit}>
             <div className='w-full h-[200px] items-center justify-center flex flex-row '>
               <div className='flex flex-col m-5 w-[40%]'>
                 <h3 className='text-bold text-xl relative right-7'>nom du terrain</h3>
@@ -400,7 +375,6 @@ const Terrain = ({ func }) => {
         </div>
         </form>
       </div>
-    </div>
   </>
 )
 }

@@ -102,7 +102,7 @@ const ResponsableContent = ({ user }) => {
           <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable`} />
           <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
         </SideBar>
-        <div className={`ml-[50px] flex relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] justify-center`}>
+        <div className={`ml-[${w}px] flex mt-[82px] w-[100%] justify-center items-center`}>
           <div className='flex flex-col'>
 
             <div className='border b-2 p-5 m-2 bg-white shadow-md rounded-md w-[250px] h-auto'>

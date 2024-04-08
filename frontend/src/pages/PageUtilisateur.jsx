@@ -25,12 +25,13 @@ const PageUtilisateur = () => {
     const [w, setW] = useState();
     const handleW = (width) => {
       if (width === 284){
-      setW(400);}
-      else {setW(width);}
+      setW(284);}
+      else {setW(102);}
     }
     useEffect(() => {
       handleW(width);
     },[width]);
+    console.log(w);
     // Check if there is no user or their type is not Particulier
     useEffect(() => {
       if (!user || user.userObj.__t !== 'Particulier') {
@@ -60,11 +61,11 @@ const PageUtilisateur = () => {
               <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
               <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
            </Sidebar>
-           <div className={`relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] `}>
-           {searchTerm ? <TerrainList param={"search"} searchTerm={searchTerm} /> :(
+           <div className={`mt-[82px] ml-[${w}px]  `}>
+           {searchTerm ? <TerrainList param={"search"} searchTerm={searchTerm} width={w} /> :(
               <div className=''>
                 <h1 className='text-3xl font-bold my-2'>Cheapest fields</h1>
-                <TerrainList param={"get"}/>
+                <TerrainList param={"get"} width={w}/>
               </div>)}
             </div>
         </div>

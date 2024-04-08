@@ -36,7 +36,7 @@ function TerrainsResp() {
             <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable/`} />
             <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
         </SideBar>
-        <div className={` relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] items-center justify-center p-8`}>
+        <div className={`ml-[${w}px] mt-[82px] w-[100%] flex items-center justify-center p-12`}>
           <TerrainList param={"responsable"} className="m-8" />
           </div>
         </div>

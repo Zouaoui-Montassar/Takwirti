@@ -47,7 +47,7 @@ const Profile = () => {
     const [w, setW] = useState();
     const handleW = (width) => {
       if (width === 284){
-      setW(400);}
+      setW(width);}
       else {setW(width);}
     }
     useEffect(() => {
@@ -65,9 +65,9 @@ const Profile = () => {
                 <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
                 <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
             </Sidebar>
-              <div className={`relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)]`}>
-                <div className='m-2 flex-grow'>
-                    <div className=" justify-center items-center ">
+              <div className={`ml-[${w}px] mt-[82px] p-12 w-[100%] flex justify-center items-center`}>
+                <div className='m-2'>
+                    <div className="">
                         <div className="relative">
                             {/* Cover Image */}
                             <img

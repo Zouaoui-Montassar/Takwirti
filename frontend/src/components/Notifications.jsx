@@ -61,10 +61,12 @@ const Notifications = () => {
                   <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
                   <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
                </Sidebar>
-                <div className={`relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] m-2 justify-center items-center`}>
+                <div className={`ml-[${w}px] mt-[82px] w-[100%] p-12 `}>
                     <h2 className='text-bold text-2xl m-2'>All notifications</h2> 
                     {notifications.map((notification) => (
+                      <div className='flex items-center justify-center'>
                         <NotificationCard key={notification._id} data={notification} />
+                      </div>
                     ))}
                 </div>
             </div>

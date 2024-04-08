@@ -83,8 +83,8 @@ const Detail = () => {
               <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
               <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
            </Sidebar>
-            <div className={`relative left-[${w}px] top-[60px] w-[calc(100vw-${w}px)] flex justify-center items-center `}>
-                <img src={terrainInfo.img} alt="image" width={700} className='mt-3 ml-3 rounded-3xl h-auto md:w-1/2' />
+            <div className={` ml-[${w}px] mt-[60px] w-[70%] flex flex-row justify-center items-center`}>
+                <img src={terrainInfo.img} alt="image" width={200} className='mt-3 ml-3 rounded-3xl h-auto md:w-1/2 ' />
                 <div className='w-full md:w-1/2 flex flex-col items-center p-4'>
                     <h1 className='bold-52 m-3'>{terrainInfo.nom}</h1>
                     <p className='text-bold text-xl text-center'>

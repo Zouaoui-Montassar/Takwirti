@@ -110,7 +110,7 @@ const FriendsList = () => {
               <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
               <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
            </Sidebar>
-        <div className={`relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] `}>
+        <div className={` ml-[${w}px] mt-[82px] w-[100%] p-12`}>
         <h2 className='text-bold text-2xl m-2'>Find People</h2>
         <div className="flex items-center justify-center">
             <div className="flex space-x-1">
@@ -174,19 +174,10 @@ const FriendsList = () => {
       <FriendsCard key={person._id} data={person} onAddFriend={addFriend} showAddButton={true} />
     ))}
 </div>
-
 )}
-
-
-     
-
-
-
-
-
           <h2 className='text-bold text-2xl m-2'>All friends</h2>
           {friends.map((friend) => (
-            <ul>
+            <ul className='flex items-center justify-center'>
               <li key={friend._id}>
                 <FriendsCard data={friend} onRemoveFriend={removeFriend} />
               </li>

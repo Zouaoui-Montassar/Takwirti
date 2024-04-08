@@ -6,6 +6,9 @@ import Message from './Message';
 import Image from './Image';
 import { useAuthContext } from '../hooks/useAuthContext';
 import axios from 'axios';
+import SearchBox from '../components/SearchBox';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import {
   ref,
   uploadBytes,
@@ -24,6 +27,8 @@ const links = [
 
 const ProfileModif = () => {
   const { user } = useAuthContext();
+  const role = user.__t ;
+  const [searchTerm, setSearchTerm] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
   const [nom, setNom] = useState(user.userObj.nom);
   const [prenom, setPrenom] = useState(user.userObj.prenom);
@@ -42,7 +47,7 @@ const ProfileModif = () => {
     const [w, setW] = useState();
     const handleW = (width) => {
       if (width === 284){
-      setW(400);}
+      setW(width);}
       else {setW(width);}
     }
     useEffect(() => {
@@ -163,17 +168,39 @@ const ProfileModif = () => {
         return 'black';
     }
   };
+  const handleSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
+  };
 
   return (
     <>
       <NavBar />
       <div className='flex flex-row'>
+      {role === 'responsable' ? (
         <Sidebar sendWidth={handleWidth}>
-          <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
+          <SidebarItem
+            icon={<School />}
+            text="profile responsable"
+            link={'responsable'}
+          />
           <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable`} />
           <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
         </Sidebar>
-        <div className='ml-[280px] flex items-center justify-center flex-col'>
+      ) : (
+        <Sidebar sendWidth={handleWidth}>
+          <SidebarItem
+            icon={<FontAwesomeIcon icon={faSearch} />}
+            text={<SearchBox onSearch={handleSearch} />}
+            test={true}
+          />
+          <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
+          <SidebarItem icon={<School />} text="Profile " link={'profile'} />
+          <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
+          <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
+          <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
+        </Sidebar>
+      )}
+        <div className={`ml-[${w}px} mt-[82px] flex justify-between items-center flex-col px-12 w-[100%]`}>
           <h1 className='bold-52 my-6'>Modifier le profil</h1>
           <form className='flex flex-col'>
             <label htmlFor='nom' className='text-2xl text-bold m-2'>

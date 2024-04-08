@@ -1,7 +1,7 @@
-
 import { MoreVertical, ChevronLast, ChevronFirst } from "lucide-react";
 import { useContext, createContext, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const SidebarContext = createContext();
 
@@ -9,6 +9,10 @@ export default function Sidebar({ children,sendWidth }) {
   const [expanded, setExpanded] = useState(true);
   const [width, setWidth] = useState();
   const ref = useRef();
+  const { user } = useAuthContext();
+  const img = user.userObj.image;
+  const email = user.userObj.email;
+  const name = user.userObj.nom
   useEffect(() =>{
     if (expanded){setWidth(284)}
     else {setWidth(73)}
@@ -36,8 +40,8 @@ export default function Sidebar({ children,sendWidth }) {
   }, []);
 
   return (
-    <div className={`h-[calc(100vh-82px)] ${expanded ? 'w-[284px]' : 'w-[73px]'} mt-[82px] z-[30]`}>
-      <aside className={`fixed h-[calc(100vh-82px)]`} ref={ref}>
+    <div className={`h-[calc(100vh-82px)] ${expanded ? 'w-[284px]' : 'w-[73px]'} mt-[82px]`}>
+      <aside className={`fixed h-[calc(100vh-82px)]  z-[30]`} ref={ref}>
         <nav className="h-full flex flex-col bg-white border-r shadow-sm">
           <div className="p-4 pb-2 flex justify-between items-center">
             <img
@@ -62,7 +66,7 @@ export default function Sidebar({ children,sendWidth }) {
           </SidebarContext.Provider>
           <div className="border-t flex p-3">
             <img
-                src="https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true"
+                src={img}
                 alt=""
                 className="w-10 h-10 rounded-md"
             />
@@ -73,8 +77,8 @@ export default function Sidebar({ children,sendWidth }) {
             `}
             >
               <div className="leading-4">
-                <h4 className="font-semibold">Takwirti</h4>
-                <span className="text-xs text-gray-600">Takwirti@gmail.com</span>
+                <h4 className="font-semibold">{name}</h4>
+                <span className="text-xs text-gray-600">{email}</span>
               </div>
               <MoreVertical size={20} />
             </div>

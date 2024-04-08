@@ -30,7 +30,7 @@ const ReservationList = () => {
     const [w, setW] = useState();
     const handleW = (width) => {
       if (width === 284){
-      setW(400);}
+      setW(width);}
       else {setW(width);}
     }
     useEffect(() => {
@@ -89,12 +89,12 @@ const ReservationList = () => {
                 ) : (
                     <Sidebar sendWidth={handleWidth}>
                         <SidebarItem icon={<School />} text="profile responsable" link={'responsable'}/>
-                        <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable/${user.userObj._id}`} />
+                        <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable`} />
                         <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
                     </Sidebar>
                 )
                 }
-                <div className={` relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] items-center justify-center p-8`}>
+                <div className={`ml-[${w}px] mt-[82px] w-[100%] items-center justify-center p-12`}>
                     <div className="flex flex-row bg-white text-sm text-gray-500 font-bold px-5 py-2 shadow border-b border-gray-300 items-center justify-between">
                         <p className='flex-grow-0'>Reservation list</p>
                         <SearchBox className="py-4" onSearch={handleSearch} isReservation={true} />
