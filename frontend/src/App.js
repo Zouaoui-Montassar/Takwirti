@@ -25,7 +25,7 @@ import ReservationAddParent from './components/ReservationAddParent';
 import Responsable2 from './components/Responsable2';
 import axios from 'axios';
 import { useEffect } from 'react';
-
+import Chat from './components/Chatapp'
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
   { id: 2, name: 'Item 2', image:'/Section 2 image.png' },
@@ -90,7 +90,7 @@ function App() {
           <Route path='/terrain/update/:id' element={<Terrain func={"update"}/>}/>
           <Route path='/friendslist' element={<FriendsList/>}/>
           <Route path='/tachkila' element={<Tachkila/>}/>
-
+          <Route path="/chat" element={<Chat />} /> 
         </Routes>
       </BrowserRouter>
     </div>
