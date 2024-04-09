@@ -5,13 +5,11 @@ import { LockOpen , CircleX , Calendar } from 'lucide-react';
 import Stars from './Stars';
 import { Link, useParams } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
-
-const links = [
-    {label: 'Accueil', path: '/'} ,
-    {label: 'Page 1', path: '/page1'} ,
-    {label: 'Page 2', path: '/page2' },
-   // Add more links as needed
-];
+import { School, Settings, LogOut } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import SearchBox from './SearchBox';
+import Sidebar, { SidebarItem } from './SideBar';
 
 const Detail = () => {
     const [terrainInfo, setTerrainInfo] = useState(null);
@@ -21,6 +19,26 @@ const Detail = () => {
     const terrainId = params.id
     const { user } = useAuthContext();
     const idUser = user.userObj._id;
+    const [searchTerm, setSearchTerm] = useState('');
+    const [width, setWidth] = useState();
+    const handleWidth = (width) => {
+      setWidth(width);
+    }
+    useEffect(() => {
+      handleWidth(width);
+    },[width]);
+    const [w, setW] = useState();
+    const handleW = (width) => {
+      if (width === 284){
+      setW(400);}
+      else {setW(width);}
+    }
+    useEffect(() => {
+      handleW(width);
+    },[width]);
+    const handleSearch = (searchTerm) => {
+        setSearchTerm(searchTerm);
+      };
     useEffect(() => {
         const fetchTerrainInfo = async () => {
             try {
@@ -55,9 +73,18 @@ const Detail = () => {
     
     return (
         <>
-            <NavBar links={links} className=""/> 
-            <div className='flex flex-col md:flex-row justify-center items-center '>
-                <img src="/Section 1 image.jpg" alt="image" width={700} className='mt-3 ml-3 rounded-3xl h-auto md:w-1/2' />
+            <NavBar /> 
+            <div className='flex flex-row'>
+            <Sidebar sendWidth={handleWidth} >
+              <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>} test={true}  />
+              <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
+              <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
+              <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
+              <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
+              <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
+           </Sidebar>
+            <div className={` ml-[${w}px] mt-[60px] w-[70%] flex flex-row justify-center items-center`}>
+                <img src={terrainInfo.img} alt="image" width={200} className='mt-3 ml-3 rounded-3xl h-auto md:w-1/2 ' />
                 <div className='w-full md:w-1/2 flex flex-col items-center p-4'>
                     <h1 className='bold-52 m-3'>{terrainInfo.nom}</h1>
                     <p className='text-bold text-xl text-center'>
@@ -86,6 +113,7 @@ const Detail = () => {
                         <Calendar className='w-6 h-6' />
                     </Link>
                 </div>
+            </div>
             </div>
         </>
     );

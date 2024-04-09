@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "node ./bin/www",
-    "start": "node --watch --env-file=.env ./bin/www"
+    "start": "node --watch --env-file=.env ./bin/www",
+    "test" : "node --watch app.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -17,13 +18,15 @@
     "express-session": "^1.18.0",
     "googleapi": "^1.0.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.3.1",
+    "moment": "^2.30.1",
+    "mongoose": "^8.2.2",
     "morgan": "~1.9.1",
     "passport": "^0.7.0",
     "passport-google-oauth": "^2.0.0",
     "passport-google-oauth2": "^0.2.0",
     "passport-google-oauth20": "^2.0.0",
-    "passport-jwt": "^4.0.1"
+    "passport-jwt": "^4.0.1",
+    "socket.io": "^4.7.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

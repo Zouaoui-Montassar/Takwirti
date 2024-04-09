@@ -22,6 +22,7 @@
     "clsx": "^2.1.0",
     "date-fns": "^3.6.0",
     "datepicker": "^0.0.0",
+    "firebase": "^10.10.0",
     "framer-motion": "^11.0.8",
     "lucide-react": "^0.352.0",
     "mongodb": "^6.5.0",
@@ -31,14 +32,18 @@
     "react-dropzone": "^14.2.3",
     "react-dropzone-uploader": "^2.11.0",
     "react-helmet": "^6.1.0",
+    "react-hot-toast": "^2.4.1",
     "react-icons": "^5.0.1",
     "react-router-dom": "^6.22.2",
     "react-scripts": "5.0.1",
     "react-simple-star-rating": "^5.1.7",
     "react-table": "^7.8.0",
     "recharts": "^2.12.3",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "tailwind-merge": "^2.2.1",
-    "web-vitals": "^3.5.2"
+    "web-vitals": "^3.5.2",
+    "zustand": "^4.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -66,6 +71,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.17",
+    "daisyui": "^4.10.1",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7"

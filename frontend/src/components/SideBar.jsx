@@ -1,66 +1,99 @@
 import { MoreVertical, ChevronLast, ChevronFirst } from "lucide-react";
-import { useContext, createContext, useState } from "react";
+import { useContext, createContext, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useLogout } from "../hooks/useLogout";
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const SidebarContext = createContext();
 
-export default function Sidebar({ children }) {
+export default function Sidebar({ children,sendWidth }) {
   const [expanded, setExpanded] = useState(true);
+  const [width, setWidth] = useState();
+  const ref = useRef();
+  const { user } = useAuthContext();
+  const img = user.userObj.image;
+  const email = user.userObj.email;
+  const name = user.userObj.nom
+  useEffect(() =>{
+    if (expanded){setWidth(284)}
+    else {setWidth(73)}
+  },[expanded])
+  useEffect(() =>{
+    sendWidth(width)
+  },[width])
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 768px)'); // Adjust the max-width according to your needs
+
+    const handleMediaQueryChange = (mediaQuery) => {
+      setExpanded(!mediaQuery.matches);
+    };
+
+    // Call the function once to set the initial state
+    handleMediaQueryChange(mediaQuery);
+
+    // Listen for media query changes
+    mediaQuery.addEventListener('change', handleMediaQueryChange);
+
+    // Cleanup function
+    return () => {
+      mediaQuery.removeEventListener('change', handleMediaQueryChange);
+    };
+  }, []);
 
   return (
-    <aside className="h-screen">
-      <nav className="h-full flex flex-col bg-white border-r shadow-sm">
-        <div className="p-4 pb-2 flex justify-between items-center">
-          <img
-            src="/blacklogo.png"
-            className={`overflow-hidden transition-all ${
-              expanded ? "w-[50px] h-[50px]" : "w-0"
-            }`}
-            alt="logo"
-          />
-          <button
-            onClick={() => setExpanded((curr) => !curr)}
-            className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
-          >
-            {expanded ? <ChevronFirst /> : <ChevronLast />}
-          </button>
-        </div>
-
-        <SidebarContext.Provider value={{ expanded, setExpanded }}>
-          <ul className="flex-1 px-3">
-            {children}
-          </ul>
-        </SidebarContext.Provider>
-        <div className="border-t flex p-3">
-          <img
-              src="https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true"
-              alt=""
-              className="w-10 h-10 rounded-md"
-          />
-          <div
-            className={`
-              flex justify-between items-center
-              overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
-          `}
-          >
-            <div className="leading-4">
-              <h4 className="font-semibold">Takwirti</h4>
-              <span className="text-xs text-gray-600">Takwirti@gmail.com</span>
-            </div>
-            <MoreVertical size={20} />
+    <div className={`h-[calc(100vh-82px)] ${expanded ? 'w-[284px]' : 'w-[73px]'} mt-[82px]`}>
+      <aside className={`fixed h-[calc(100vh-82px)]  z-[30]`} ref={ref}>
+        <nav className="h-full flex flex-col bg-white border-r shadow-sm">
+          <div className="p-4 pb-2 flex justify-between items-center">
+            <img
+              src="/blacklogo.png"
+              className={`overflow-hidden transition-all ${
+                expanded ? "w-[50px] h-[50px]" : "w-0"
+              }`}
+              alt="logo"
+            />
+            <button
+              onClick={() => setExpanded((curr) => !curr)}
+              className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
+            >
+              {expanded ? <ChevronFirst /> : <ChevronLast />}
+            </button>
           </div>
-        </div>
-      </nav>
-    </aside>
+
+          <SidebarContext.Provider value={{ expanded, setExpanded }}>
+            <ul className="flex-1 px-3">
+              {children}
+            </ul>
+          </SidebarContext.Provider>
+          <div className="border-t flex p-3">
+            <img
+                src={img}
+                alt=""
+                className="w-10 h-10 rounded-md"
+            />
+            <div
+              className={`
+                flex justify-between items-center
+                overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
+            `}
+            >
+              <div className="leading-4">
+                <h4 className="font-semibold">{name}</h4>
+                <span className="text-xs text-gray-600">{email}</span>
+              </div>
+              <MoreVertical size={20} />
+            </div>
+          </div>
+        </nav>
+      </aside>
+    </div>
   );
 }
 
-export function SidebarItem({ icon, text, active, alert,link }) {
+export function SidebarItem({ icon, text, active, alert,link, test }) {
   const { expanded, setExpanded } = useContext(SidebarContext);
 
   return (
-    <Link to={`/${link}`}
+    <Link to={test? '' :`/${link}`}
       className={`
         relative flex py-2 px-3 my-1
         font-medium rounded-md cursor-pointer
@@ -109,4 +142,3 @@ export function SidebarItem({ icon, text, active, alert,link }) {
     </Link>
   );
 }
-

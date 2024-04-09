@@ -90,6 +90,26 @@ const login = async (req, res) => {
 const updateParticulier = async (req, res) => {
     const { id } = req.params;
     const updatedFields = req.body;
+
+    if (updatedFields.email) {
+        try {
+            const existingUser = await ParticulierModel.findOne({ email: updatedFields.email });
+            if (existingUser && existingUser._id.toString() !== id) {
+                return res.status(400).json({ message: "Email already taken" });
+            }
+        } catch (error) {
+            return res.status(500).json({ message: "Failed to check email uniqueness", error: error.message });
+        }
+    }
+    // password encryption ( ken yetupdata )
+    if (updatedFields.password) {
+        try {
+            const hash = await bcrypt.hash(updatedFields.password, 10);
+            updatedFields.password = hash;
+        } catch (error) {
+            return res.status(500).json({ message: "Failed to encrypt the new password", error: error.message });
+        }
+    }
     try {
         const updatedParticulier = await ParticulierModel.findByIdAndUpdate(id, updatedFields, { new: true });
         res.status(200).json({ message: "Particulier updated successfully", user: updatedParticulier });
@@ -101,6 +121,24 @@ const updateParticulier = async (req, res) => {
 const updateResponsable = async (req, res) => {
     const { id } = req.params;
     const updatedFields = req.body;
+    if (updatedFields.email) {
+        try {
+            const existingUser = await ResponsableModel.findOne({ email: updatedFields.email });
+            if (existingUser && existingUser._id.toString() !== id) {
+                return res.status(400).json({ message: "Email already taken" });
+            }
+        } catch (error) {
+            return res.status(500).json({ message: "Failed to check email uniqueness", error: error.message });
+        }
+    }
+    if (updatedFields.password) {
+        try {
+            const hash = await bcrypt.hash(updatedFields.password, 10);
+            updatedFields.password = hash;
+        } catch (error) {
+            return res.status(500).json({ message: "Failed to encrypt the new password", error: error.message });
+        }
+    }
     try {
         const updatedResponsable = await ResponsableModel.findByIdAndUpdate(id, updatedFields, { new: true });
         res.status(200).json({ message: "Responsable updated successfully", user: updatedResponsable });
@@ -145,6 +183,7 @@ const getUserById = async (req, res) => {
     }
 };
 
+// add friend zeyda , mais khaleha for tests
 const addFriend = async (req, res) => {
     const { userId, friendId } = req.body; 
     try {
@@ -180,7 +219,7 @@ const GetAllFriends = async (req, res) => {
       
       // Return nom prenom tel w _id ( lel remove )
       const friendsDetails = friends.map(friend => ({ nom: friend.nom, prenom: friend.prenom , tel:friend.tel , _id : friend._id }));
-      console.log(friendsDetails);
+      /* console.log(friendsDetails); */
       res.status(200).json(friendsDetails);
     } catch (error) {
       console.error(error);

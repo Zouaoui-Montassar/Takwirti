@@ -1,16 +1,22 @@
 import React from 'react';
 import { Fragment, useState, useEffect } from 'react';
-import NavBar from './NavBar';
-import SideBar ,{SidebarItem}from './SideBar';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import Dailog from './Dailog';
 import TimeList from './TimeList';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Image from './Image';
 import { School ,Settings,LogOut} from 'lucide-react';
-
+import { useAuthContext } from '../hooks/useAuthContext';
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+  list,
+} from "firebase/storage";
+import { storage } from "../firebase";
 
 const ville = [
   { name: 'Tunis' },
@@ -19,14 +25,10 @@ const ville = [
   { name: 'gafsa' },
 ];
 
-const links = [
-  { label: 'Accueil', path: '/' },
-  { label: 'Page 1', path: '/page1' },
-  { label: 'Page 2', path: '/page2' },
-  // Add more links as needed
-];
 // id w func mawjoudin fel path (a modifier plus tard)
-const Terrain = ({ func, id }) => {
+const Terrain = ({ func }) => {
+  const { user } = useAuthContext();
+  const id = user.userObj._id;
   const [img, setImg] = useState("abc")
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -39,8 +41,13 @@ const Terrain = ({ func, id }) => {
   const [time , setTime] = useState([]);
   const [date, setDate] = useState([]);
   const [status, setStatus]=useState();
-
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const [image, setImage] = useState(null); // State to hold the uploaded image
+
+  const handleImageUpload = async (file) => {
+    setImage(file); // Set the uploaded image in state
+  };
   const handleTime = (time) => {
     setTime(time);
   }
@@ -68,8 +75,16 @@ const Terrain = ({ func, id }) => {
     e.preventDefault();
     try {
       let response;
+      let imageUrl;
+      if (image) {
+        const storageRef = ref(storage, `terrainpictures/${user.userObj._id}`);
+        const imageSnapshot = await uploadBytes(storageRef, image);
+        imageUrl = await getDownloadURL(imageSnapshot.ref);
+        console.log(imageUrl);
+      }
       if (func === "add") {
         response = await axios.post(`http://localhost:4000/ter/terrain/add/${id}`, {
+          img: imageUrl,
           nom: name,
           phone: phone,
           prix: prix,
@@ -84,6 +99,7 @@ const Terrain = ({ func, id }) => {
       } else if (func === "update") {
         console.log(time);
         response = await axios.put(`http://localhost:4000/ter/terrain/update/${id}`, {
+          img: imageUrl,
           nom: name,
           phone: phone,
           prix: prix,
@@ -101,6 +117,7 @@ const Terrain = ({ func, id }) => {
       } else {
         console.error(`Failed to ${func} terrain`);
       }
+      navigate(`/terrain/responsable`)
     } catch (error) {
       console.error(`Error ${func}ing terrain:`, error);
     }
@@ -123,18 +140,9 @@ const Terrain = ({ func, id }) => {
 
   return (
     <>
-      <NavBar copy links={links} />
-      <div className='flex flex-row'>
-        <SideBar>
-                {/* Contenu de la barre latérale */}
-                  <SidebarItem icon={<School />} text="profile responsable"  link={'responsable'} />
-                  <SidebarItem icon={<Settings />} text="list terrain" link={'terrain/responsable'} />
-                  <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
-                  <SidebarItem icon={<LogOut />} text="se déconnecter" link={'signout'}/>
-            </SideBar>
-        <div className='p-5  w-full h-full'>
-          <h1 className='bold-52'>{func} Terrain</h1>
-          <form onSubmit={handleSubmit}>
+      <div className='p-5  w-full h-full'>
+        <h1 className='bold-52'>{func} Terrain</h1>
+        <form onSubmit={handleSubmit}>
             <div className='w-full h-[200px] items-center justify-center flex flex-row '>
               <div className='flex flex-col m-5 w-[40%]'>
                 <h3 className='text-bold text-xl relative right-7'>nom du terrain</h3>
@@ -348,7 +356,7 @@ const Terrain = ({ func, id }) => {
             
             <div className=' justify-center items-center m-4 '>
               <div className='relative left-[350px]  w-[500px]'>
-                <Image />
+                <Image onImageUpload={handleImageUpload} />
               </div>
             </div>
            
@@ -367,7 +375,6 @@ const Terrain = ({ func, id }) => {
         </div>
         </form>
       </div>
-    </div>
   </>
 )
 }

@@ -6,7 +6,7 @@ import whitelogo from '../assets/whitelogo.png';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 
-const NavBar = ({ links, isHomePage }) => {
+const NavBar = ({ isHomePage }) => {
   /*added , isHomePage fou9 hedhi bedhabet   */ 
   const { user } = useAuthContext(); // bech naffichi el infos fel profile ala jnab
   /* const [isHomePage, setIsHomePage] = useState(false); */
@@ -30,7 +30,7 @@ const NavBar = ({ links, isHomePage }) => {
 
 
   return (
-    <nav className={`bg-primary-50 flex justify-between items-center py-3 max-container text-white ${isHomePage ? 'px-[10%]' : 'px-[3%]'}`}>
+    <nav className={`bg-primary-50 fixed top-0 z-40 h-[82px] w-[100%] flex justify-between items-center py-3 max-container text-white ${isHomePage ? 'px-[10%]' : 'px-[3%]'}`}>
       
       <Link to="#">
     <div className='flex flex-row'>
@@ -59,7 +59,7 @@ const NavBar = ({ links, isHomePage }) => {
                 <span className="sr-only">Open user menu</span>
                 <img
                   className="w-8 h-8 rounded-full"
-                  src={whitelogo}
+                  src={user.userObj.image}
                   alt="user photo"
                 />
               </button>

@@ -23,8 +23,10 @@ import FriendsList from './components/FriendsList';
 import Notifications from './components/Notifications';
 import Tachkila from './components/Tachkila';
 import ReservationAddParent from './components/ReservationAddParent';
-import React , {useState, useEffect} from 'react';
+import Responsable2 from './components/Responsable2';
 import axios from 'axios';
+import { useEffect } from 'react';
+import Chat from './components/Chatapp'
 import Admin from './pages/Admin';
 
 const data = [
@@ -75,7 +77,7 @@ function App() {
           <Route path="/signin" element={<Sign_in/>} />
           <Route path="/stats" element={<Stats/>} />
           <Route path='/responsable' element={<Responsable/>}/>  {/* protected */} 
-          <Route path='/responsable/:id' element={<Responsable/>}/>
+          <Route path='/responsable/:terrainId' element={<Responsable2/>}/>
           <Route path='/terrain/add' element={<Terrain func={"add"} id={"9876543210fedcba"}/>}/>
           <Route path='/terrain/responsable' element={<TerrainsResp/>}/>
           <Route path='/particulier' element={<PageUtilisateur/>}/> {/* protected */} 
@@ -85,14 +87,13 @@ function App() {
           <Route path="/notifications" element={<Notifications/>} />     
           <Route path="/Reservation/add/:idUser/:idTer" element={<ReservationAddParent />} />
           <Route path="/list" element={<List/>} />
-          <Route path="/reservation/list" element={<ReservationList xxx={"Particulier"}/>} />
+          <Route path="/reservation/listP" element={<ReservationList xxx={"Particulier"}/>} />
+          <Route path="/reservation/listR" element={<ReservationList xxx={"Responsable"}/>} />
           <Route path="/reservation/edit/:idRes" element={<ReservationEdit/>} />
           <Route path='/terrain/update/:id' element={<Terrain func={"update"}/>}/>
           <Route path='/friendslist' element={<FriendsList/>}/>
           // eslint-disable-next-line react/jsx-no-comment-textnodes
           <Route path='/tachkila' element={<Tachkila/>}/>
-          <Route path='/admin' element={<Admin/>}/>
-        
 
         </Routes>
       </BrowserRouter>

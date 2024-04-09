@@ -10,7 +10,7 @@ const NotificationCard = ({ data }) => {
   
   return (
     <div>
-      <div className='w-[600px] mb-2 rounded-2xl p-2 shadow-2xl shadow-slate-400 m-5 border border-5 border-gray-400'>
+      <div className=' w-[600px] mb-2 rounded-2xl p-2 shadow-2xl shadow-slate-400 m-5 border border-5 border-gray-400'>
         <div className='flex flex-row justify-between'>
           <div className='flex flex-row items-center'>
             <img src={data.image} alt='Friend image' className='w-[100px] h-[100px] rounded-full ' />

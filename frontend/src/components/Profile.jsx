@@ -17,19 +17,10 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import axios from 'axios';
 
 
-
-const links = [
-    { label: 'Accueil', path: '/' },
-    { label: 'Page 1', path: '/page1' },
-    { label: 'Page 2', path: '/page2' },
-    // Add more links as needed
-];
-
 const Profile = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [pendingRequests, setPendingRequests] = useState([]);
     const { user } = useAuthContext(); 
-    console.log("mel profile "+ user.userObj)
     useEffect(() => {
         const fetchPendingRequests = async () => {
           try {
@@ -46,24 +37,37 @@ const Profile = () => {
     const handleSearch = (searchTerm) => {
       setSearchTerm(searchTerm);
     };
-    
-    
-
-
+    const [width, setWidth] = useState();
+    const handleWidth = (width) => {
+      setWidth(width);
+    }
+    useEffect(() => {
+      handleWidth(width);
+    },[width]);
+    const [w, setW] = useState();
+    const handleW = (width) => {
+      if (width === 284){
+      setW(width);}
+      else {setW(width);}
+    }
+    useEffect(() => {
+      handleW(width);
+    },[width]);
     return (
         <>
-            <NavBar links={links} />
-            <div className='flex flex-row'>
-                <Sidebar>
-                    <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>}  />
-                    <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
-              <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
-              <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
-              <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/list'} />
-              <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
-                </Sidebar>
-                <div className='m-2 flex-grow'>
-                    <div className="flex justify-center items-center ">
+            <NavBar />
+            <div className='flex flex-row '>
+              <Sidebar sendWidth={handleWidth} >
+                <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>} test={true}  />
+                <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
+                <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
+                <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
+                <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
+                <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
+            </Sidebar>
+              <div className={`ml-[${w}px] mt-[82px] p-12 w-[100%] flex justify-center items-center`}>
+                <div className='m-2'>
+                    <div className="">
                         <div className="relative">
                             {/* Cover Image */}
                             <img
@@ -74,7 +78,7 @@ const Profile = () => {
                             
                             {/* Profile Image */}
                             <img
-                                src="/taswira.jpg"
+                                src={user.userObj.image}
                                 alt="Profile"
                                 className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-[250px] h-[250px] rounded-full border-4 border-white"
                             />
@@ -91,14 +95,14 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    <div className="flex flex-row justify-center m-2 relative left-[850px] bottom-[100px]  w-[350px]">
+                    <div className="flex flex-row justify-center m-2 relative left-[65%] bottom-[100px]  w-[350px]">
                         <div className='border b-2 border-green-500 bg-green-500 w-[90px] flex flex-row p-2 items-center justify-center rounded-md shadow-lg shadow-slate-400 mr-2'>
                           <button className="mr-2 text-white text-lg">Add friend</button>
                           <MdOutlineAdd className=' w-[25px] h-[25px] text-white' />
                         </div>
 
                         <div className='border b-2 border-blue-500 bg-blue-500 w-[90px] flex flex-row p-2 items-center justify-center rounded-md shadow-lg shadow-slate-400 mr-2'>
-                          <Link to={`/profilemodifier`} className="mr-2 text-white text-lg">Modify</Link>
+                          <Link to={`/profile/modifier`} className="mr-2 text-white text-lg">Modify</Link>
                           <BsPen className='  text-white' />
                         </div>
 
@@ -145,6 +149,7 @@ const Profile = () => {
 
                 </div>
             </div>
+          </div>
         </>
     );
 };
