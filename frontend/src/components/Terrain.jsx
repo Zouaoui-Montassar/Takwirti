@@ -2,12 +2,13 @@ import React from 'react';
 import { Fragment, useState, useEffect } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
-import Dailog from './Dailog';
+import SideBar, { SidebarItem } from '../components/SideBar';
+import NavBar from '../components/NavBar';
+import { School, Settings } from 'lucide-react';
 import TimeList from './TimeList';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Image from './Image';
-import { School ,Settings,LogOut} from 'lucide-react';
 import { useAuthContext } from '../hooks/useAuthContext';
 import {
   ref,
@@ -29,6 +30,7 @@ const ville = [
 const Terrain = ({ func }) => {
   const { user } = useAuthContext();
   const id = user.userObj._id;
+  const idTer = useParams();
   const [img, setImg] = useState("abc")
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -44,7 +46,41 @@ const Terrain = ({ func }) => {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [image, setImage] = useState(null); // State to hold the uploaded image
-
+  const [width, setWidth] = useState();
+  const [terrain, setTerrain] = useState({}); 
+  const getTerrain = async () => {
+    try {
+      if (func === "update") {
+        const response = await axios.get(`http://localhost:4000/ter/terrain/getInfo/${idTer.id}`);
+        setTerrain(response.data.terrain);
+        console.log(terrain)
+        console.log(response.data.terrain);
+      } 
+    } catch (error) {
+        console.error('Error getting terrain:', error);
+    }
+  } 
+  useEffect(() => {
+    getTerrain();
+    console.log("ok");
+  }, [idTer.id]);
+  
+  console.log('Terrain', terrain);
+  const handleWidth = (width) => {
+    setWidth(width);
+  }
+  useEffect(() => {
+    handleWidth(width);
+  },[width]);
+  const [w, setW] = useState();
+  const handleW = (width) => {
+    if (width === 284){
+    setW(220);}
+    else {setW(width);}
+  }
+  useEffect(() => {
+    handleW(width);
+  },[width]);
   const handleImageUpload = async (file) => {
     setImage(file); // Set the uploaded image in state
   };
@@ -98,7 +134,7 @@ const Terrain = ({ func }) => {
         });
       } else if (func === "update") {
         console.log(time);
-        response = await axios.put(`http://localhost:4000/ter/terrain/update/${id}`, {
+        response = await axios.put(`http://localhost:4000/ter/terrain/update/${idTer.id}`, {
           img: imageUrl,
           nom: name,
           phone: phone,
@@ -136,11 +172,16 @@ const Terrain = ({ func }) => {
       console.error('Error deleting terrain:', error);
     }
   };
-  
-
   return (
     <>
-      <div className='p-5  w-full h-full'>
+    <NavBar  />
+      <div className='flex flex-row'>
+        <SideBar sendWidth={handleWidth}>
+          <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
+          <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable`} />
+          <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
+        </SideBar>
+      <div className={`p-5  w-full h-full ml-[${w}] mt-[82px]`}>
         <h1 className='bold-52'>{func} Terrain</h1>
         <form onSubmit={handleSubmit}>
             <div className='w-full h-[200px] items-center justify-center flex flex-row '>
@@ -151,6 +192,7 @@ const Terrain = ({ func }) => {
                   type='text'
                   placeholder='NOM DU TERRAIN'
                   onChange={(e) => {setName(e.target.value)}}
+                  value={(func === "update") ? terrain.nom : null}
                 />
               </div>
               <div className='flex flex-col m-5 w-[40%]'>
@@ -162,6 +204,7 @@ const Terrain = ({ func }) => {
                   type='phone'
                   placeholder='12345678'
                   onChange={(e) => {setPhone(e.target.value)}}
+                  value={(func === "update") ? terrain.phone : null}
                 />
               </div>
             </div>
@@ -176,6 +219,7 @@ const Terrain = ({ func }) => {
                   type='text'
                   placeholder='adresse'
                   onChange={handleAddressChange}
+                  value={(func === "update") ? terrain.position : null}
                   disabled={func === 'update'}
                   title={func === 'update' ? 'Ce champ est inaccessible en mode édition de terrain' : ''}
                 />
@@ -248,8 +292,8 @@ const Terrain = ({ func }) => {
                 </h3>
                 <select
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
-                  value={data}
                   onChange={(e) => {handleDurationChange(e)}}
+                  value={(func === "update") ? terrain.calendrier.duree : data}
                 >
                   <option value={60}>60 minutes</option>
                   <option value={75}>75 minutes</option>
@@ -264,7 +308,7 @@ const Terrain = ({ func }) => {
                 <input
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
                   type='number'
-                  defaultValue={120}
+                  value={(func === "update") ? terrain.prix : 120}
                   onChange= {(e) => {setPrix(e.target.value)}}
                 />
               </div>
@@ -278,7 +322,7 @@ const Terrain = ({ func }) => {
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
                   type='time'
                   step="60"
-                  defaultValue={ouverture}
+                  value={(func === "update") ? terrain.calendrier.open : ouverture}
                   onChange={(e) => setOuverture(e.target.value)}
                 />
               </div>
@@ -290,7 +334,7 @@ const Terrain = ({ func }) => {
                 className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
                 type='time'
                 step="60"
-                defaultValue={fermeture}
+                value={(func === "update") ? terrain.calendrier.close : fermeture}
                 onChange={(e) => setFermeture(e.target.value)}
               />
             </div>
@@ -317,7 +361,7 @@ const Terrain = ({ func }) => {
                   id="indisponible"
                   name="status"
                   value="indisponible"
-                  checked={status === 'indisponible'}
+                  checked={(func === "update") ? status === terrain.status : status === 'indisponible'}
                   onChange={(e) => setStatus(e.target.value)}
                 />
                 <label htmlFor="indisponible">Indisponible</label>
@@ -374,6 +418,7 @@ const Terrain = ({ func }) => {
           </button>
         </div>
         </form>
+      </div>
       </div>
   </>
 )

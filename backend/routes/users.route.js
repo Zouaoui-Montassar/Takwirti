@@ -25,6 +25,8 @@ router.put('/users/update_responsable/:id', userController.updateResponsable);
 // Get user by id 
 router.get('/users/:id', userController.getUserById);
 
+//delete user
+router.delete('/users/delete/:id', userController.deleteUser);
 
 // search user bel name / tel  ( case sensitive )
 
