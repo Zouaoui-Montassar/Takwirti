@@ -46,7 +46,7 @@ const sendMessage = async (req, res) => {
 const getMessages = async (req, res) => {
 	try {
 		const { id: userToChatId } = req.params;
-		const senderId = "660cbe2eb04582b478846ed8"; //req.user._id; ena yaani 
+		const senderId = "66080cdfee2d8589f7a8f725"; //req.user._id; ena yaani 
 
 		const conversation = await Conversation.findOne({
 			participants: { $all: [senderId, userToChatId] },
