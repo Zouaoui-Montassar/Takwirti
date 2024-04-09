@@ -219,7 +219,7 @@ const GetAllFriends = async (req, res) => {
       
       // Return nom prenom tel w _id ( lel remove )
       const friendsDetails = friends.map(friend => ({ nom: friend.nom, prenom: friend.prenom , tel:friend.tel , _id : friend._id }));
-      console.log(friendsDetails);
+      /* console.log(friendsDetails); */
       res.status(200).json(friendsDetails);
     } catch (error) {
       console.error(error);
