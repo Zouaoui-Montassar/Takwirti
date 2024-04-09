@@ -13,7 +13,7 @@ const SearchInput = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (!search) return;
-		if (search.length < 3) {
+		if (search.length < 2) {
 			return toast.error("Search term must be at least 3 characters long");
 			
 		}
