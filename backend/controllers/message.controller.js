@@ -5,7 +5,7 @@ const sendMessage = async (req, res) => {
 	try {
 		const { message } = req.body;
 		const { id: receiverId } = req.params;
-		const senderId = "660cbe2eb04582b478846ed8"  //const senderId = req.user._id;
+		const {senderId } = req.body;  //const senderId = req.user._id;
         // const { senderId } = req.body //const senderId = req.user._id; ena yaani 
         console.log(message , receiverId , senderId)
 		let conversation = await Conversation.findOne({
@@ -46,8 +46,8 @@ const sendMessage = async (req, res) => {
 const getMessages = async (req, res) => {
 	try {
 		const { id: userToChatId } = req.params;
-		const senderId = "66080cdfee2d8589f7a8f725"; //req.user._id; ena yaani 
-
+		 const {senderId }= req.query; //req.user._id; ena yaani  
+		console.log(senderId);
 		const conversation = await Conversation.findOne({
 			participants: { $all: [senderId, userToChatId] },
 		}).populate("messages"); // NOT REFERENCE BUT ACTUAL MESSAGES

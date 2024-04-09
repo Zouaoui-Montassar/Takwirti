@@ -37,6 +37,7 @@
     "react-scripts": "5.0.1",
     "react-simple-star-rating": "^5.1.7",
     "recharts": "^2.12.3",
+    "socket.io": "^4.7.5",
     "tailwind-merge": "^2.2.1",
     "web-vitals": "^3.5.2",
     "zustand": "^4.5.2"
