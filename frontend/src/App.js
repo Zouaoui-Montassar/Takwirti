@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 import './App.css';
 import Sign_in from './pages/Sign_in';
 import Stats from './components/Stats';
@@ -26,6 +27,8 @@ import Responsable2 from './components/Responsable2';
 import axios from 'axios';
 import { useEffect } from 'react';
 import Chat from './components/Chatapp'
+import Admin from './pages/Admin';
+
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
   { id: 2, name: 'Item 2', image:'/Section 2 image.png' },
@@ -89,8 +92,9 @@ function App() {
           <Route path="/reservation/edit/:idRes" element={<ReservationEdit/>} />
           <Route path='/terrain/update/:id' element={<Terrain func={"update"}/>}/>
           <Route path='/friendslist' element={<FriendsList/>}/>
+          // eslint-disable-next-line react/jsx-no-comment-textnodes
           <Route path='/tachkila' element={<Tachkila/>}/>
-          <Route path="/chat" element={<Chat />} /> 
+
         </Routes>
       </BrowserRouter>
     </div>

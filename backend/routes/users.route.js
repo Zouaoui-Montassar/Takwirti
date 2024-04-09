@@ -31,6 +31,8 @@ router.delete('/users/delete/:id', userController.deleteUser);
 // search user bel name / tel  ( case sensitive )
 
 router.get('/users/search/:query', userController.getUserByQuery);
+// delete user 
+router.get('/users/delete_user',userController.deleteUser);
 
 
 // FRIENDS 
