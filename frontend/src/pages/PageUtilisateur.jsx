@@ -60,6 +60,8 @@ const PageUtilisateur = () => {
               <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
               <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
               <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
+              <SidebarItem icon={<Settings />} text="Messages" link={'chat'} />
+
            </Sidebar>
            <div className={`mt-[82px] ml-[${w}px]  `}>
            {searchTerm ? <TerrainList param={"search"} searchTerm={searchTerm} width={w} /> :(
