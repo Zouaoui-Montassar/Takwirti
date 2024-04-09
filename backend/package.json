@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "node ./bin/www",
-    "start": "node --watch --env-file=.env ./bin/www"
+    "start": "node --watch --env-file=.env ./bin/www",
+    "test" : "node --watch app.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

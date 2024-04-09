@@ -210,7 +210,7 @@ const ProfileModif = () => {
               type='text'
               name='nom'
               id='nom'
-              className='border border-5 border-slate-500 w-[500px] mb-2 rounded-2xl p-2 shadow-md shadow-slate-200'
+              className='border bg-gray-100 border-5 border-slate-500 w-[500px] mb-2 rounded-2xl p-2 shadow-md shadow-slate-200'
               placeholder='Nom'
               defaultValue={user.userObj.nom}
               onChange={(e) => {
@@ -224,7 +224,7 @@ const ProfileModif = () => {
               type='text'
               name='prenom'
               id='prenom'
-              className='border border-5 border-slate-500 w-[500px] mb-2 rounded-2xl p-2 shadow-md shadow-slate-200'
+              className='border bg-gray-100 border-5 border-slate-500 w-[500px] mb-2 rounded-2xl p-2 shadow-md shadow-slate-200'
               placeholder='Prénom'
               defaultValue={user.userObj.prenom}
               onChange={(e) => {
@@ -238,7 +238,7 @@ const ProfileModif = () => {
               type='email'
               name='email'
               id='email'
-              className='border border-5 border-slate-500 w-[500px] mb-2 rounded-2xl p-2 shadow-md shadow-slate-200'
+              className='border bg-gray-100 border-5 border-slate-500 w-[500px] mb-2 rounded-2xl p-2 shadow-md shadow-slate-200'
               placeholder='Email'
               defaultValue={user.userObj.email}
               onChange={(e) => {
@@ -252,7 +252,7 @@ const ProfileModif = () => {
               type='text'
               name='tel'
               id='tel'
-              className='border border-5 border-slate-500 w-[500px] mb-2 rounded-2xl p-2 shadow-md shadow-slate-200'
+              className='border bg-gray-100 border-5 border-slate-500 w-[500px] mb-2 rounded-2xl p-2 shadow-md shadow-slate-200'
               placeholder='Numéro de téléphone'
               defaultValue={user.userObj.tel}
               onChange={(e) => {
@@ -268,7 +268,7 @@ const ProfileModif = () => {
               type='password'
               name='password'
               id='password'
-              className='border border-5 border-slate-500 w-[500px] mb-2 rounded-2xl p-2 shadow-md shadow-slate-200'
+              className='border bg-gray-100 border-5 border-slate-500 w-[500px] mb-2 rounded-2xl p-2 shadow-md shadow-slate-200'
               placeholder='Mot de passe'
               onChange={(e) => {
                 setPassword(e.target.value);
@@ -286,7 +286,7 @@ const ProfileModif = () => {
               type='password'
               name='password2'
               id='password2'
-              className='border border-5 border-slate-500 w-[500px] mb-2 rounded-2xl p-2 shadow-md shadow-slate-200'
+              className='border bg-gray-100 border-5 border-slate-500 w-[500px] mb-2 rounded-2xl p-2 shadow-md shadow-slate-200'
               placeholder='Confirmer le mot de passe'
               onChange={(e) => {
                 setPassword2(e.target.value);

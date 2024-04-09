@@ -149,7 +149,7 @@ const Sign_up = ({xxx}) => {
                     type="name"
                     autoComplete="name"
                     required
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-50 focus:border-primary-50 sm:text-sm"
+                    className="appearance-none bg-gray-100 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-50 focus:border-primary-50 sm:text-sm"
                   />
                 </div>
               </div>
@@ -165,7 +165,7 @@ const Sign_up = ({xxx}) => {
                     type="lastname"
                     autoComplete="lastname"
                     required
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-50 focus:border-primary-50 sm:text-sm"
+                    className="appearance-none bg-gray-100 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-50 focus:border-primary-50 sm:text-sm"
                   />
                 </div>
               </div>
@@ -183,7 +183,7 @@ const Sign_up = ({xxx}) => {
                   autoComplete="email"
                   required
                   onChange={handleEmailChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-50 focus:border-primary-50 sm:text-sm"
+                  className="appearance-none bg-gray-100 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-50 focus:border-primary-50 sm:text-sm"
                 />
               </div>
             </div>
@@ -199,7 +199,7 @@ const Sign_up = ({xxx}) => {
                    type="password"
                    autoComplete="current-password"
                    required
-                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-50 focus:border-primary-50 sm:text-sm"
+                   className="appearance-none bg-gray-100 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-50 focus:border-primary-50 sm:text-sm"
                  />
                </div>
             </div>
@@ -215,7 +215,7 @@ const Sign_up = ({xxx}) => {
                    type="confirmpassword"
                    autoComplete="confirmpassword"
                    required
-                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-50 focus:border-primary-50 sm:text-sm"
+                   className="appearance-none bg-gray-100 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-50 focus:border-primary-50 sm:text-sm"
                  />
                </div>
             </div>
@@ -234,7 +234,7 @@ const Sign_up = ({xxx}) => {
                     type="birthdate"
                     autoComplete="birthdate"
                     required
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-50 focus:border-primary-50 sm:text-sm"
+                    className="appearance-none bg-gray-100 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-50 focus:border-primary-50 sm:text-sm"
                   />
                 </div>
               </div>
@@ -253,7 +253,7 @@ const Sign_up = ({xxx}) => {
                     required
                     value={phoneNumber}
                     onChange={handlePhoneNumberChange}
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-50 focus:border-primary-50 sm:text-sm"
+                    className="appearance-none bg-gray-100 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-50 focus:border-primary-50 sm:text-sm"
                     placeholder="Format: 12345678"
                   />
                 </div>
