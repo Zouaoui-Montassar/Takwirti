@@ -14,7 +14,7 @@ const SearchInput = () => {
 		e.preventDefault();
 		if (!search) return;
 		if (search.length < 2) {
-			return toast.error("Search term must be at least 1 characters long");
+			return toast.error("Search term must be at least 2 characters long");
 			
 		}
 		const conversation = conversations.find((c) => c.nom.toLowerCase().includes(search.toLowerCase()) ||
