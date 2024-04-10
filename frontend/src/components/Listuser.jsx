@@ -1,98 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useTable } from 'react-table';
+import axios from 'axios';
 
 const UserAccountsTable = () => {
   const [users, setUsers] = useState([]);
 
+
+  const getAllUsers = async() => {
+    try{
+      const reponse = await axios.get(`http://localhost:4000/api/users/getAllUsers`);
+      setUsers(reponse.data);
+      console.log(reponse.data);
+    }catch (err){
+      console.error(err);
+    }
+  }
+
   useEffect(() => {
     // You can fetch the data from an API or any other source and set it to the state.
     // For demonstration, I am using a mock data.
-    const mockData = [
-      {
-        id: 1,
-        fullName: 'mohammed moenes',
-        role: 'Administrator',
-        createdAt: 'Sep 30, 2022',
-        status: 'Active',
-        image: '/images/-ytzjgg6lxK1ICPcNfXho.png',
-      },
-      {
-        id: 2,
-        fullName: 'lkaouuuu',
-        role: 'Administrator',
-        createdAt: 'aug 32, 2025',
-        status: 'suspended',
-        image: '/images/-ytzjgg6lxK1ICPcNfXho.png',
-      },
-      {
-        id: 3,
-        fullName: 'raefff',
-        role: 'Administrator',
-        createdAt: 'Sep 28, 2022',
-        status: 'Active',
-        image: '/images/-ytzjgg6lxK1ICPcNfXho.png',
-      },
-      {
-        id: 4,
-        fullName: 'LMONTAAAAA',
-        role: 'Administrator',
-        createdAt: 'Sep 28, 2022',
-        status: 'INActive',
-        image: '/images/-ytzjgg6lxK1ICPcNfXho.png',
-      },
-      {
-        id: 5,
-        fullName: 'YA KHW AAD',
-        role: 'USER',
-        createdAt: 'Sep 28, 2022',
-        status: 'Active',
-        image: '/images/-ytzjgg6lxK1ICPcNfXho.png',
-      },
-      {
-        id: 6,
-        fullName: 'AAAAAAAA',
-        role: 'Administrator',
-        createdAt: 'Sep 28, 2022',
-        status: 'Active',
-        image: '/images/-ytzjgg6lxK1ICPcNfXho.png',
-      },
-      {
-        id: 7,
-        fullName: 'BBBBBBBBBB',
-        role: 'Administrator',
-        createdAt: 'Sep 28, 2022',
-        status: 'Active',
-        image: '/images/-ytzjgg6lxK1ICPcNfXho.png',
-      },
-      {
-        id: 8,
-        fullName: 'CCCCCCCCCCCC',
-        role: 'Administrator',
-        createdAt: 'Sep 28, 2022',
-        status: 'Active',
-        image: '/images/-ytzjgg6lxK1ICPcNfXho.png',
-      },
-      {
-        id: 9,
-        fullName: 'DDDDDDDDDDDDDD',
-        role: 'Administrator',
-        createdAt: 'Sep 28, 2022',
-        status: 'Active',
-        image: '/images/-ytzjgg6lxK1ICPcNfXho.png',
-      },
-      {
-        id: 10,
-        fullName: 'MMMMMMMMMMMMMM',
-        role: 'Administrator',
-        createdAt: 'Sep 28, 2022',
-        status: 'Active',
-        image: '/images/-ytzjgg6lxK1ICPcNfXho.png',
-      },
-      
-      // More data
-    ];
-
-    setUsers(mockData);
+    getAllUsers();
   }, []);
 
   const columns = React.useMemo(

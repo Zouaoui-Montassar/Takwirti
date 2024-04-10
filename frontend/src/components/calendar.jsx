@@ -1,14 +1,18 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import List from './List';
 import { useLocation,useParams } from 'react-router-dom';
 
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-const Calendar = ({ onDateSelect, dayBlocked}) => {
-  console.log(dayBlocked);
+const Calendar = ({ onDateSelect, dayBlocked, jour}) => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [selectedDate, setSelectedDate] = useState(new Date()); // Define setSelectedDate here
+  useEffect(()=>{
+    if (jour!=null){
+      setSelectedDate(new Date(jour))
+    }
+  },[jour])
   const modalDateRef = useRef(null);
   const params= useParams();
   const idUser = params.idUser ;
@@ -50,16 +54,17 @@ const Calendar = ({ onDateSelect, dayBlocked}) => {
     for (let i = 0; i < firstDayOfWeek; i++) {
       calendar.push(<div key={`empty-${i}`} className="text-center py-2 border"></div>);
     }
-console.log(selectedDate.toDateString())
+    const today = new Date();
+    const yesterday = new Date(today.setDate(today.getDate() - 1));
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(currentYear, currentMonth, day);
-      let isBlocked = (dayBlocked === date.getDay())|| (date < new Date()); // Comparer le jour actuel avec le jour bloqué
+      let isBlocked = (dayBlocked === date.getDay()) || (date <= yesterday); // Comparer le jour actuel avec le jour bloqué
       const classNames = [
         'text-center',
         'py-2',
         'border',
         'cursor-pointer',
-        date.toDateString() === new Date().toDateString() ? 'bg-sky-500 text-white' : '',
+        date.toDateString() === new Date().toDateString() ? 'bg-gray-200 text-primary-50 border border-primary-50' : '',
         date.toDateString() === selectedDate?.toDateString() && isReservationPage ? 'bg-primary-50 text-white' : '', // Conditional class for selected date
         isReservationPage && date.toDateString() === selectedDate?.toString() ? 'bg-green-500 text-white' : '', // Conditional class for selected date on reservation page
         isBlocked ? 'text-gray-400 cursor-not-allowed' : '', // Utilisez isBlocked directement pour désactiver le bouton

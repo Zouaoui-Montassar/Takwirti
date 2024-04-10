@@ -36,16 +36,16 @@ const Tachkila = ({handleTachkila , tachkila}) => {
 
     const deletePlayer = (index,e) => {
         e.preventDefault(); // lezma makenchi kol delete yab9a yabeeth fi post request lel add reservation
-        // nal9a 27 reservation fel collection naarech ken joret lhaja hedhi 9bal ma nhot e.preventDefault() wala le
+        // nal9a 27 reservation fel collection naarech ken joret lhaja hedhi 9bal ma nhot e.preventDefault() wala le ==> achraf : eyy joretha 
         const updatedTeam = [...team.slice(0, index), ...team.slice(index + 1)];
         setTeam(updatedTeam);
     };
 
-    const updatePlayer = (index, newName) => {
+    /* const updatePlayer = (index, newName) => {
         const updatedTeam = [...team];
         updatedTeam[index] = newName;
         setTeam(updatedTeam);
-    };
+    }; */
 
     const handleInputClick = () => {
         setShowSuggestions(true);

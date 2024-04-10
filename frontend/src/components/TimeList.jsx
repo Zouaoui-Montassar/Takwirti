@@ -1,7 +1,11 @@
-import { React , useState } from 'react';
+import { React , useState, useEffect } from 'react';
 
-const TimeList = ({ start, end, step , sendDataToParent}) => {
-  const [selectedTimes, setSelectedTimes] = useState([]); // State to keep track of selected times
+const TimeList = ({ start, end, step , sendDataToParent,time}) => {
+  const [selectedTimes, setSelectedTimes] = useState([]); 
+  useEffect(() => {
+    if(time!=null)
+      setSelectedTimes(time);
+  },[time]);
   const hs = parseInt(start[0]+start[1])
   const he = parseInt(end[0]+end[1])
   start = new Date(`2024-01-01T${start}`);
@@ -34,7 +38,7 @@ const TimeList = ({ start, end, step , sendDataToParent}) => {
       hour: '2-digit',
       minute: '2-digit',
     });
-    const isSelected = selectedTimes.includes(formattedTime);
+    const isSelected = selectedTimes.includes(formattedTime) && (time != null )? time.includes(formattedTime): null;
     timeList.push(
       
       <div key={formattedTime} className="w-full sm:w-1/2 md:w-1/4 lg:w-1/6 mb-4 lg:mb-0">
@@ -44,6 +48,7 @@ const TimeList = ({ start, end, step , sendDataToParent}) => {
           id={formattedTime}
           className="mr-2 cursor-pointer"
           onChange={() => handleTimeSelection(formattedTime)}
+          checked={isSelected}
         />
         {formattedTime}
       </label>

@@ -1,10 +1,11 @@
 import React from 'react';
+import NavBar from '../components/NavBar';
+import SideBar, { SidebarItem } from '../components/SideBar';
+import { School, Settings } from 'lucide-react';
 import { Fragment, useState, useEffect } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
-import SideBar, { SidebarItem } from '../components/SideBar';
-import NavBar from '../components/NavBar';
-import { School, Settings } from 'lucide-react';
+import Dailog from './Dailog';
 import TimeList from './TimeList';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -28,6 +29,7 @@ const ville = [
 
 // id w func mawjoudin fel path (a modifier plus tard)
 const Terrain = ({ func }) => {
+  const [width, setWidth] = useState();
   const { user } = useAuthContext();
   const id = user.userObj._id;
   const idTer = useParams();
@@ -41,31 +43,13 @@ const Terrain = ({ func }) => {
   const [ouverture, setOuverture] = useState('08:00');
   const [fermeture, setFermeture] = useState('00:00');
   const [time , setTime] = useState([]);
-  const [date, setDate] = useState([]);
+  const [date, setDate] = useState("none");
   const [status, setStatus]=useState();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [image, setImage] = useState(null); // State to hold the uploaded image
-  const [width, setWidth] = useState();
-  const [terrain, setTerrain] = useState({}); 
-  const getTerrain = async () => {
-    try {
-      if (func === "update") {
-        const response = await axios.get(`http://localhost:4000/ter/terrain/getInfo/${idTer.id}`);
-        setTerrain(response.data.terrain);
-        console.log(terrain)
-        console.log(response.data.terrain);
-      } 
-    } catch (error) {
-        console.error('Error getting terrain:', error);
-    }
-  } 
-  useEffect(() => {
-    getTerrain();
-    console.log("ok");
-  }, [idTer.id]);
-  
-  console.log('Terrain', terrain);
+  const [terrainItems, setTerrainItems] = useState([]);
+  const [calendrier, setCalendrier] = useState([]);
   const handleWidth = (width) => {
     setWidth(width);
   }
@@ -81,6 +65,19 @@ const Terrain = ({ func }) => {
   useEffect(() => {
     handleW(width);
   },[width]);
+  const getTerrain = async() => {
+    try { 
+      const response = await axios.get(`http://localhost:4000/ter/terrain/getInfo/${idTer.id}`);
+      setTerrainItems(response.data.terrain);
+      setCalendrier(response.data.terrain.calendrier); 
+    }catch(e) { 
+      console.error('Error fetching terrain items:', e);
+    }
+  }
+  useEffect(() => {
+    getTerrain();
+  },[])
+
   const handleImageUpload = async (file) => {
     setImage(file); // Set the uploaded image in state
   };
@@ -172,16 +169,18 @@ const Terrain = ({ func }) => {
       console.error('Error deleting terrain:', error);
     }
   };
+  
+
   return (
     <>
     <NavBar  />
       <div className='flex flex-row'>
         <SideBar sendWidth={handleWidth}>
-          <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
+          <SidebarItem icon={<School />} text="Dashboard" link={'responsable'} />
           <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable`} />
           <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
         </SideBar>
-      <div className={`p-5  w-full h-full ml-[${w}] mt-[82px]`}>
+      <div className={`p-5  h-full ml-[${w}px] mt-[82px] w-[100%] justify-center items-center`}>
         <h1 className='bold-52'>{func} Terrain</h1>
         <form onSubmit={handleSubmit}>
             <div className='w-full h-[200px] items-center justify-center flex flex-row '>
@@ -192,7 +191,7 @@ const Terrain = ({ func }) => {
                   type='text'
                   placeholder='NOM DU TERRAIN'
                   onChange={(e) => {setName(e.target.value)}}
-                  value={(func === "update") ? terrain.nom : null}
+                  value={func==="update"? terrainItems.nom : null}
                 />
               </div>
               <div className='flex flex-col m-5 w-[40%]'>
@@ -204,7 +203,8 @@ const Terrain = ({ func }) => {
                   type='phone'
                   placeholder='12345678'
                   onChange={(e) => {setPhone(e.target.value)}}
-                  value={(func === "update") ? terrain.phone : null}
+                  value={func==="update"? terrainItems.phone : null}
+
                 />
               </div>
             </div>
@@ -219,9 +219,10 @@ const Terrain = ({ func }) => {
                   type='text'
                   placeholder='adresse'
                   onChange={handleAddressChange}
-                  value={(func === "update") ? terrain.position : null}
                   disabled={func === 'update'}
                   title={func === 'update' ? 'Ce champ est inaccessible en mode édition de terrain' : ''}
+                  value={func==="update"? terrainItems.position : null}
+
                 />
               </div>
               <div className='flex flex-col w-[40%] m-5'>
@@ -293,7 +294,8 @@ const Terrain = ({ func }) => {
                 <select
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
                   onChange={(e) => {handleDurationChange(e)}}
-                  value={(func === "update") ? terrain.calendrier.duree : data}
+                  value={func==="update"? calendrier.duree : 90}
+
                 >
                   <option value={60}>60 minutes</option>
                   <option value={75}>75 minutes</option>
@@ -308,8 +310,9 @@ const Terrain = ({ func }) => {
                 <input
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
                   type='number'
-                  value={(func === "update") ? terrain.prix : 120}
                   onChange= {(e) => {setPrix(e.target.value)}}
+                  value={func==="update"? terrainItems.prix : 120}
+                  
                 />
               </div>
             </div>
@@ -322,8 +325,9 @@ const Terrain = ({ func }) => {
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
                   type='time'
                   step="60"
-                  value={(func === "update") ? terrain.calendrier.open : ouverture}
                   onChange={(e) => setOuverture(e.target.value)}
+                  value={func==="update"? calendrier.open : ouverture}
+
                 />
               </div>
             <div className='flex flex-col m-5 w-[40%]'>
@@ -334,12 +338,12 @@ const Terrain = ({ func }) => {
                 className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
                 type='time'
                 step="60"
-                value={(func === "update") ? terrain.calendrier.close : fermeture}
+                value={func==="update"? calendrier.close : fermeture}
                 onChange={(e) => setFermeture(e.target.value)}
               />
             </div>
           </div>
-            {func === 'update' && (
+          {func === 'update' && (
               <div className='w-full h-[200px] items-center justify-center flex flex-row '>
                 <h3 className='text-bold text-xl relative right-11'>
                   disponibilite de terrain
@@ -350,7 +354,7 @@ const Terrain = ({ func }) => {
                   id="disponible"
                   name="status"
                   value="disponible"
-                  checked={status === 'disponible'}
+                  checked={terrainItems.status === 'disponible'}
                   onChange={(e) => setStatus(e.target.value)}
                 />
                 <label htmlFor="disponible">Disponible</label>
@@ -361,7 +365,7 @@ const Terrain = ({ func }) => {
                   id="indisponible"
                   name="status"
                   value="indisponible"
-                  checked={(func === "update") ? status === terrain.status : status === 'indisponible'}
+                  checked={terrainItems.status === 'indisponible'}
                   onChange={(e) => setStatus(e.target.value)}
                 />
                 <label htmlFor="indisponible">Indisponible</label>
@@ -374,7 +378,7 @@ const Terrain = ({ func }) => {
                 </h3>
                 <br />
                 {/* Placez le composant TimeList ici */}
-                <TimeList start={ouverture} end={fermeture} step={data} label="Time Slots:" sendDataToParent={handleTime} />
+                <TimeList start={ouverture} end={fermeture} step={data} label="Time Slots:" sendDataToParent={handleTime} time={func==="update"?calendrier.time : null} />
               </div>
               <div className='flex flex-col m-5 w-[40%]'>
                 <h3 className='text-bold text-xl relative right-11'>
@@ -383,7 +387,7 @@ const Terrain = ({ func }) => {
                 <br />
                 <select
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
-                  value={date}
+                  value={func==="update" ? calendrier.date : date}
                   onChange={(e) => {setDate(e.target.value)}}
                 >
                   <option value={"Monday"}>Monday</option>
@@ -400,7 +404,7 @@ const Terrain = ({ func }) => {
             
             <div className=' justify-center items-center m-4 '>
               <div className='relative left-[350px]  w-[500px]'>
-                <Image onImageUpload={handleImageUpload} />
+                <Image onImageUpload={handleImageUpload} pic={func === "upade" ? terrainItems.img: null} />
               </div>
             </div>
            

@@ -94,7 +94,7 @@ function App() {
           <Route path='/friendslist' element={<FriendsList/>}/>
           // eslint-disable-next-line react/jsx-no-comment-textnodes
           <Route path='/tachkila' element={<Tachkila/>}/>
-
+          <Route path='/admin' element={<Admin/>}/>
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 
-const ImageUploader = ( { onImageUpload }) => {
+const ImageUploader = ( { onImageUpload ,pic }) => {
     const [image, setImage] = useState(null);
-
+    useEffect (()=> {
+        if (pic!=null) {
+            setImage(pic);
+    }},[pic])
     const handleImageUpload = event => {
         const file = event.target.files[0];
         setImage(file);
