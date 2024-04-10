@@ -28,6 +28,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import Chat from './components/Chatapp'
 import Admin from './pages/Admin';
+import Chatapp from './components/Chatapp';
 
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
@@ -95,6 +96,7 @@ function App() {
           // eslint-disable-next-line react/jsx-no-comment-textnodes
           <Route path='/tachkila' element={<Tachkila/>}/>
           <Route path='/admin' element={<Admin/>}/>
+          <Route path='/chat' element={<Chatapp/>}/>
         </Routes>
       </BrowserRouter>
     </div>
