@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end, step }) => {
+const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end, step , jour }) => {
   const [selectedHour, setSelectedHour] = useState([]);
-  
-  // Fonction pour gérer le clic sur une heure
+  const jourDate = new Date(jour);
+  useEffect(()=>{
+    if(jour!=null){
+      setSelectedHour(jourDate.toLocaleTimeString('fr-FR', {
+        hour: '2-digit',
+        minute: '2-digit'
+      }));
+    }
+  },[jour])
   const handleHourClick = (hour) => {
     if (!reservedHours.includes(hour)) {
       setSelectedHour(hour);
       onHourSelect(hour);
-      console.log('setSelectedHour', hour);
     } else {
       alert("You cannot reserve this hour as it's already reserved.");
     }
   };
   const hs = parseInt(start);
-  console.log(hs)
   const he = parseInt(end);
   start = new Date(`2024-01-01T${start}`);
   if (hs >= he) {
@@ -38,12 +43,12 @@ const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end
           onClick={() => handleHourClick(formattedTime)}
           className={`w-full px-4 py-3 bg-white ${
             selectedHour === formattedTime
-              ? 'bg-sky-100 text-sky-900'
+              ? 'bg-sky-100 '
               : (reservedHours || []).includes(formattedTime)
-                ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
+                ? 'bg-gray-300 cursor-not-allowed'
                 : ''
           } border-b border-gray-200 transition-all duration-300 ease-in-out
-          cursor-pointer ${isReservationPage && selectedHour === formattedTime ? 'text-primary-50 border-primary-50' : ''}`}
+          cursor-pointer ${isReservationPage && selectedHour === formattedTime ? 'text-primary-50 border-primary-50 bg-primary-50' : ''}`}
           disabled={(reservedHours || []).includes(formattedTime)}
           value={formattedTime}
         />
@@ -53,7 +58,6 @@ const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end
   }
 
   const getDayOfWeek = (date) => {
-    console.log(date);
     const dateObj = typeof date === 'string' ? new Date(date) : date;
     const options = { weekday: 'long' };
     return new Intl.DateTimeFormat("fr-CA", options).format(dateObj);

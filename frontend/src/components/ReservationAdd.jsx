@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Calendar from './Calendar';
 import List from './List';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 
-export const ReservationAdd = ({ idTer, sendselectedDate, sendselectedHour, sendterrainItems }) => {
+export const ReservationAdd = ({ idTer,idRes,jour, sendselectedDate, sendselectedHour, sendterrainItems }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedHour, setSelectedHour] = useState();
     const [terrainItems, setTerrainItems] = useState(null);
@@ -15,6 +16,7 @@ export const ReservationAdd = ({ idTer, sendselectedDate, sendselectedHour, send
     const [closeTime, setCloseTime] = useState();
     const [stepDuration, setStepDuration] = useState();
     const [timeReserved, setTimeReserved] = useState();
+    const locate = useLocation();
     const fetchTerrainInfo = async () => {
         try {
           const response = await axios.get(`http://localhost:4000/ter/terrain/getInfo/${idTer}`);
@@ -89,7 +91,7 @@ export const ReservationAdd = ({ idTer, sendselectedDate, sendselectedHour, send
         <div className='flex flex-col items-center justify-center md:flex-row md:items-start md:justify-between pt-8'>
           <div className="w-full mb-4 md:mb-0"> {/* Full width on small screens, stack vertically */}
             <p className='mb-2'>select date</p>
-            <Calendar className="w-full " onDateSelect={handleDateSelect} dayBlocked={terrainItems.calendrier.date }/> {/* Adjust width for small screens and above */}
+            <Calendar className="w-full " onDateSelect={handleDateSelect} dayBlocked={terrainItems.calendrier.date } jour={locate.pathname === `/reservation/edit/${idRes}`?jour:null} /> {/* Adjust width for small screens and above */}
           </div>
           <div className="md:w-1/2 w-full"> {/* Half width on medium screens and above */}
             <p>select time</p>
@@ -101,6 +103,7 @@ export const ReservationAdd = ({ idTer, sendselectedDate, sendselectedHour, send
                 start={openTime}
                 end={closeTime}
                 step={stepDuration}
+                jour={locate.pathname === `/reservation/edit/${idRes}`?jour:null}
             />
           </div>
         </div>

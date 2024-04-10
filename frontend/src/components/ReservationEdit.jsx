@@ -56,6 +56,17 @@ const ReservationEdit = () => {
         try{
             const reservation = await axios.get(`http://localhost:4000/res/reservation/getReservationInfo/${idRes}`);
             setIdTer(reservation.data.reservations.terrain);
+            const date = new Date(reservation.data.reservations.date);
+            setSelectedDate(date.toLocaleDateString('fr-FR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: '2-digit'
+              }));
+            setSelectedHour(date.toLocaleTimeString('fr-FR', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+              }));
             setReservationDetails(reservation.data.reservations);
             setTachkila(reservation.data.reservations.participants)
         }catch(e){
@@ -67,8 +78,6 @@ const ReservationEdit = () => {
         try {
             const response = await axios.get(`http://localhost:4000/ter/terrain/getInfo/${idTer}`);
             setTerrainItems(response.data.terrain);
-            console.log(terrainItems);
-            console.log(response.data.terrain);
         } catch (error) {
             console.error('Failed to fetch terrain info:', error);
         }
@@ -88,8 +97,7 @@ const ReservationEdit = () => {
 
         const handleOnSubmit = async (e) => { 
             e.preventDefault();
-            console.log(selectedDate, selectedHour)
-            let combinedDateTime = new Date(selectedDate);
+            let combinedDateTime = new Date(reservationDetails.date);
             combinedDateTime.setHours(parseInt(selectedHour), 0, 0, 0);
             combinedDateTime = combinedDateTime.toISOString();
             try {
@@ -122,7 +130,7 @@ const ReservationEdit = () => {
         const handleTachkila = (tachkila) => {
             setTachkila(tachkila);
         } 
-
+        console.log(reservationDetails.participants);
         return (
             <div>
                 <NavBar />
@@ -136,12 +144,14 @@ const ReservationEdit = () => {
                     <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
                 </Sidebar>
                 <div className={`relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] p-8`}>
-                    <p>You reservation in {terrainItems.nom} on {reservationDetails.date} with {reservationDetails.participants}</p>
+                    <p>You reservation in {terrainItems.nom} on {selectedDate} at {selectedHour} with {reservationDetails.participants}</p>
                     <p>You can update you reservation here</p>
                     <form onSubmit={handleOnSubmit}>
                         <TeamProvider value={{ team, setTeam }}>
                             <ReservationAdd 
                                 idTer={idTer} 
+                                idRes={idRes}
+                                jour={reservationDetails.date}
                                 sendselectedDate={handleDateSelect}
                                 sendselectedHour={handleHourSelect}
                                 sendterrainItems={handleTerrainItems}

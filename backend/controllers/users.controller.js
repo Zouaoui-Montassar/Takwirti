@@ -149,8 +149,9 @@ const updateResponsable = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
     try {
-        const users = await UserModel.find();
-        res.status(200).json(users);
+        const user = await UserModel.find();
+        console.log(user)
+        res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ message: "Failed to fetch users", error: error.message });
     }

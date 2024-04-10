@@ -20,8 +20,6 @@ const ReservationList = () => {
     const id = user.userObj._id;
     const [yyy , setyyy ] = useState(user.userObj.__t);
     const [xxx , setxxx ] = useState();
-
-    console.log(searchTerm);
     const date = new Date(searchTerm);
     const [width, setWidth] = useState();
     const handleWidth = (width) => {
@@ -49,6 +47,7 @@ const ReservationList = () => {
                     } else if(yyy === "Responsable") {
                         const response = await axios.get(`http://localhost:4000/res/reservation/listR/${id}`);
                         setReservations(response.data.reservations);
+                        console.log(response);
                     }}
                 else if(xxx === "search") {
                     const response = await axios.get(`http://localhost:4000/res/reservation/search/${id}`, { params : { searchTerm : date.toISOString() }});

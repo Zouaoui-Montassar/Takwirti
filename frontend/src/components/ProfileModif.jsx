@@ -182,7 +182,7 @@ const ProfileModif = () => {
     <>
       <NavBar />
       <div className='flex flex-row'>
-      {role === 'responsable' ? (
+      {role === 'Responsable' ? (
         <Sidebar sendWidth={handleWidth}>
           <SidebarItem
             icon={<School />}
