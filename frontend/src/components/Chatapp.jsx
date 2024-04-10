@@ -9,6 +9,9 @@ import Sidebar , { SidebarItem } from '../components/SideBar';
 import SearchBox from '../components/SearchBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { Bell } from 'lucide-react';
+import { ContactRound , ListPlus , MessageCircleMore } from 'lucide-react';
+import { CgUserList } from "react-icons/cg";
 
 const Chatapp = () => {
   const { user } = useAuthContext();
@@ -40,15 +43,15 @@ const Chatapp = () => {
       <div className='flex flex-row'>
            <Sidebar sendWidth={handleWidth} >
               <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>} test={true}  />
-              <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
-              <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
-              <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
-              <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
-              <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
-              <SidebarItem icon={<Settings />} text="Messages" link={'chat'} />
+              <SidebarItem icon={<School />} text="Home" link={'particulier'} />
+              <SidebarItem icon={<ContactRound />} text="Profile " link={'profile'} />
+              <SidebarItem icon={<Bell />} text="Notifications" link={'notifications'} />
+              <SidebarItem icon={<ListPlus />} text="Reservations" link={'reservation/listP'} />
+              <SidebarItem icon={<CgUserList className='w-8 h-8' />} text="Friends" link={'friendslist'} />
+              <SidebarItem icon={<MessageCircleMore />} text="Messages" link={'chat'} />
 
            </Sidebar>
-      <div className={`flex h-[100%] md:h-[550px] sm:h-[450px] rounded-lg overflow-hidden bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg ml-[${w}px] mt-[82px] justify-center p-8 w-[90%] `}>
+      <div className={`flex h-[100%] md:h-[630px] sm:h-[450px] rounded-lg overflow-hidden  bg-opacity-50 backdrop-filter backdrop-blur-lg ml-[${w}px] mt-[90px] justify-start p-8 w-[90%] `}>
         <SidebarChat />
         <MessageContainer />
       </div>

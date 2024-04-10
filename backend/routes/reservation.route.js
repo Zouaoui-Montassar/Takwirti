@@ -14,6 +14,9 @@ router.get('/reservation/search/:partId', reservationController.searchReservatio
 router.get('/reservation/listP/:partId', reservationController.listReservationP);
 router.get('/reservation/listR/:resId', reservationController.listReservationR);
 router.get('/reservation/compter/:resId', reservationController.compterReservation);
+router.get('/reservation/compterC/:resId', reservationController.compterReservationC);
+router.get('/reservation/compterT/:resId', reservationController.compterReservationT);
+router.get('/reservation/compterA/:resId', reservationController.compterReservationA);
 /* router.post('/reservation/add-participants', reservationController.addParticipantsToReservation); */
 router.get('/reservation/getInfo/:terrainId/:date', reservationController.getReservation)
 router.get('/reservation/getReservationInfo/:idRes', reservationController.getReservationInfo);

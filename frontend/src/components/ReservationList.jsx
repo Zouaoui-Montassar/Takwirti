@@ -8,6 +8,9 @@ import Sidebar , { SidebarItem } from '../components/SideBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { School ,Settings} from 'lucide-react';
+import { Bell } from 'lucide-react';
+import { ContactRound , ListPlus , MessageCircleMore } from 'lucide-react';
+import { CgUserList } from "react-icons/cg";
 
 
 const ReservationList = () => {
@@ -43,7 +46,7 @@ const ReservationList = () => {
                     if(yyy === "Particulier") {
                         const response = await axios.get(`http://localhost:4000/res/reservation/listP/${id}`);
                         setReservations(response.data.reservations);
-                    } else if(yyy === "responsable") {
+                    } else if(yyy === "Responsable") {
                         const response = await axios.get(`http://localhost:4000/res/reservation/listR/${id}`);
                         setReservations(response.data.reservations);
                     }}
@@ -72,6 +75,13 @@ const ReservationList = () => {
         setxxx("search")
       };
 
+      const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString();
+    };
+
+  
+
     return (
         <>
         <NavBar/>
@@ -80,11 +90,12 @@ const ReservationList = () => {
                 (yyy === "Particulier") ? (
                     <Sidebar sendWidth={handleWidth} >
                         <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>} test={true}  />
-                        <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
-                        <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
-                        <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
-                        <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
-                        <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
+                        <SidebarItem icon={<School />} text="Home" link={'particulier'} />
+                        <SidebarItem icon={<ContactRound />} text="Profile " link={'profile'} />
+                        <SidebarItem icon={<Bell />} text="Notifications" link={'notifications'} />
+                        <SidebarItem icon={<ListPlus />} text="Reservations" link={'reservation/listP'} />
+                        <SidebarItem icon={<CgUserList className='w-8 h-8' />} text="Friends" link={'friendslist'} />
+                        <SidebarItem icon={<MessageCircleMore />} text="Messages" link={'chat'} />
                     </Sidebar>
                 ) : (
                     <Sidebar sendWidth={handleWidth}>
@@ -105,17 +116,17 @@ const ReservationList = () => {
                             <table className="w-full">
                                 <tbody>
                                     {reservations.map((item, index) => (
-                                        <tr key={index} onClick={() => toReservationEdit(item._id)} className="relative transform scale-10 text-xs py-1 border-b-2 border-blue-100 cursor-default bg-blue-500 bg-opacity-25">
+                                        <tr key={index} onClick={() => toReservationEdit(item._id)} className="relative transform scale-10 text-xs py-1 border-b-2 border-blue-100 cursor-default bg-blue-500 bg-opacity-25  " >
                                             <td className="pl-5 pr-3 whitespace-no-wrap">
-                                                <div className="text-gray-400">{item.date}</div>
+                                                <div className="text-gray-400 text-xl">{item.date}</div>
                                                 <div>{item.time}</div>
                                             </td>
                                             <td className="px-2 py-2 whitespace-no-wrap">
-                                                <div className="leading-5 text-gray-500 font-medium">{item.user}</div>
-                                                <div className="leading-5 text-gray-900">{item.terrain}
+                                                <div className="leading-5 text-gray-500 font-medium text-lg mb-1">id user : {item.user}</div>
+                                                <div className="leading-5 text-gray-900 text-lg mb-1"> id terrain : {item.terrain}
                                                     <a className="text-blue-500 hover:underline" href="#">{item.lien_terrain}</a>
                                                 </div>
-                                                <div className="leading-5 text-gray-800">{item.status}</div>
+                                                <div className={` ${item.status === "Terminée" || item.status === "Annulée" ? 'text-red-500 text-lg' : 'text-green-500 text-lg'}`}>statut : {item.status}</div>
                                             </td>
                                         </tr>
                                     ))}
