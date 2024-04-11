@@ -88,7 +88,6 @@ const Calendar = ({ onDateSelect, dayBlocked, jour}) => {
         />
       );
     }
-    
 
     return (
       <>
@@ -146,22 +145,12 @@ const Calendar = ({ onDateSelect, dayBlocked, jour}) => {
           {generateCalendar()}
           {!isReservationPage && (
           <div id="myModal" className="modal hidden fixed inset-0 flex items-center justify-center z-50">
-            <div className="modal-overlay absolute inset-0 bg-black opacity-50"></div>
-            <div className="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
-              <div className="modal-content py-4 text-left px-6">
-                
-                <div className="flex justify-between items-center">
-                  <p className="text-2xl font-bold" ref={modalDateRef}></p>
-                  <button onClick={hideModal} className="modal-close px-3 py-1 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring">✕</button>
-                </div>
                 <List date={selectedDate} 
                       isReservationPage={isReservationPage}
                       start={"08:00:00"}
                       end={"20:00:00"}
                       step={120}/>
               </div>
-            </div>
-          </div>
            )}
         </div>
       </div>

@@ -5,9 +5,9 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import SideBar, { SidebarItem } from '../components/SideBar';
 import { School, Settings } from 'lucide-react';
 import axios from 'axios';
-import ParentCalender2 from './ParentCalender2';
+import Calender2 from './Calender2';
 import { motion } from 'framer-motion'
-
+import { ListPlus , Dribbble } from 'lucide-react';
 
 const links = [
   { label: 'Accueil', path: '/' },
@@ -17,6 +17,7 @@ const links = [
 
 
   const ResponsableContent = ({ data ,user}) => {
+
     const imageVariants = {
       hidden: {
         opacity: 0,
@@ -36,17 +37,10 @@ const links = [
       return <div>Calendrier data not available</div>; // Return some placeholder content or handle the case when calendrier is not present
     }
   
-    console.log(data.calendrier.open);
-    console.log(data.calendrier.close);
-    console.log(data.calendrier.duree);
-    console.log(data.calendrier.date);
-    console.log(data.calendrier.time);
-
-  
     return (
       <div className='items-center justify-center  w-full'>
         <h1 className='bold-36 my-2'> calender terrain : {data.nom}</h1> 
-        <ParentCalender2 openTime={data.calendrier.open} closeTime={data.calendrier.close} time={data.calendrier.duree} date={data.calendrier.date} rh={data.calendrier.time}  />
+        <Calender2 dayBlocked={data.calendrier.date} openTime={data.calendrier.open} closeTime={data.calendrier.close} time={data.calendrier.duree} date={data.calendrier.date} rh={data.calendrier.time}  />
         <div className='flex flex-row items-center justify-center'>
           <motion.img src="/taswira2.jpg" alt="taswira" width={400} height={400} className='absolute right-0 top-[500px] rounded-full m-2' variants={imageVariants} initial="hidden" animate="visible" />
           <div>
@@ -61,9 +55,23 @@ const links = [
 const Responsable2 = () => {
   const { user } = useAuthContext();
   const { terrainId } = useParams();
-  console.log(terrainId); 
   const [terrainInfo, setTerrainInfo] = useState({});
-
+  const [width, setWidth] = useState();
+  const handleWidth = (width) => {
+    setWidth(width);
+  }
+  useEffect(() => {
+    handleWidth(width);
+  },[width]);
+  const [w, setW] = useState();
+  const handleW = (width) => {
+    if (width === 284){
+    setW(220);}
+    else {setW(width);}
+  }
+  useEffect(() => {
+    handleW(width);
+  },[width]);
   useEffect(() => {
     const fetchTerrainInfo = async () => {
       try {
@@ -88,13 +96,14 @@ const Responsable2 = () => {
     <>
       <NavBar links={links} />
       <div className='flex flex-row'>
-        <SideBar>
+        <SideBar sendWidth={handleWidth}>
           <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
-          <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable/${user.userObj._id}`} />
-          <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
+          <SidebarItem icon={< Dribbble />} text="list terrain" link={`terrain/responsable`} />
+          <SidebarItem icon={<ListPlus /> } text="reservation list" link={'reservation/listR'} />
         </SideBar>
-
-        <ResponsableContent data={terrainInfo} user={user} /> {/* Pass terrainInfo as data */}
+        <div className={`ml-[${w}px] flex mt-[82px] w-[100%] justify-center items-center`}>
+          <ResponsableContent data={terrainInfo} user={user} /> {/* Pass terrainInfo as data */}
+        </div>
       </div>
     </>
   );

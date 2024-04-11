@@ -18,7 +18,7 @@ const ReservationEdit = () => {
     const { user } = useAuthContext();
     const idUser = user.userObj._id;
     const [idTer, setIdTer] = useState();
-    const [selectedDate, setSelectedDate] = useState();
+    const [Datee, setDatee] = useState(new Date());
     const [selectedHour, setSelectedHour] = useState();
     const [reservationDetails, setReservationDetails] = useState();
     const [terrainItems, setTerrainItems] = useState();
@@ -26,6 +26,7 @@ const ReservationEdit = () => {
     const [searchTerm, setSearchTerm] = useState();
     const [team, setTeam] = useState();
     const [width, setWidth] = useState();
+    const [selectedDate, setSelectedDate] = useState();
     const handleWidth = (width) => {
       setWidth(width);
     }
@@ -57,6 +58,9 @@ const ReservationEdit = () => {
             const reservation = await axios.get(`http://localhost:4000/res/reservation/getReservationInfo/${idRes}`);
             setIdTer(reservation.data.reservations.terrain);
             const date = new Date(reservation.data.reservations.date);
+            console.log(date);
+            const date1 = date.toISOString()
+            console.log(date1);
             setSelectedDate(date.toLocaleDateString('fr-FR', {
                 day: '2-digit',
                 month: '2-digit',
@@ -97,7 +101,7 @@ const ReservationEdit = () => {
 
         const handleOnSubmit = async (e) => { 
             e.preventDefault();
-            let combinedDateTime = new Date(reservationDetails.date);
+            let combinedDateTime = new Date(Datee);
             combinedDateTime.setHours(parseInt(selectedHour), 0, 0, 0);
             combinedDateTime = combinedDateTime.toISOString();
             try {
@@ -105,7 +109,6 @@ const ReservationEdit = () => {
                     date : new Date(combinedDateTime),
                     participants: tachkila,
                 });
-                console.log(response.data); // Assuming you want to log the response
                 navigate('/reservation/listP');
             } catch (error) {
                 console.error('Failed to add reservation:', error);
@@ -113,11 +116,10 @@ const ReservationEdit = () => {
         }
 
         const handleDateSelect = async (date) => {
-            setSelectedDate(date);
+            setDatee(date);
             // Appeler une fonction pour récupérer les détails de la réservation pour la date sélectionnée
             setReservationDetails(reservationDetails);
         };
-
         const handleHourSelect = (hour) => {
             setSelectedHour(hour);
         };
@@ -130,7 +132,6 @@ const ReservationEdit = () => {
         const handleTachkila = (tachkila) => {
             setTachkila(tachkila);
         } 
-        console.log(reservationDetails.participants);
         return (
             <div>
                 <NavBar />
