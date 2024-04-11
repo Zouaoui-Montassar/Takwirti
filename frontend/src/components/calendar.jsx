@@ -127,7 +127,6 @@ const Calendar = ({ onDateSelect, dayBlocked, jour}) => {
   };
 
   const handleDaySelect = (selectedDate) => {
-    console.log(selectedDate);
     setSelectedDate(selectedDate);
     onDateSelect(selectedDate); // Update selectedDate state with the selected date
     if (!isReservationPage) {

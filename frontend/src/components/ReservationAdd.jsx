@@ -47,7 +47,7 @@ export const ReservationAdd = ({ idTer,idRes,jour, sendselectedDate, sendselecte
               return `${String(reservationDateTime.getHours()).padStart(2, '0')}:${String(reservationDateTime.getMinutes()).padStart(2, '0')}`;
             });
       
-            setTimeReserved(...timeReserved, reservationTimes)
+            setReservedHours(...reservedHours, reservationTimes)
           } else {
             console.log('Aucune réservation trouvée');
           }
@@ -59,12 +59,13 @@ export const ReservationAdd = ({ idTer,idRes,jour, sendselectedDate, sendselecte
       useEffect(()=>{
         fetchTerrainInfo();
       },[idTer])
-      /* useEffect(() => {
-        setTimeReserved(reservedHours)
+      useEffect(() => {
+        reservedHours.length = 0 
+        setReservedHours(reservedHours)
         handleFetchReservations();
-      }, [selectedDate]);  */
-/*       console.log(reservedHours);
-      console.log(timeReserved); */
+      }, [selectedDate]); 
+      console.log(reservedHours);
+      console.log(timeReserved);
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -78,7 +79,6 @@ export const ReservationAdd = ({ idTer,idRes,jour, sendselectedDate, sendselecte
     }
 
     const handleDateSelect = (date) => {
-      console.log(date);
         setSelectedDate(date);
         sendselectedDate(date);
     };

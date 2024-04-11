@@ -45,12 +45,12 @@ const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end
             selectedHour === formattedTime
               ? 'bg-sky-100 '
               : (reservedHours || []).includes(formattedTime)
-                ? 'bg-gray-300 cursor-not-allowed'
+                ? 'bg-gray-300 cursor-not-allowed text-gray-300'
                 : ''
           } border-b border-gray-200 transition-all duration-300 ease-in-out
           cursor-pointer ${isReservationPage && selectedHour === formattedTime ? 'text-primary-50 border-primary-50 bg-primary-50' : ''}`}
           disabled={(reservedHours || []).includes(formattedTime)}
-          value={formattedTime}
+          value={(reservedHours || []).includes(formattedTime)?formattedTime+"  reserved": formattedTime}
         />
       </li>
     );
