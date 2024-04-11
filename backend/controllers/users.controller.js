@@ -150,8 +150,6 @@ const updateResponsable = async (req, res) => {
 const getAllUsers = async (req, res) => {
     try {
         const response = await ParticulierModel.find({});
-        console.log(response);
-
         res.status(200).json(response);
     } catch (error) {
         console.error("Failed to fetch users:", error);

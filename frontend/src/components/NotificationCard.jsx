@@ -13,7 +13,7 @@ const NotificationCard = ({ data }) => {
       <div className=' w-[600px] mb-2 rounded-2xl p-2 shadow-2xl shadow-slate-400 m-5 border border-5 border-gray-400'>
         <div className='flex flex-row justify-between'>
           <div className='flex flex-row items-center'>
-            <img src={data.image} alt='Friend image' className='w-[100px] h-[100px] rounded-full ' />
+             <img src={data.image} alt='Friend image' className='w-[100px] h-[100px] rounded-full ' /> 
             <div className='m-2'>
               <h3 className='text-bold text-xl'>Notification from {data.sender.nom} {data.sender.prenom}</h3>
               <p>Message : {data.message}</p>
