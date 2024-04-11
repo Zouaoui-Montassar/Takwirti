@@ -8,7 +8,7 @@ const Message = ({message}) => {
 	const fromMe = message.senderId === user.userObj._id;
 	const formattedTime = extractTime(message.createdAt);
 	const chatClassName = fromMe ? "chat-end" : "chat-start";
-	const profilePic = fromMe ? user.profilePic : selectedConversation?.profilePic;
+	const profilePic = fromMe ? user.image : selectedConversation?.image;
 	const bubbleBgColor = fromMe ? "bg-primary-50" : "bg-gray-500";
 
 	return (

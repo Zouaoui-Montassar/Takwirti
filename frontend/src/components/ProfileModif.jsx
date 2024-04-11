@@ -109,16 +109,19 @@ const ProfileModif = () => {
     event.preventDefault(); // Prevent the default form submission
 
     try {
+      console.log("click : entrain de modifier le profile");
       let url;
       let updatedFields = {
         nom: nom,
         prenom: prenom,
         email: email,
         tel: tel,
-        password: password,
         image :user.userObj.image,
         // Add other fields as necessary
       };
+      if (password) { // ken password feragh ma yhezouch
+        updatedFields.password = password;
+      }
       if (image) {
         const storageRef = ref(storage, `profilepictures/${user.userObj._id}`);
         const imageSnapshot = await uploadBytes(storageRef, image);
@@ -133,7 +136,7 @@ const ProfileModif = () => {
         url = `http://localhost:4000/api/users/update_responsable/${user.userObj._id}`;
       }
 
-      const response = await axios.put(url, updatedFields);
+      const response = await axios.patch(url, updatedFields);
       if (response.status === 200) {
         console.log(response);
         setIsSuccess(true);
