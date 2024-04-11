@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import {useParams,useLocation} from 'react-router-dom';
 const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end, step , jour }) => {
   const [selectedHour, setSelectedHour] = useState([]);
   const jourDate = new Date(jour);

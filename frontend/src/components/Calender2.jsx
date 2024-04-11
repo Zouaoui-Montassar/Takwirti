@@ -1,16 +1,13 @@
 import React, { useState, useRef } from 'react';
-import List from './List';
-import { useParams } from 'react-router-dom';
 
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-const Calendar2 = ({ dayBlocked , ouvre , ferme ,duree,hr}) => {
+const Calendar2 = ({ onDateSelect, dayBlocked }) => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [selectedDate, setSelectedDate] = useState(new Date()); // Define setSelectedDate here
+
   const modalDateRef = useRef(null);
-  const params= useParams();
-  const idUser = params.idUser ;
-  const idTer = params.idTer;
   const dayNameToNumber = (dayName) => {
     switch (dayName.toLowerCase()) {
       case 'sunday':
@@ -30,9 +27,7 @@ const Calendar2 = ({ dayBlocked , ouvre , ferme ,duree,hr}) => {
       default:
         return -1; // Retourne -1 si le nom du jour n'est pas valide
     }}
-  console.log(dayBlocked)
   dayBlocked = dayNameToNumber(dayBlocked)
-  console.log(dayBlocked)
 
   const generateCalendar = () => {
     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -55,12 +50,13 @@ const Calendar2 = ({ dayBlocked , ouvre , ferme ,duree,hr}) => {
         'py-2',
         'border',
         'cursor-pointer',
-        date.toDateString() === new Date().toDateString() ? 'bg-sky-500 text-white' : '',
+        date.toDateString() === new Date().toDateString() ? 'bg-gray-200 text-primary-50 border border-primary-50' : '',
+        date.toDateString() === selectedDate?.toDateString()? 'bg-primary-50 text-white' : '', // Conditional class for selected date
         isBlocked ? 'text-gray-400 cursor-not-allowed' : '', // Utilisez isBlocked directement pour désactiver le bouton
       ].join(' ');
     
       calendar.push(
-          <input type="button" key={day} className={classNames} onClick={() => showModal(date.toDateString())} value={day} disabled={isBlocked}/>
+          <input type="button" key={day} className={classNames} onClick={() =>{ handleDaySelect(date);setSelectedDate(date);}} value={day} disabled={isBlocked}/>
       );
     }
     
@@ -104,6 +100,10 @@ const Calendar2 = ({ dayBlocked , ouvre , ferme ,duree,hr}) => {
     document.getElementById('myModal').classList.add('hidden');
   };
 
+  const handleDaySelect = (selectedDate) => {
+    setSelectedDate(selectedDate);
+    onDateSelect(selectedDate); // Update selectedDate state with the selected date
+  }
   return (
     <div className="flex justify-center ">
       <div className="p-8">
@@ -122,7 +122,9 @@ const Calendar2 = ({ dayBlocked , ouvre , ferme ,duree,hr}) => {
                   <p className="text-2xl font-bold">Selected Date</p>
                   <button onClick={hideModal} className="modal-close px-3 py-1 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring">✕</button>
                 </div>
-                <div ref={modalDateRef} className="text-xl font-semibold"></div>
+                <div ref={modalDateRef} className="text-xl font-semibold">
+                  
+                </div>
               </div>
             </div>
           </div>

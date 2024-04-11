@@ -5,7 +5,7 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import SideBar, { SidebarItem } from '../components/SideBar';
 import { School, Settings } from 'lucide-react';
 import axios from 'axios';
-import Calender2 from './Calender2';
+import ParentCalender2 from './ParentCalender2';
 import { motion } from 'framer-motion'
 import { ListPlus , Dribbble } from 'lucide-react';
 
@@ -40,9 +40,9 @@ const links = [
     return (
       <div className='items-center justify-center  w-full'>
         <h1 className='bold-36 my-2'> calender terrain : {data.nom}</h1> 
-        <Calender2 dayBlocked={data.calendrier.date} openTime={data.calendrier.open} closeTime={data.calendrier.close} time={data.calendrier.duree} date={data.calendrier.date} rh={data.calendrier.time}  />
+        <ParentCalender2 dayBlocked={data.calendrier.date} openTime={data.calendrier.open} closeTime={data.calendrier.close} time={data.calendrier.duree} date={data.calendrier.date} rh={data.calendrier.time}  />
         <div className='flex flex-row items-center justify-center'>
-          <motion.img src="/taswira2.jpg" alt="taswira" width={400} height={400} className='absolute right-0 top-[500px] rounded-full m-2' variants={imageVariants} initial="hidden" animate="visible" />
+          {/* <motion.img src="/taswira2.jpg" alt="taswira" width={400} height={400} className='absolute right-0 top-[500px] rounded-full m-2' variants={imageVariants} initial="hidden" animate="visible" /> */}
           <div>
               <p className='text-3xl text-bold border border-green-500 p-1 w-[500px] rounded-md shadow-2xl shadow-slate-500 absolute right-[30%]'>Hi , <span className='bold-36 text-green-500'>{user.userObj.nom} {user.userObj.prenom}</span> Take pleasure in overseeing your reservations and stadiums <span className='bold-36 text-green-500'>...</span></p>
           </div>
