@@ -171,22 +171,28 @@ const FriendsList = () => {
 
         }
         { findpeople.length > 0 && (
-          <div className='m-2'>
-  {findpeople
-    .filter(person => person._id !== user.userObj._id)
-    .map((person) => (
-      <FriendsCard key={person._id} data={person} onAddFriend={addFriend} showAddButton={true} />
-    ))}
+          <div className='m-2 '>
+{findpeople
+  .filter(person => person._id !== user.userObj._id && !friends.some(friend => friend._id === person._id))
+  .map((person) => (
+    <FriendsCard key={person._id} data={person} onAddFriend={addFriend} showAddButton={true} />
+  ))}
+
 </div>
 )}
           <h2 className='text-bold text-2xl m-2'>All friends</h2>
-          {friends.map((friend) => (
-            <ul className='flex items-center justify-center'>
-              <li key={friend._id}>
-                <FriendsCard data={friend} onRemoveFriend={removeFriend} />
-              </li>
-            </ul>
-          ))   }
+          {friends.length === 0 && (
+  <div className="m-2">
+    <h2 className="text-gray-500 text-lg text-center">No friends found</h2>
+  </div>
+)}
+{friends.map((friend) => (
+  <ul className="flex items-center justify-center " key={friend._id}>
+    <li>
+      <FriendsCard data={friend} onRemoveFriend={removeFriend} />
+    </li>
+  </ul>
+))}
         </div>
       </div>
     </>
