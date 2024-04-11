@@ -1,28 +1,27 @@
 import React from 'react';
-import { BsTelephone } from "react-icons/bs";
-import { BsFillExclamationTriangleFill  } from 'react-icons/bs';
+import { BsFillExclamationTriangleFill } from 'react-icons/bs';
 
 const NotificationCard = ({ data }) => {
   const createdAtDate = new Date(data.createdAt);
-
-  // Format the date as a string
   const formattedDate = createdAtDate.toLocaleString();
-  
+
   return (
-    <div>
-      <div className=' w-[600px] mb-2 rounded-2xl p-2 shadow-2xl shadow-slate-400 m-5 border border-5 border-gray-400'>
-        <div className='flex flex-row justify-between'>
-          <div className='flex flex-row items-center'>
-            <img src={data.image} alt='Friend image' className='w-[100px] h-[100px] rounded-full ' />
-            <div className='m-2'>
-              <h3 className='text-bold text-xl'>Notification from {data.sender.nom} {data.sender.prenom}</h3>
-              <p>Message : {data.message}</p>
-              <p>Received on : {formattedDate}</p>
-            </div>
+    <div className="max-w-lg mx-auto bg-white shadow-md rounded-lg overflow-hidden my-4 w-full">
+      <div className="p-4">
+        <div className="flex items-center">
+          <img src={data.sender.image} alt="Friend" className="w-12 h-12 rounded-full" />
+          <div className="ml-4">
+            <h3 className="text-lg font-semibold">{data.sender.nom} {data.sender.prenom}</h3>
+            <p className="text-sm text-gray-500">Received on {formattedDate}</p>
           </div>
-          
-          <BsFillExclamationTriangleFill className='text-xl text-white border border-5 border-yellow-500 bg-yellow-500 h-[50px] w-[50px] rounded-xl shadow-md shadow-slate-500 mt-5' />
         </div>
+        <div className="mt-2">
+          <p className="text-sm">{data.message}</p>
+        </div>
+      </div>
+      <div className="bg-primary-50 px-4 py-2 flex justify-end items-center">
+        <BsFillExclamationTriangleFill className="text-xl text-white mr-2" />
+        <span className="text-white font-semibold">Notification</span>
       </div>
     </div>
   );
