@@ -24,7 +24,7 @@ export const ReservationAdd = ({ idTer,idRes,jour, sendselectedDate, sendselecte
           setCloseTime(response.data.terrain.calendrier.close);
           setOpenTime(response.data.terrain.calendrier.open);
           setStepDuration(response.data.terrain.calendrier.duree);
-          setReservedHours(response.data.terrain.calendrier.time);
+          setReservedHours(...reservedHours,response.data.terrain.calendrier.time);
           sendterrainItems(response.data.terrain);
           setLoading(false);
         } catch (error) {
@@ -47,9 +47,7 @@ export const ReservationAdd = ({ idTer,idRes,jour, sendselectedDate, sendselecte
               return `${String(reservationDateTime.getHours()).padStart(2, '0')}:${String(reservationDateTime.getMinutes()).padStart(2, '0')}`;
             });
       
-            setTimeReserved(reservationTimes);
-            setReservedHours(reservationTimes);
-            console.log(reservedHours);
+            setTimeReserved(...timeReserved, reservationTimes)
           } else {
             console.log('Aucune réservation trouvée');
           }
@@ -58,13 +56,15 @@ export const ReservationAdd = ({ idTer,idRes,jour, sendselectedDate, sendselecte
           setLoading(false);
         }
       }
-      
-      useEffect(() => {
-        setReservedHours([])
-        setTimeReserved([])
+      useEffect(()=>{
         fetchTerrainInfo();
+      },[idTer])
+      useEffect(() => {
+        setTimeReserved(reservedHours)
+        handleFetchReservations();
       }, [selectedDate]); 
-
+      console.log(reservedHours);
+      console.log(timeReserved);
     if (loading) {
         return <div>Loading...</div>;
     }

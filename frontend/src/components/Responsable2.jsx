@@ -7,7 +7,7 @@ import { School, Settings } from 'lucide-react';
 import axios from 'axios';
 import ParentCalender2 from './ParentCalender2';
 import { motion } from 'framer-motion'
-
+import { ListPlus , Dribbble } from 'lucide-react';
 
 const links = [
   { label: 'Accueil', path: '/' },
@@ -17,6 +17,7 @@ const links = [
 
 
   const ResponsableContent = ({ data ,user}) => {
+
     const imageVariants = {
       hidden: {
         opacity: 0,
@@ -63,7 +64,22 @@ const Responsable2 = () => {
   const { terrainId } = useParams();
   console.log(terrainId); 
   const [terrainInfo, setTerrainInfo] = useState({});
-
+  const [width, setWidth] = useState();
+  const handleWidth = (width) => {
+    setWidth(width);
+  }
+  useEffect(() => {
+    handleWidth(width);
+  },[width]);
+  const [w, setW] = useState();
+  const handleW = (width) => {
+    if (width === 284){
+    setW(220);}
+    else {setW(width);}
+  }
+  useEffect(() => {
+    handleW(width);
+  },[width]);
   useEffect(() => {
     const fetchTerrainInfo = async () => {
       try {
@@ -88,13 +104,14 @@ const Responsable2 = () => {
     <>
       <NavBar links={links} />
       <div className='flex flex-row'>
-        <SideBar>
+        <SideBar sendWidth={handleWidth}>
           <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
-          <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable/${user.userObj._id}`} />
-          <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/list'} />
+          <SidebarItem icon={< Dribbble />} text="list terrain" link={`terrain/responsable`} />
+          <SidebarItem icon={<ListPlus /> } text="reservation list" link={'reservation/listR'} />
         </SideBar>
-
-        <ResponsableContent data={terrainInfo} user={user} /> {/* Pass terrainInfo as data */}
+        <div className={`ml-[${w}px] flex mt-[82px] w-[100%] justify-center items-center`}>
+          <ResponsableContent data={terrainInfo} user={user} /> {/* Pass terrainInfo as data */}
+        </div>
       </div>
     </>
   );
