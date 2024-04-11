@@ -59,12 +59,12 @@ export const ReservationAdd = ({ idTer,idRes,jour, sendselectedDate, sendselecte
       useEffect(()=>{
         fetchTerrainInfo();
       },[idTer])
-      useEffect(() => {
+      /* useEffect(() => {
         setTimeReserved(reservedHours)
         handleFetchReservations();
-      }, [selectedDate]); 
-      console.log(reservedHours);
-      console.log(timeReserved);
+      }, [selectedDate]);  */
+/*       console.log(reservedHours);
+      console.log(timeReserved); */
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -78,6 +78,7 @@ export const ReservationAdd = ({ idTer,idRes,jour, sendselectedDate, sendselecte
     }
 
     const handleDateSelect = (date) => {
+      console.log(date);
         setSelectedDate(date);
         sendselectedDate(date);
     };
