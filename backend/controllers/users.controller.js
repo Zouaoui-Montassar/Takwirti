@@ -210,7 +210,7 @@ const removeFriend = async (req, res) => {
 const GetAllFriends = async (req, res) => {
     try {
       const userId = req.params.userId;
-      const user = await UserModel.findById(userId).populate('ListeAmi', 'nom prenom tel');
+      const user = await UserModel.findById(userId).populate('ListeAmi', 'nom prenom tel image');
   
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
@@ -219,7 +219,7 @@ const GetAllFriends = async (req, res) => {
       const friends = user.ListeAmi ; 
       
       // Return nom prenom tel w _id ( lel remove )
-      const friendsDetails = friends.map(friend => ({ nom: friend.nom, prenom: friend.prenom , tel:friend.tel , _id : friend._id }));
+      const friendsDetails = friends.map(friend => ({ nom: friend.nom, prenom: friend.prenom , tel:friend.tel , _id : friend._id ,image: friend.image }));
       /* console.log(friendsDetails); */
       res.status(200).json(friendsDetails);
     } catch (error) {

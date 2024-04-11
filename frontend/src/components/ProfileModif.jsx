@@ -109,6 +109,7 @@ const ProfileModif = () => {
     event.preventDefault(); // Prevent the default form submission
 
     try {
+      console.log("click : entrain de modifier le profile");
       let url;
       let updatedFields = {
         nom: nom,
