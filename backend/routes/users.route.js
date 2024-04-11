@@ -26,7 +26,7 @@ router.patch('/users/update_responsable/:id', userController.updateResponsable);
 router.get('/users/:id', userController.getUserById);
 
 // get all users 
-router.get('/users/getusers', userController.getAllUsers);
+router.get('/users/getusers/all', userController.getAllUsers);
 
 //delete user
 router.delete('/users/delete/:id', userController.deleteUser);
