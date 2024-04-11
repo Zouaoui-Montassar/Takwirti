@@ -8,7 +8,7 @@ const GetAllNotifUser  = async (req, res) => {
 
         const notifications = await NotifModel.find({ receiver: id }).populate({
             path: 'sender',
-            select: 'nom prenom'
+            select: 'nom prenom image'
         }).sort({ createdAt: -1 }); // tri bel latest , populate bech tjibli el nom wel prenom mel id mtaa el sender
         
         res.status(200).json({
