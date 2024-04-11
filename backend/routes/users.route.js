@@ -19,8 +19,8 @@ router.post('/users/login', userController.login);
 /*  router.use(requireAuth);  */
 
 // updates
-router.put('/users/update_particulier/:id', userController.updateParticulier);
-router.put('/users/update_responsable/:id', userController.updateResponsable);
+router.patch('/users/update_particulier/:id', userController.updateParticulier);
+router.patch('/users/update_responsable/:id', userController.updateResponsable);
 
 // Get user by id 
 router.get('/users/:id', userController.getUserById);
