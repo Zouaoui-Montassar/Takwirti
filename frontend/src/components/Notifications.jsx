@@ -67,11 +67,15 @@ const Notifications = () => {
                </Sidebar>
                 <div className={`ml-[${w}px] mt-[82px] w-[100%] p-12 `}>
                     <h2 className='text-bold text-2xl m-2'>All notifications</h2> 
-                    {notifications.map((notification) => (
-                      <div className='flex items-center justify-center'>
-                        <NotificationCard key={notification._id} data={notification} />
-                      </div>
-                    ))}
+                    {notifications.length === 0 ? (
+          <p className="text-gray-500 text-lg text-center">No notifications yet</p>
+        ) : (
+          notifications.map((notification) => (
+            <div className='flex items-center justify-center' key={notification._id}>
+              <NotificationCard data={notification} />
+            </div>
+          ))
+        )}
                 </div>
             </div>
         </>

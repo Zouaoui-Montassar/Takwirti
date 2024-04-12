@@ -42,7 +42,7 @@ const NavBar = ({ isHomePage }) => {
       <div className='flex space-x-7 items-center justify-center'>
         {isHomePage ? (
           <>
-            <Link to="/signin" className='text-white hover:rounded-xl hover:bg-white hover:text-green-500 hover:w-auto hover:p-2'>Login</Link>
+            <Link to="/signin" className='text-white hover:rounded-full hover:bg-white hover:text-green-500  px-5 py-2'>Login</Link>
             <Link to="/signupparti" className='bg-white text-green-500 px-4 py-2 rounded-full'>Sign up</Link>
           </>
         ) : (
@@ -103,7 +103,7 @@ const NavBar = ({ isHomePage }) => {
 
             {/* Notification Menu */}
             <div className="relative px-5">
-              <FontAwesomeIcon icon={faBell} className="me-4 flex items-center text-3xl text-neutral-600 dark:text-white cursor-pointer" onClick={toggleNotificationMenu} />
+              <FontAwesomeIcon icon={faBell} className="me-4 flex items-center text-3xl  dark:text-white cursor-pointer" onClick={toggleNotificationMenu} />
               {isNotificationMenuOpen && (
                 <ul
                   className="absolute z-[1000] top-14 right-0 m-0 min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-black shadow-lg"
