@@ -20,6 +20,8 @@ import { storage } from "../firebase";
 import { Bell } from 'lucide-react';
 import { ContactRound , ListPlus , MessageCircleMore } from 'lucide-react';
 import { CgUserList } from "react-icons/cg";
+import {  Dribbble } from 'lucide-react';
+
 
 
 
@@ -187,13 +189,9 @@ const ProfileModif = () => {
       <div className='flex flex-row'>
       {role === 'Responsable' ? (
         <Sidebar sendWidth={handleWidth}>
-          <SidebarItem
-            icon={<School />}
-            text="profile responsable"
-            link={'responsable'}
-          />
-          <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable`} />
-          <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
+          <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
+          <SidebarItem icon={< Dribbble />} text="list terrain" link={`terrain/responsable`} />
+          <SidebarItem icon={<ListPlus /> } text="reservation list" link={'reservation/listR'} />
         </Sidebar>
       ) : (
         <Sidebar sendWidth={handleWidth}>

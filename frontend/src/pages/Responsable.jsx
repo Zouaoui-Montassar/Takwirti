@@ -14,6 +14,7 @@ const ResponsableContent = ({ user }) => {
   const [terrainList, setTerrainList] = useState([]);
   const [reservationData, setReservationData] = useState([]);
   const [width, setWidth] = useState();
+  const [count, setCount] = useState(0);
   const [count1, setCount1] = useState(0);
   const [count2, setCount2] = useState(0);
   const [count3, setCount3] = useState(0);
@@ -125,7 +126,11 @@ const ResponsableContent = ({ user }) => {
       const count3 = await fetchReservationCountA(user.userObj._id);
 
 
-      setReservationData([{ date: 'Today', value: count }]);
+      setReservationData([{ date: 'Today', TotalRes: count },
+        { date: 'Today', Current: count1 },
+        { date: 'Today', Finished: count2 },
+        { date: 'Today', Canceled: count3 }]);
+      setCount(count);
       setCount1(count1);
       setCount2(count2);
       setCount3(count3);
@@ -172,7 +177,10 @@ const ResponsableContent = ({ user }) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="value" fill="#00cc00" barSize={80} />
+              <Bar dataKey="TotalRes" fill="#00cc00" barSize={80} />
+              <Bar dataKey="Current" fill="#ff0000" barSize={80} /> 
+              <Bar dataKey="Finished" fill="#0000ff" barSize={80} /> 
+              <Bar dataKey="Canceled" fill="#ff7f0e" barSize={80} /> 
             </BarChart>
             </div>
 
@@ -180,7 +188,7 @@ const ResponsableContent = ({ user }) => {
                 <div className="w-[150px] h-[150px]  ml-[60px] border border-gray-400 rounded-2xl shadow-md shadow-slate-400 transform transition-transform hover:rotate-360 m-2">
                   <div className="flex flex-col items-center justify-center w-full h-full">
                     <h1 className="text-gray-600 text-2xl text-bold">total reservations:</h1>
-                    <h2 className="text-green-500 text-4xl text-bold">{reservationData.length > 0 ? reservationData[0].value : 0}</h2>              
+                    <h2 className="text-green-500 text-4xl text-bold">{count}</h2>              
                   </div>
                 </div>
 

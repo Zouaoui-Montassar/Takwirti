@@ -157,6 +157,17 @@ const getAllUsers = async (req, res) => {
     }
 };
 
+const countAllUsers = async (req, res) => {
+    try {
+        const userCount = await UserModel.countDocuments();
+        console.log(userCount);
+        res.status(200).json({ userCount });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to count users", error: error.message });
+    }
+};
+
+
 const deleteUser = async (req, res) => {
     const { id } = req.params;
     try {
@@ -330,6 +341,7 @@ module.exports.userController = {
     updateParticulier,
     updateResponsable,
     getAllUsers,
+    countAllUsers,
     deleteUser,
     getUserById,
     addFriend,
