@@ -32,15 +32,14 @@ const links = [
       },
     };
 
-    console.log(data.calendrier); // Check if calendrier is present in data
     if (!data.calendrier) {
       return <div>Calendrier data not available</div>; // Return some placeholder content or handle the case when calendrier is not present
     }
-  
+console.log(data._id)
     return (
       <div className='items-center justify-center  w-full'>
         <h1 className='bold-36 my-2'> calender terrain : {data.nom}</h1> 
-        <ParentCalender2 dayBlocked={data.calendrier.date} openTime={data.calendrier.open} closeTime={data.calendrier.close} time={data.calendrier.duree} date={data.calendrier.date} rh={data.calendrier.time}  />
+        <ParentCalender2 dayBlocked={data.calendrier.date} openTime={data.calendrier.open} closeTime={data.calendrier.close} time={data.calendrier.duree} date={data.calendrier.date} rh={data.calendrier.time} idTer={data._id} />
         <div className='flex flex-row items-center justify-center'>
           {/* <motion.img src="/taswira2.jpg" alt="taswira" width={400} height={400} className='absolute right-0 top-[500px] rounded-full m-2' variants={imageVariants} initial="hidden" animate="visible" /> */}
           <div>

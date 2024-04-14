@@ -39,9 +39,6 @@ const addTerrain = async (req, res) => {
         res.status(500).json({ message: "Failed to add terrain", error: error.message });
     }
 };
-
-
-
 // update terrain function
 const updateTerrain = async (req, res, next) => {
     try {
@@ -74,7 +71,6 @@ const updateTerrain = async (req, res, next) => {
         res.status(500).json({ message: "Failed to update terrain", error: error.message });
     }
 };
-
 // delete terrain function
 const deleteTerrain = async (req, res) => {
     try {
@@ -99,7 +95,6 @@ const deleteTerrain = async (req, res) => {
         res.status(500).json({ message: "Failed to delete terrain", error: error.message });
     }
 };
-
 // search terrain function
 const searchTerrain = async (req, res) => {
     try {
@@ -119,8 +114,6 @@ const searchTerrain = async (req, res) => {
     }
 };
 
-
-
 // list terrain function of a specific responsable
 const listTerrain = async (req, res) => { 
     try {
@@ -135,9 +128,8 @@ const listTerrain = async (req, res) => {
         res.status(500).json({ message: "Failed to list terrain", error: error.message });
     }
 };
-
 // update calendar function
-const updateCalendar = async (req, res, next) => {
+/* const updateCalendar = async (req, res, next) => {
     try {
         // Extract terrain ID and updated data from request body or parameters
         const respId = req.params.respId;
@@ -156,7 +148,7 @@ const updateCalendar = async (req, res, next) => {
         // Handle errors if any
         res.status(500).json({ message: "Failed to update terrains", error: error.message });
     }
-};
+}; */
 
 const getTerrain = async (req, res) => {
     try {
@@ -193,7 +185,7 @@ module.exports.terrainController = {
     deleteTerrain,
     searchTerrain,
     listTerrain,
-    updateCalendar,
+    /*updateCalendar,*/
     getTerrain,
     getTerrainInfo,
 };

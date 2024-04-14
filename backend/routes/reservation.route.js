@@ -20,6 +20,8 @@ router.get('/reservation/compterA/:resId', reservationController.compterReservat
 /* router.post('/reservation/add-participants', reservationController.addParticipantsToReservation); */
 router.get('/reservation/getInfo/:terrainId/:date', reservationController.getReservation)
 router.get('/reservation/getReservationInfo/:idRes', reservationController.getReservationInfo);
+router.get('/reservation/ByDate/:terrainId/:date', reservationController.getReservationByDate)
+
 
 
 module.exports.reservationRouter = router;

@@ -317,7 +317,23 @@ const getReservationInfo = async(req, res) => {
         res.status(500).json({ message: "Failed to get reservation info", error: error.message });
     };
 }
-
+const getReservationByDate = async(req, res) => {
+    const terrainId = req.params.terrainId 
+    const date = req.params.date;
+    try {
+        console.log(date);
+        const reservations = await reservationModel.find({
+            terrain: terrainId,
+            date: date, 
+            status : "En cours" || "Terminée"
+        });
+        console.log(reservations)
+        res.status(200).json({ reservations });
+        return reservations;
+    }catch (error) {
+        res.status(500).json({ message: "Failed to search for reservations", error: error.message });
+    }
+}
 
 module.exports.reservationController = {
     addReservation,
@@ -334,4 +350,5 @@ module.exports.reservationController = {
     /* addParticipantsToReservation, */
     getReservation,
     getReservationInfo,
+    getReservationByDate
 };
