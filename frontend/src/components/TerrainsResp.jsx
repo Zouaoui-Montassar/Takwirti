@@ -3,7 +3,7 @@ import NavBar from './NavBar';
 import SideBar, { SidebarItem } from './SideBar';
 import TerrainList from './TerrainList';
 import { useAuthContext } from '../hooks/useAuthContext';
-
+import { ListPlus , Dribbble } from 'lucide-react';
 import { School ,Settings,LogOut} from 'lucide-react';
 
 
@@ -32,9 +32,9 @@ function TerrainsResp() {
         <NavBar/>
         <div className='flex flex-row space-x-5'>
         <SideBar sendWidth={handleWidth}>
-            <SidebarItem icon={<School />} text="profile responsable" link={'responsable'}/>
-            <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable/`} />
-            <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
+          <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
+          <SidebarItem icon={< Dribbble />} text="list terrain" link={`terrain/responsable`} />
+          <SidebarItem icon={<ListPlus /> } text="reservation list" link={'reservation/listR'} />
         </SideBar>
         <div className={`ml-[${w}px] mt-[82px] w-[100%] flex items-center justify-center p-12`}>
           <TerrainList param={"responsable"} className="m-8" />

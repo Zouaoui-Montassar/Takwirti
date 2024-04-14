@@ -28,6 +28,9 @@ router.get('/users/:id', userController.getUserById);
 // get all users 
 router.get('/users/getusers/all', userController.getAllUsers);
 
+//count all users
+router.get('/users/count/all', userController.countAllUsers);
+
 //delete user
 router.delete('/users/delete/:id', userController.deleteUser);
 
