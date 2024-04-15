@@ -326,6 +326,10 @@ const getReservationByDate = async(req, res) => {
             terrain: terrainId,
             date: date, 
             status : "En cours" || "Terminée"
+        }).populate({
+            path: 'user',
+            select: 'nom prenom',
+            model : UserModel
         });
         console.log(reservations)
         res.status(200).json({ reservations });

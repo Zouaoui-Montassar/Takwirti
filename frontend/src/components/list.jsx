@@ -38,9 +38,9 @@ const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end
   const handleFetchOneReservations = async (test) => {
     try {
       const response = await axios.get(`http://localhost:4000/res/reservation/ByDate/${idTer}/${test.toISOString()}`);
-      const x = response.data.reservations
-      setIdUser(x)
-      console.log(x);
+      const x = response.data.reservations[0].user.nom + ' ' + response.data.reservations[0].user.prenom;
+      setIdUser(x);
+      return x;
     } catch (error) {
       console.error(error);
     }
@@ -83,12 +83,14 @@ const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end
     }
   }, [reservations]); // Only run when reservations change
   let i =0;
+  let x = null;
   while (currentTime < end) {
-    const formattedTime = currentTime.toLocaleTimeString('it-IT', {
+    let formattedTime = currentTime.toLocaleTimeString('it-IT', {
       hour12: false,
       hour: '2-digit',
       minute: '2-digit',
     });
+    let test = null;
     if(isRespo){
       i = (reservationTime || []).includes(formattedTime)? i+1 : i  ;
       console.log((reservationTime || []).includes(formattedTime),i)
@@ -99,14 +101,15 @@ const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end
           const timeString = reservationTime[index]; // Assuming "hh:mm" format
           console.log(timeString)
           const [hour, minutes] = timeString.split(':').map(part => parseInt(part));
-          const test = new Date(date);
+          test = new Date(date);
           test.setHours(hour, minutes); // Set hours and minutes separately
           console.log(test);
-          handleFetchOneReservations(test);
+          if (idUser===undefined){
+             x = handleFetchOneReservations(test)
+          }
         }
       }
     }
-    console.log(idUser)
     hours.push(
       <li key={formattedTime}>
         <input
@@ -124,7 +127,7 @@ const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end
           value = {
             (isRespo)? 
                 (reservedHours || []).includes(formattedTime)?  formattedTime + "  temps repos" :
-                (reservationTime || []).includes(formattedTime)? formattedTime + `  by user ${idUser} ` :
+                (reservationTime || []).includes(formattedTime)? formattedTime + `  by ${ x? x : null || 'Fetching...'}` :
                 formattedTime+ "  aucune reservation" :
             (reservedHours || []).includes(formattedTime)?  formattedTime + "  reserved" :
             formattedTime  
