@@ -77,11 +77,19 @@ const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end
 
   const [reservationTime, setReservationTime] = useState([]);
   useEffect(() => {
+
     if (Array.isArray(reservations) && reservations.length > 0) {
-      const reservationTimes = reservations.map(reservation => reservation.time);
-      setReservationTime(reservationTimes);
+      console.log("from the backend",reservations);
+      const reservationTimes = reservations.map(reservation => ({
+        time: reservation.time,
+        nom: reservation.userId ? reservation.userId.nom : 'Unknown',
+    prenom: reservation.userId ? reservation.userId.prenom : 'Unknown'
+    }));
+    
+        setReservationTime(reservationTimes);
+        console.log("from use effect", reservationTimes);
     }
-  }, [reservations]); // Only run when reservations change
+}, [reservations]); // Only run when reservations change
   let i =0;
   let x = null;
   while (currentTime < end) {
@@ -93,17 +101,17 @@ const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end
     let test = null;
     if(isRespo){
       i = (reservationTime || []).includes(formattedTime)? i+1 : i  ;
-      console.log((reservationTime || []).includes(formattedTime),i)
+/*       console.log((reservationTime || []).includes(formattedTime),i) */
       if ((reservationTime || []).includes(formattedTime)) {
         const index = reservationTime.findIndex(time => time === formattedTime);
         if (index !== -1) {
-          console.log("formatted : ", formattedTime)
+/*           console.log("formatted : ", formattedTime) */
           const timeString = reservationTime[index]; // Assuming "hh:mm" format
-          console.log(timeString)
+/*           console.log(timeString) */
           const [hour, minutes] = timeString.split(':').map(part => parseInt(part));
           test = new Date(date);
           test.setHours(hour, minutes); // Set hours and minutes separately
-          console.log(test);
+/*           console.log(test); */
           if (idUser===undefined){
              x = handleFetchOneReservations(test)
           }
@@ -125,12 +133,13 @@ const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end
           cursor-pointer ${isReservationPage && selectedHour === formattedTime ? 'text-primary-50 border-primary-50 bg-primary-50' : ''}`}
           disabled={(reservedHours || []).includes(formattedTime)}
           value = {
-            (isRespo)? 
-                (reservedHours || []).includes(formattedTime)?  formattedTime + "  temps repos" :
-                (reservationTime || []).includes(formattedTime)? formattedTime + `  by ${ x? x : null || 'Fetching...'}` :
-                formattedTime+ "  aucune reservation" :
-            (reservedHours || []).includes(formattedTime)?  formattedTime + "  reserved" :
-            formattedTime  
+            (isRespo) ? 
+    (reservedHours || []).includes(formattedTime) ?  formattedTime + "  temps repos" :
+    (reservationTime || []).find(reservation => reservation.time === formattedTime) ? 
+    formattedTime + `  by ${reservationTime.find(reservation => reservation.time === formattedTime).nom} ${reservationTime.find(reservation => reservation.time === formattedTime).prenom}` :
+    formattedTime + "  aucune reservation" :
+    (reservedHours || []).includes(formattedTime) ?  formattedTime + "  reserved" :
+    formattedTime
         }
         />
       </li>

@@ -299,8 +299,12 @@ const getReservation = async(req, res) => {
         const reservations = await reservationModel.find({
             terrain: terrainId,
             date: { $gte: startOfDay, $lte: endOfDay }
+        }).populate({
+            path: 'user',
+            model: 'Particulier',
+            select: 'nom prenom'
         });
-        console.log(reservations)
+        console.log("mel back end get reservation",reservations)
         res.status(200).json({ reservations });
     }catch (error) {
         res.status(500).json({ message: "Failed to search for reservations", error: error.message });
