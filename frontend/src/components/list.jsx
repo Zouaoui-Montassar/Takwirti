@@ -30,6 +30,7 @@ const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end
         setReservations(reservations);
       } else {
         setReservations([]);
+        setReservationTime([]);
       }
     } catch (error) {
       console.error(error);
