@@ -44,10 +44,12 @@ const ReservationList = () => {
                 if (xxx === undefined) {
                     if(yyy === "Particulier") {
                         const response = await axios.get(`http://localhost:4000/res/reservation/listP/${id}`);
+                        console.log(reservations);
                         setReservations(response.data.reservations);
                     } else if(yyy === "Responsable") {
                         const response = await axios.get(`http://localhost:4000/res/reservation/listR/${id}`);
                         setReservations(response.data.reservations);
+                        console.log(reservations);
                         console.log(response);
                     }}
                 else if(xxx === "search") {
@@ -112,18 +114,19 @@ const ReservationList = () => {
                     </div>
 
                     <div className="w-full h-auto overflow-auto shadow bg-white px-12" id="journal-scroll">
-                        {reservations? (
+                        {reservations.length > 0? (
                             <table className="w-full">
                                 <tbody>
                                     {reservations.map((item, index) => (
                                         <tr key={index} onClick={() => toReservationEdit(item._id)} className="relative transform scale-10 text-xs py-1 border-b-2 border-blue-100 cursor-default bg-blue-500 bg-opacity-25  " >
                                             <td className="pl-5 pr-3 whitespace-no-wrap">
-                                                <div className="text-gray-400 text-xl">{item.date}</div>
+                                            <div className="text-gray-400 text-xl">Date : {new Date(item.date).toLocaleDateString()}</div>
+
                                                 <div>{item.time}</div>
                                             </td>
                                             <td className="px-2 py-2 whitespace-no-wrap">
-                                                <div className="leading-5 text-gray-500 font-medium text-lg mb-1">id user : {item.user}</div>
-                                                <div className="leading-5 text-gray-900 text-lg mb-1"> id terrain : {item.terrain}
+                                                <div className="leading-5 text-gray-500 font-medium text-lg mb-1">By : {item.user.nom} {item.user.prenom}</div>
+                                                <div className="leading-5 text-gray-900 text-lg mb-1"> Nom terrain : {item.terrain.nom}
                                                     <a className="text-blue-500 hover:underline" href="#">{item.lien_terrain}</a>
                                                 </div>
                                                 <div className={` ${item.status === "Terminée" || item.status === "Annulée" ? 'text-red-500 text-lg' : 'text-green-500 text-lg'}`}>statut : {item.status}</div>

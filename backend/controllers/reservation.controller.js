@@ -158,13 +158,26 @@ const listReservationP = async (req, res) => {
     try {
         const { partId } = req.params;
 
-        const reservations = await reservationModel.find({ user: partId });
+        const reservations = await reservationModel.find({ user: partId })
+        .populate({
+            path: 'user',
+            model: 'Particulier',
+            select: 'nom prenom'
+        })
+        .populate({
+            path: 'terrain',
+            model: 'Terrain',
+            select: 'nom '
+        });
 
+
+        console.log(reservations);
         res.status(200).json({ reservations });
     } catch (error) {
         res.status(500).json({ message: "Failed to list reservations", error: error.message });
     }
 };
+
 
 // list reservation function d'un terrain qui appartient a un specific responsable
 const listReservationR = async (req, res) => {

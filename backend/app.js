@@ -10,7 +10,7 @@ const { notifRouter } = require('./routes/notification.route');
 const { messageRouter } = require('./routes/message.route');
 const cors = require('cors');
 const session = require('express-session');
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+/* const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy; */
 const { app , server } = require('./socket/socket.js');
 
 require('dotenv').config();

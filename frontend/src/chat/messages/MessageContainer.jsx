@@ -39,6 +39,7 @@ const NoChatSelected = () => {
 			<div className='px-4 text-center sm:text-lg md:text-xl text-black font-semibold flex flex-col items-center gap-2'>
 				<p>Welcome 👋 {user.userObj.nom} {user.userObj.prenom}</p>
 				<p>Select a chat to start messaging</p>
+				<p>Or add friends if you don't have any yet !</p>
 				<TiMessages className='text-3xl md:text-6xl text-center' />
 			</div>
 		</div>
