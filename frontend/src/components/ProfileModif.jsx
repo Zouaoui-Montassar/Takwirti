@@ -44,6 +44,7 @@ const ProfileModif = () => {
   const [tel, setTel] = useState(user.userObj.tel);
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
+  const [error, setError] = useState(null); // New state for error message
   const [image, setImage] = useState(null); // State to hold the uploaded image
   const [width, setWidth] = useState();
     const handleWidth = (width) => {
@@ -146,7 +147,7 @@ const ProfileModif = () => {
       console.log(response);
     } catch (error) {
       console.error('Failed to update profile:', error);
-      // Handle profile update errors
+      setError('Failed to update profile');
     }
   };
 
@@ -209,10 +210,10 @@ const ProfileModif = () => {
         </Sidebar>
       )}
         <div className={`ml-[${w}px} mt-[82px] flex justify-between items-center flex-col px-12 w-[100%]`}>
-          <h1 className='bold-52 my-6'>Modifier le profil</h1>
+          <h1 className='bold-52 my-6'>Update Profile</h1>
           <form className='flex flex-col'>
             <label htmlFor='nom' className='text-2xl text-bold m-2'>
-              Nom
+              First Name
             </label>
             <input
               type='text'
@@ -226,7 +227,7 @@ const ProfileModif = () => {
               }}
             />
             <label htmlFor='prenom' className='text-2xl text-bold m-2'>
-              Prénom
+              Last Name
             </label>
             <input
               type='text'
@@ -254,7 +255,7 @@ const ProfileModif = () => {
               }}
             />
             <label htmlFor='tel' className='text-2xl text-bold m-2'>
-              Numéro de téléphone
+              Phone Number
             </label>
             <input
               type='text'
@@ -270,7 +271,7 @@ const ProfileModif = () => {
             <label htmlFor="Photo" className='text-2xl text-bold m-2'>Photo</label>
             <Image onImageUpload={handleImageUpload} />
             <label htmlFor='password' className='text-2xl text-bold m-2'>
-              Mot de passe
+              Password
             </label>
             <input
               type='password'
@@ -286,9 +287,9 @@ const ProfileModif = () => {
               type='checkbox'
               onClick={togglePasswordVisibility}
             />{' '}
-            Afficher le mot de passe
+            Show Password
             <label htmlFor='password2' className='text-2xl text-bold m-2'>
-              Confirmer le mot de passe
+              Confirm Password
             </label>
             <input
               type='password'
@@ -317,6 +318,8 @@ const ProfileModif = () => {
               onClick={handleSubmit}
             />
           </form>
+          {/* Error message */}
+          {error && <p className='text-red-500 text-xl text-bold'>{error}</p>}
           {isSuccess && <Message />}
         </div>
       </div>

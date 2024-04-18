@@ -152,7 +152,7 @@ const ResponsableContent = ({ user }) => {
           <div className='flex flex-col'>
 
             <div className='border b-2 p-5 m-2 bg-white shadow-md rounded-md w-[250px] h-auto'>
-              <h1 className='text-2xl border-b-2 border-b-black mb-2 '>Terrains</h1>
+              <h1 className='text-2xl border-b-2 border-b-black mb-2 '>Stadiums</h1>
               <div className='flex flex-col'>
                 {terrainList.length > 0 ? (
                   // Render terrain items if there are items in the list

@@ -10,6 +10,7 @@ import TimeList from './TimeList';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Image from './Image';
+import { ListPlus , Dribbble } from 'lucide-react';
 import { useAuthContext } from '../hooks/useAuthContext';
 import {
   ref,
@@ -50,6 +51,17 @@ const Terrain = ({ func }) => {
   const [image, setImage] = useState(null); // State to hold the uploaded image
   const [terrainItems, setTerrainItems] = useState([]);
   const [calendrier, setCalendrier] = useState([]);
+  const [error, setError] = useState(null); // State to hold error messages
+
+  // Function to handle errors
+  const handleError = (errorMessage) => {
+    setError(errorMessage);
+    setTimeout(() => {
+      setError(null); // Clear error after some time
+    }, 5000); // Adjust time as needed
+  };
+
+
   const handleWidth = (width) => {
     setWidth(width);
   }
@@ -149,10 +161,12 @@ const Terrain = ({ func }) => {
         console.log(`Terrain ${func}ed successfully`);
       } else {
         console.error(`Failed to ${func} terrain`);
+        handleError(`Failed to ${func} terrain`);
       }
       navigate(`/terrain/responsable`)
     } catch (error) {
       console.error(`Error ${func}ing terrain:`, error);
+      handleError(`Error ${func}ing terrain`);
     }
   };
   
@@ -164,6 +178,7 @@ const Terrain = ({ func }) => {
         // Optionally, perform any other actions after successful deletion
       } else {
         console.error('Failed to delete terrain');
+        handleError(`Failed to delete terrain`);
       }
     } catch (error) {
       console.error('Error deleting terrain:', error);
@@ -177,15 +192,15 @@ const Terrain = ({ func }) => {
       <div className='flex flex-row'>
         <SideBar sendWidth={handleWidth}>
           <SidebarItem icon={<School />} text="Dashboard" link={'responsable'} />
-          <SidebarItem icon={<Settings />} text="list terrain" link={`terrain/responsable`} />
-          <SidebarItem icon={<Settings />} text="reservation list" link={'reservation/listR'} />
+          <SidebarItem icon={< Dribbble />} text="list terrain" link={`terrain/responsable`} />
+          <SidebarItem icon={<ListPlus /> } text="reservation list" link={'reservation/listR'} />
         </SideBar>
       <div className={`p-5  h-full ml-[${w}px] mt-[82px] w-[100%] justify-center items-center`}>
-        <h1 className='bold-52'>{func} Terrain</h1>
+        <h1 className='bold-52'>{func} Stadium</h1>
         <form onSubmit={handleSubmit}>
             <div className='w-full h-[200px] items-center justify-center flex flex-row '>
               <div className='flex flex-col m-5 w-[40%]'>
-                <h3 className='text-bold text-xl relative right-7'>nom du terrain</h3>
+                <h3 className='text-bold text-xl relative right-7'>Stadium Name</h3>
                 <input
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
                   type='text'
@@ -227,7 +242,7 @@ const Terrain = ({ func }) => {
               </div>
               <div className='flex flex-col w-[40%] m-5'>
                 <h3 className='text-bold text-xl relative right-1'>
-                  Ville
+                  city
                 </h3>
                 <Listbox value={selected.name} onChange={setSelected} disabled={func === 'update'} title={func === 'update' ? 'Ce champ est inaccessible en mode édition de terrain' : ''}>
                   <div className='relative mt-1 bg-white'>
@@ -289,7 +304,7 @@ const Terrain = ({ func }) => {
             <div className='w-full h-[200px] flex flex-row items-center justify-center '>
               <div className='flex flex-col m-5 w-[40%]'>
                 <h3 className='text-bold text-xl relative right-11'>
-                  Temps par match
+                  Time per match
                 </h3>
                 <select
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
@@ -305,7 +320,7 @@ const Terrain = ({ func }) => {
               </div>
               <div className='flex flex-col m-5 w-[40%]'>
                 <h3 className='text-bold text-xl relative right-11'>
-                  prix du match
+                  match prize
                 </h3>
                 <input
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
@@ -319,7 +334,7 @@ const Terrain = ({ func }) => {
           <div className='w-full h-[200px] items-center justify-center flex flex-row '>
             <div className='flex flex-col m-5 w-[40%]'>
                 <h3 className='text-bold text-xl relative right-7'>
-                  Temps ouverture
+                  Opening time
                 </h3>
                 <input
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
@@ -332,7 +347,7 @@ const Terrain = ({ func }) => {
               </div>
             <div className='flex flex-col m-5 w-[40%]'>
               <h3 className='text-bold text-xl relative right-11'>
-                temps fermeture
+                closing time
               </h3>
               <input
                 className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
@@ -346,7 +361,7 @@ const Terrain = ({ func }) => {
           {func === 'update' && (
               <div className='w-full h-[200px] items-center justify-center flex flex-row '>
                 <h3 className='text-bold text-xl relative right-11'>
-                  disponibilite de terrain
+                    availability of Satdium
                 </h3>
                 <input
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
@@ -374,7 +389,7 @@ const Terrain = ({ func }) => {
           <div className='w-full h-auto items-center justify-center flex flex-row'>
               <div className='flex flex-col m-5 w-[40%] '>
                 <h3 className='text-bold text-xl relative right-11 '>
-                  temps bloquer ou reservee
+                  time block or reserved
                 </h3>
                 <br />
                 {/* Placez le composant TimeList ici */}
@@ -382,7 +397,7 @@ const Terrain = ({ func }) => {
               </div>
               <div className='flex flex-col m-5 w-[40%]'>
                 <h3 className='text-bold text-xl relative right-11'>
-                  date repos
+                  rest date
                 </h3>
                 <br />
                 <select
@@ -407,6 +422,17 @@ const Terrain = ({ func }) => {
                 <Image onImageUpload={handleImageUpload} pic={func === "upade" ? terrainItems.img: null} />
               </div>
             </div>
+
+                      {error && (
+              <div className="flex justify-center items-center h-screen fixed top-0 left-0 w-full bg-gray-500 bg-opacity-75 z-50">
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative w-[50%] my-5">
+                  <strong className="font-bold text-xl">Error: </strong>
+                  <span className="block sm:inline text-red-500 text-xl">{error}</span>
+                </div>
+              </div>
+            )}
+
+      
            
 
           <div className='flex flex-row items-center justify-center space-x-2'>
@@ -415,10 +441,10 @@ const Terrain = ({ func }) => {
             onClick={func === 'update' ? handleDeleteTerrain : null}
             type={func === 'update' ? 'button' : 'reset'}
           >
-            {func === 'update' ? 'Supprimer le terrain' : 'Annuler'}
+            {func === 'update' ? 'Delete Stadium' : 'Cancel'}
           </button>
           <button className='p-2 border bg-green-500 text-white rounded-md text-xl' type="submit">
-            Soumettre
+            Confirm
           </button>
         </div>
         </form>
