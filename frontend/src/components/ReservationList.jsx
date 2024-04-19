@@ -126,7 +126,10 @@ const ReservationList = () => {
                                             </td>
                                             <td className="px-2 py-2 whitespace-no-wrap">
                                             <div className="leading-5 text-gray-500 font-medium text-lg mb-1">By : {item.user?.nom} {item.user?.prenom}</div>
-<div className="leading-5 text-gray-900 text-lg mb-1"> Nom terrain : {item.terrain?.nom}
+                                                        <div className="leading-5 text-gray-900 text-lg mb-1"> Nom terrain : {' '}
+                                                        <a className="text-blue-500 hover:underline" href={`/terrain/detail/${item.terrain?._id}`} onClick={(e) => e.stopPropagation()}>
+                                                            {item.terrain?.nom}
+                                                                                </a>
                                                     <a className="text-blue-500 hover:underline" href="#">{item.lien_terrain}</a>
                                                 </div>
                                                 <div className={` ${item.status === "Terminée" ? 'text-red-500 text-lg' : item.status === "Annulée" ? 'text-yellow-500 text-lg' : 'text-green-500 text-lg'}`}>statut : {item.status}</div>
