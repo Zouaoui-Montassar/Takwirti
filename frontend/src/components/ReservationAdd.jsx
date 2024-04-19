@@ -107,7 +107,6 @@ const ReservationAdd = () => {
             console.error('Failed to add reservation:', error);
         }
     }
-    console.log(selectedDate)
   return (
     <>
         <NavBar />
