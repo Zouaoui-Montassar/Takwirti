@@ -188,7 +188,17 @@ const listReservationR = async (req, res) => {
         // Extract terrain IDs
         const terrainIds = terrains.map(terrain => terrain._id);
         // Find reservations associated with the found terrains
-        const reservations = await reservationModel.find({ terrain: { $in: terrainIds } });
+        const reservations = await reservationModel.find({ terrain: { $in: terrainIds } })
+        .populate({
+            path: 'user',
+            model: 'Particulier',
+            select: 'nom prenom'
+        })
+        .populate({
+            path: 'terrain',
+            model: 'Terrain',
+            select: 'nom '
+        });
 
         res.status(200).json({ reservations });
     } catch (error) {

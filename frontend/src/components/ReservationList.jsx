@@ -120,7 +120,7 @@ const ReservationList = () => {
                                     {reservations.map((item, index) => (
                                         <tr key={index} onClick={() => toReservationEdit(item._id)} className="relative transform scale-10 text-xs py-1 border-b-2 border-blue-100 cursor-default bg-blue-500 bg-opacity-25  " >
                                             <td className="pl-5 pr-3 whitespace-no-wrap">
-                                            <div className="text-gray-400 text-xl">Date : {new Date(item.date).toLocaleDateString()}</div>
+                                            <div className="text-gray-400 text-xl">Date : {new Date(item.date).toLocaleString()}</div>
 
                                                 <div>{item.time}</div>
                                             </td>
