@@ -118,7 +118,7 @@ const ReservationList = () => {
                             <table className="w-full">
                                 <tbody>
                                     {reservations.map((item, index) => (
-                                        <tr key={index} onClick={yyy === "Particulier" ? () => toReservationEdit(item._id) : null} className="relative transform scale-10 text-xs py-1 border-b-2 border-blue-100 cursor-default bg-blue-500 bg-opacity-25  " >
+                                        <tr key={index} onClick={yyy === "Particulier" && item.status === "En cours" ? () => toReservationEdit(item._id) : null} className="relative transform scale-10 text-xs py-1 border-b-2 border-blue-100 cursor-default bg-blue-500 bg-opacity-25  " >
                                             <td className="pl-5 pr-3 whitespace-no-wrap">
                                             <div className="text-gray-400 text-xl">Date : {new Date(item.date).toLocaleString()}</div>
 
