@@ -49,9 +49,12 @@ const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end
   useEffect(()=>{
     handleFetchReservations();
   },[date]);
+  console.log(jourDate)
+  console.log(modifiedDate)
+  console.log(date)
   useEffect(()=>{
     if(jour!=null){
-      setSelectedHour(jourDate.toLocaleTimeString('fr-FR', {
+      setSelectedHour(date.toLocaleTimeString('fr-FR', {
         hour: '2-digit',
         minute: '2-digit'
       }));

@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {ReservationAdd} from './ReservationAdd';
 import { TeamContext, TeamProvider } from '../context/Teamcontext';
+import Reservation from './Reservation';
 import Tachkila from './Tachkila';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import NavBar from '../components/NavBar';
-import Sidebar , { SidebarItem } from '../components/SideBar';
+import NavBar from './NavBar';
+import Sidebar , { SidebarItem } from './SideBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { School ,Settings,LogOut} from 'lucide-react';
-import SearchBox from '../components/SearchBox';
+import SearchBox from './SearchBox';
 import { useAuthContext } from '../hooks/useAuthContext';
 
 const ReservationEdit = () => {
@@ -19,6 +19,7 @@ const ReservationEdit = () => {
     const idUser = user.userObj._id;
     const [idTer, setIdTer] = useState();
     const [Datee, setDatee] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState();
     const [selectedHour, setSelectedHour] = useState();
     const [reservationDetails, setReservationDetails] = useState();
     const [terrainItems, setTerrainItems] = useState();
@@ -26,33 +27,40 @@ const ReservationEdit = () => {
     const [searchTerm, setSearchTerm] = useState();
     const [team, setTeam] = useState();
     const [width, setWidth] = useState();
-    const [selectedDate, setSelectedDate] = useState();
-    const handleWidth = (width) => {
-      setWidth(width);
-    }
-    useEffect(() => {
-      handleWidth(width);
-    },[width]);
     const [w, setW] = useState();
+    const [ancien, setAncien] = useState();
+
+    // width for the frontend layout
+    const handleWidth = (width) => {
+        setWidth(width);
+      }
+    useEffect(() => {
+        handleWidth(width);
+    },[width]);
     const handleW = (width) => {
-      if (width === 284){
-      setW(400);}
-      else {setW(width);}
+        if (width === 284){
+            setW(435);
+        }
+        else {
+            setW(100);
+        }
     }
     useEffect(() => {
-      handleW(width);
+        handleW(width);
     },[width]);
+
     useEffect(() => {
         if (idTer == null) {
             const initialTeam = [];
             getTerrainfromReservation(); 
         }
     });
-    
+
     useEffect(() => {
-            fetchTerrainInfo();
+        fetchTerrainInfo();
     },[idTer])
 
+    //fetch terrain from reservation
     const getTerrainfromReservation = async () =>{
         try{
             const reservation = await axios.get(`http://localhost:4000/res/reservation/getReservationInfo/${idRes}`);
@@ -62,6 +70,11 @@ const ReservationEdit = () => {
             const date1 = date.toISOString()
             console.log(date1);
             setSelectedDate(date.toLocaleDateString('fr-FR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: '2-digit'
+              }));
+            setDatee(date.toLocaleDateString('fr-FR', {
                 day: '2-digit',
                 month: '2-digit',
                 year: '2-digit'
@@ -78,6 +91,7 @@ const ReservationEdit = () => {
         }
     }
 
+    //fetching for terrain info to set terrainItems
     const fetchTerrainInfo = async () => {
         try {
             const response = await axios.get(`http://localhost:4000/ter/terrain/getInfo/${idTer}`);
@@ -101,11 +115,17 @@ const ReservationEdit = () => {
 
         const handleOnSubmit = async (e) => { 
             e.preventDefault();
-            let combinedDateTime = new Date(Datee);
+            const dateParts = Datee.split('/'); // Séparer la chaîne en parties (jour, mois, année)
+            const day = parseInt(dateParts[0], 10); // Récupérer le jour et le convertir en nombre entier
+            const month = parseInt(dateParts[1], 10) - 1; // Récupérer le mois (soustraire 1 car les mois sont indexés à partir de zéro)
+            const year = parseInt(dateParts[2], 10) + 2000; // Récupérer l'année (ajouter 2000 car l'année est sur deux chiffres)
+            let combinedDateTime = new Date(year, month, day);
+            console.log(selectedDate);
+            console.log(combinedDateTime);
             combinedDateTime.setHours(parseInt(selectedHour), 0, 0, 0);
             combinedDateTime = combinedDateTime.toISOString();
             try {
-                const response = await axios.put(`http://localhost:4000/res/reservation/update/${idRes}`,{
+                const response = await axios.patch(`http://localhost:4000/res/reservation/update/${idRes}`,{
                     date : new Date(combinedDateTime),
                     participants: tachkila,
                 });
@@ -116,7 +136,11 @@ const ReservationEdit = () => {
         }
 
         const handleDateSelect = async (date) => {
-            setDatee(date);
+            setDatee(date.toLocaleDateString('fr-FR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: '2-digit'
+              }));
             // Appeler une fonction pour récupérer les détails de la réservation pour la date sélectionnée
             setReservationDetails(reservationDetails);
         };
@@ -132,6 +156,7 @@ const ReservationEdit = () => {
         const handleTachkila = (tachkila) => {
             setTachkila(tachkila);
         } 
+        console.log(Datee)
         return (
             <div>
                 <NavBar />
@@ -145,11 +170,12 @@ const ReservationEdit = () => {
                     <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
                 </Sidebar>
                 <div className={`relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] p-8`}>
-                    <p>You reservation in {terrainItems.nom} on {selectedDate} at {selectedHour} with {reservationDetails.participants}</p>
+                    <p>your reservation is on {new Date(reservationDetails.date).toLocaleString()}</p>
+                    <p>You reservation updated in {terrainItems.nom} on {Datee} at {selectedHour} with {reservationDetails.participants}</p>
                     <p>You can update you reservation here</p>
                     <form onSubmit={handleOnSubmit}>
                         <TeamProvider value={{ team, setTeam }}>
-                            <ReservationAdd 
+                            <Reservation 
                                 idTer={idTer} 
                                 idRes={idRes}
                                 jour={reservationDetails.date}
@@ -175,4 +201,4 @@ const ReservationEdit = () => {
     }
 }
 
-export default ReservationEdit;
+export default ReservationEdit

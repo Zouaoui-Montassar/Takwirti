@@ -1,112 +1,147 @@
-import React, { useState, useEffect } from 'react';
-import Calendar from './Calendar';
-import List from './List';
+import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { TeamContext, TeamProvider } from '../context/Teamcontext';
+import Reservation from './Reservation';
+import Tachkila from './Tachkila';
+import NavBar from './NavBar';
+import Sidebar , { SidebarItem } from './SideBar';
+import SearchBox from './SearchBox';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { School ,Settings,LogOut} from 'lucide-react';
 
-
-export const ReservationAdd = ({ idTer,idRes,jour, sendselectedDate, sendselectedHour, sendterrainItems }) => {
-    const [selectedDate, setSelectedDate] = useState(new Date());
+const ReservationAdd = () => {
+    const params = useParams();
+    const idUser = params.idUser;
+    const idTer = params.idTer; 
+    const { team, setTeam } = useContext(TeamContext);
+    const [selectedDate, setSelectedDate] = useState();
     const [selectedHour, setSelectedHour] = useState();
-    const [terrainItems, setTerrainItems] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [reservedHours, setReservedHours] = useState([]);
-    const [openTime, setOpenTime] = useState("");
-    const [closeTime, setCloseTime] = useState();
-    const [stepDuration, setStepDuration] = useState();
-    const [timeReserved, setTimeReserved] = useState();
-    const locate = useLocation();
-    const fetchTerrainInfo = async () => {
-        try {
-          const response = await axios.get(`http://localhost:4000/ter/terrain/getInfo/${idTer}`);
-          setTerrainItems(response.data.terrain);
-          setCloseTime(response.data.terrain.calendrier.close);
-          setOpenTime(response.data.terrain.calendrier.open);
-          setStepDuration(response.data.terrain.calendrier.duree);
-          setReservedHours(...reservedHours,response.data.terrain.calendrier.time);
-          sendterrainItems(response.data.terrain);
-          setLoading(false);
-        } catch (error) {
-          setError(error.message);
-          setLoading(false);
-          handleFetchReservations();
-        }
-      };
-      
-      const handleFetchReservations = async () => {
-        try {
-          const response = await axios.get(`http://localhost:4000/res/reservation/getInfo/${idTer}/${selectedDate.toISOString()}`, {
-            params: {
-              date: selectedDate.toISOString() // Assuming selectedDate is a valid Date object
-            }
-          });
-          if (response.data.reservations && response.data.reservations.length > 0) {
-            const reservationTimes = response.data.reservations.map(reservation => {
-              const reservationDateTime = new Date(reservation.date);
-              return `${String(reservationDateTime.getHours()).padStart(2, '0')}:${String(reservationDateTime.getMinutes()).padStart(2, '0')}`;
-            });
-      
-            setReservedHours(...reservedHours, reservationTimes)
-          } else {
-            console.log('Aucune réservation trouvée');
-          }
-        } catch (error) {
-          setError(error.message);
-          setLoading(false);
-        }
-      }
-      useEffect(()=>{
-        fetchTerrainInfo();
-      },[idTer])
-      useEffect(() => {
-        reservedHours.length = 0 
-        setReservedHours(reservedHours)
-        handleFetchReservations();
-      }, [selectedDate]); 
-      console.log(reservedHours);
-      console.log(timeReserved);
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    const [terrainItems, setTerrainItems] = useState();
+    const [searchTerm, setSearchTerm] = useState('');
+    const [tachkila, setTachkila] = useState();
+    const navigate = useNavigate();
+    const [width, setWidth] = useState();
+    const [w, setW] = useState();
+    const [nom, setNom] = useState();
+    
 
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
-
-    if (!terrainItems) {
-        return <div>Terrain not found.</div>;
-    }
-
+    //handle de la date selecteé rom calandar component
     const handleDateSelect = (date) => {
         setSelectedDate(date);
-        sendselectedDate(date);
     };
+    //handle de l'heure selecteé from list component
     const handleHourSelect = (hour) => {
         setSelectedHour(hour);
-        sendselectedHour(hour); 
-      };
+    };
 
-    
-    return (
-        <div className='flex flex-col items-center justify-center md:flex-row md:items-start md:justify-between pt-8'>
-          <div className="w-full mb-4 md:mb-0"> {/* Full width on small screens, stack vertically */}
-            <p className='mb-2'>select date</p>
-            <Calendar className="w-full " onDateSelect={handleDateSelect} dayBlocked={terrainItems.calendrier.date } jour={locate.pathname === `/reservation/edit/${idRes}`?jour:null} /> {/* Adjust width for small screens and above */}
-          </div>
-          <div className="md:w-1/2 w-full"> {/* Half width on medium screens and above */}
-            <p>select time</p>
-            <List
-                date={selectedDate}
-                reservedHours={reservedHours}
-                isReservationPage={true}
-                onHourSelect={handleHourSelect}
-                start={openTime}
-                end={closeTime}
-                step={stepDuration}
-                jour={locate.pathname === `/reservation/edit/${idRes}`?jour:null}
-            />
-          </div>
+    const handleTerrainItems = (data) => {
+        setTerrainItems(data);
+    };
+    //handle recherche de puis sideabr component
+    const handleSearch = (searchTerm) => {
+        setSearchTerm(searchTerm);
+      };
+    //handle tachkila from tachkila component 
+    const handleTachkila = (tachkila) => {
+        setTachkila(tachkila);
+    } 
+
+    // width for the frontend layout
+    const handleWidth = (width) => {
+        setWidth(width);
+      }
+    useEffect(() => {
+        handleWidth(width);
+    },[width]);
+    const handleW = (width) => {
+        if (width === 284){
+            setW(435);
+        }
+        else {
+            setW(100);
+        }
+    }
+    useEffect(() => {
+        handleW(width);
+    },[width]);
+
+    //initialisation de tachkila
+    useEffect(() => {
+        const initialTeam = [];
+    }, []);
+
+    //lors de chargement de page preparation des infos de terrain
+    useEffect(() => {
+        const fetchTerrainInfo = async () => {
+            try {
+                const response = await axios.get(`http://localhost:4000/ter/terrain/getInfo/${idTer}`);
+                setTerrainItems(response.data.terrain);
+                setNom(response.data.terrain.nom)
+            } catch (error) {
+                console.error('Failed to fetch terrain info:', error);
+            }
+        };
+        fetchTerrainInfo();
+    }, [idTer]);
+
+    //action de boutton submit : envoie d'une post de creation d'une nouvelle reservation
+    const handleOnSubmit = async (e) => { 
+        e.preventDefault();
+        let combinedDateTime = new Date(selectedDate);
+        console.log(selectedDate)
+        combinedDateTime.setHours(parseInt(selectedHour), 0, 0, 0);
+        combinedDateTime = combinedDateTime.toISOString();
+        try {
+            const response = await axios.post(`http://localhost:4000/res/reservation/add/${idUser}/${idTer}`,{
+                date : new Date(combinedDateTime),
+                participants: tachkila,
+            });
+            console.log(response.data); // Assuming you want to log the response
+            navigate('/reservation/listP');
+        } catch (error) {
+            console.error('Failed to add reservation:', error);
+        }
+    }
+  return (
+    <>
+        <NavBar />
+                <div className='flex flex-row'>
+                <Sidebar sendWidth={handleWidth} >
+                <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>} test={true}  />
+                <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
+                <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
+                <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
+                <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
+                <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
+            </Sidebar>
+            <div className={`px-[15%] p-[2%] ml-[${w}px] mt-[82px] w-auto justify-between items-center`}>
+                <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900">Reservation Date and Time</h1>
+                <p>Here you can make your reservation in { nom }</p>
+                <form onSubmit={handleOnSubmit}>
+                    <TeamProvider value={{ team, setTeam }}>
+                        <Reservation 
+                            idTer={idTer} 
+                            sendselectedDate={handleDateSelect}
+                            sendselectedHour={handleHourSelect}
+                            sendterrainItems={handleTerrainItems}
+                        />
+                        <Tachkila handleTachkila ={handleTachkila}/>
+                    </TeamProvider>
+                    <div className="flex flex-col md:flex-row md:justify-end mt-4"> {/* Stack vertically on small screens, align to end on medium screens and above */}
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 md:mb-0 md:mr-2 rounded" type='submit'> {/* Margin on bottom on small screens, margin on right on medium screens and above */}
+                            Submit
+                        </button>
+                        <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" type='reset'>
+                            Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    );
-};
+    </>
+  )
+}
+
+export default ReservationAdd

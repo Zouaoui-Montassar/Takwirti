@@ -7,7 +7,7 @@ const requireAuth = require('../middlewares/requireAuth.js');
 router.use(requireAuth);  */
 
 router.post('/reservation/add/:partId/:terId', reservationController.addReservation);
-router.put('/reservation/update/:reservationId', reservationController.updateReservation);
+router.patch('/reservation/update/:reservationId', reservationController.updateReservation);
 router.put('/reservation/annul/:reservationId', reservationController.annulerReservation);
 router.put('/reservation/termin', reservationController.terminerReservation);
 router.get('/reservation/search/:partId', reservationController.searchReservation);

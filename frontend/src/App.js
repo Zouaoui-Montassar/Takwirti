@@ -22,11 +22,10 @@ import { useAuthContext } from './hooks/useAuthContext';
 import FriendsList from './components/FriendsList';
 import Notifications from './components/Notifications';
 import Tachkila from './components/Tachkila';
-import ReservationAddParent from './components/ReservationAddParent';
+import ReservationAdd from './components/ReservationAdd';
 import Responsable2 from './components/Responsable2';
 import axios from 'axios';
 import { useEffect } from 'react';
-import Chat from './components/Chatapp'
 import Admin from './pages/Admin';
 import Chatapp from './components/Chatapp';
 
@@ -86,7 +85,7 @@ function App() {
           <Route path="/profile" element={<Profile/>} />
           <Route path="/profile/modifier" element={<ProfileModif/>} />
           <Route path="/notifications" element={<Notifications/>} />     
-          <Route path="/Reservation/add/:idUser/:idTer" element={<ReservationAddParent />} />
+          <Route path="/Reservation/add/:idUser/:idTer" element={<ReservationAdd />} />
           <Route path="/list" element={<List/>} />
           <Route path="/reservation/listP" element={<ReservationList xxx={"Particulier"}/>} />
           <Route path="/reservation/listR" element={<ReservationList xxx={"Responsable"}/>} />

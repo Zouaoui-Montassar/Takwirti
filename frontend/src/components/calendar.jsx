@@ -7,7 +7,7 @@ const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'Jul
 const Calendar = ({ onDateSelect, dayBlocked, jour}) => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
-  const [selectedDate, setSelectedDate] = useState(new Date()); // Define setSelectedDate here
+  const [selectedDate, setSelectedDate] = useState(new Date(jour)); // Define setSelectedDate here
   useEffect(()=>{
     if (jour!=null){
       setSelectedDate(new Date(jour))
