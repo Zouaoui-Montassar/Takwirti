@@ -66,9 +66,7 @@ const ReservationEdit = () => {
             const reservation = await axios.get(`http://localhost:4000/res/reservation/getReservationInfo/${idRes}`);
             setIdTer(reservation.data.reservations.terrain);
             const date = new Date(reservation.data.reservations.date);
-            console.log(date);
             const date1 = date.toISOString()
-            console.log(date1);
             setSelectedDate(date.toLocaleDateString('fr-FR', {
                 day: '2-digit',
                 month: '2-digit',
@@ -155,8 +153,7 @@ const ReservationEdit = () => {
         };
         const handleTachkila = (tachkila) => {
             setTachkila(tachkila);
-        } 
-        console.log(Datee)
+        }
         return (
             <div>
                 <NavBar />

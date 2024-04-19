@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
 const Reservation = ({idTer, idRes, jour, sendselectedDate, sendselectedHour, sendterrainItems }) => {
-    const [selectedDate, setSelectedDate] = useState(new Date());  
+    const [selectedDate, setSelectedDate] = useState(new Date(jour));  
     const [selectedHour, setSelectedHour] = useState();
     const [terrainItems, setTerrainItems] = useState();
     const [loading, setLoading] = useState(true);
@@ -25,6 +25,9 @@ const Reservation = ({idTer, idRes, jour, sendselectedDate, sendselectedHour, se
             const options = { hour: 'numeric', minute: 'numeric' }; // Options de formatage pour toLocaleTimeString
             const x = y.toLocaleTimeString('fr-FR', options); // Utilisation de toLocaleTimeString avec les options spécifiées
             setSelectedHour(x);
+            const options2 = { date: 'numeric', month: 'numeric' }; // Options de formatage pour toLocaleTimeString
+            const x2 = y.toLocaleTimeString('fr-FR', options2); // Utilisation de toLocaleTimeString avec les options spécifiées
+            setSelectedDate(x2);
         }
     },[jour])
 
@@ -79,12 +82,10 @@ const Reservation = ({idTer, idRes, jour, sendselectedDate, sendselectedHour, se
             });
             // Utilisation de la date formatée comme souhaité
             setDate(formattedDate);
-            console.log(formattedDate);
             if (selectedHour !== undefined){
                 const options = { hour: 'numeric', minute: 'numeric' };
                 const formattedHeure = selectedDate.toLocaleTimeString('fr-FR', options);
                 setHeure(formattedHeure);
-                console.log(formattedHeure);
             }
         }
         else {
@@ -95,12 +96,10 @@ const Reservation = ({idTer, idRes, jour, sendselectedDate, sendselectedHour, se
             });
             // Utilisation de la date formatée comme souhaité
             setDate(formattedDate);
-            console.log(formattedDate);
             if (selectedHour !== undefined){
                 const options = { hour: 'numeric', minute: 'numeric' };
                 const formattedHeure = selectedDate.toLocaleTimeString('fr-FR', options);
                 setHeure(formattedHeure);
-                console.log(formattedHeure);
             }       
             }
         fetchTerrainInfo();
@@ -133,7 +132,6 @@ const Reservation = ({idTer, idRes, jour, sendselectedDate, sendselectedHour, se
         setSelectedHour(hour);
         sendselectedHour(hour); 
     };
-    console.log(jour)
   return (
     <>
         <div className='flex flex-col items-center justify-center md:flex-row md:items-start md:justify-between pt-8'>

@@ -123,6 +123,7 @@ const ReservationAdd = () => {
                     <TeamProvider value={{ team, setTeam }}>
                         <Reservation 
                             idTer={idTer} 
+                            jour={null}
                             sendselectedDate={handleDateSelect}
                             sendselectedHour={handleHourSelect}
                             sendterrainItems={handleTerrainItems}

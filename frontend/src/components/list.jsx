@@ -21,7 +21,6 @@ const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end
           date: modifiedDate.toISOString() // Assuming selectedDate is a valid Date object
         }
       });
-      console.log(response);
       if (response.data.reservations && response.data.reservations.length > 0) {
         const reservations = response.data.reservations.map(reservation => ({
           time: `${String(new Date(reservation.date).getHours()).padStart(2, '0')}:${String(new Date(reservation.date).getMinutes()).padStart(2, '0')}`,
@@ -47,14 +46,13 @@ const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end
     }
   };
   useEffect(()=>{
-    handleFetchReservations();
+    if (isRespo)
+      handleFetchReservations();
   },[date]);
-  console.log(jourDate)
-  console.log(modifiedDate)
-  console.log(date)
   useEffect(()=>{
     if(jour!=null){
-      setSelectedHour(date.toLocaleTimeString('fr-FR', {
+      const x = new Date(jour)
+      setSelectedHour(x.toLocaleTimeString('fr-FR', {
         hour: '2-digit',
         minute: '2-digit'
       }));
