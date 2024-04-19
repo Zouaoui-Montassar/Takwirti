@@ -16,8 +16,11 @@ const Sign_in = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { dispatch } = useAuthContext();
 
-  const toSignUp = () => {
+  const toSignUpR = () => {
     navigate('/signuprespo');
+  };
+  const toSignUpP = () => {
+    navigate('/signupparti');
   };
 
   const handleChange = (event) => {
@@ -136,12 +139,17 @@ const Sign_in = () => {
             <hr className="my-6 border-gray-300" />
           </form>
           <p className="mt-4 text-center text-sm text-gray-600">
-            Don't have an account?{' '}
-            <a onClick={toSignUp} className="font-medium text-blue-600 hover:text-blue-500">
-              Sign up
+            Need to a responsable account?{' '}
+            <a onClick={toSignUpR} className="font-medium text-blue-600 hover:text-blue-500">
+              Get yours now !
             </a>
           </p>
-          
+          <p className="mt-4 text-center text-sm text-gray-600">
+          Need to book fields ?{' '}
+            <a onClick={toSignUpP} className="font-medium text-blue-600 hover:text-blue-500">
+              Sign up
+            </a>
+            </p>
         </div>
         {/* Right side */}
         <div className="md:w-1/2 bg-cover bg-center h-64 md:h-auto" style={{ backgroundImage: `url(${backgroundImage})` }}>

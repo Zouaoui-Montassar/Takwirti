@@ -41,7 +41,7 @@ const Invitation = ({ data }) => {
     return (
       <div className='w-[550px] h-[160px] border border-6 border-black shadow-2xl  shadow-slate-400 rounded-2xl m-5 relative bg-slate-100'>
           <div className='flex flex-row'>
-              <img src="/taswira.jpg" alt="taswira" width={90} height={90} className='m-7 rounded-full' />
+              <img src={data.image} alt="taswira" width={90} height={90} className='m-7 rounded-full' />
               <div className='items-center justify-center mt-11 ml-[20px]'>
                   <h1 className='text-xl font-bold text-blueGray-400'>{data.nom} {data.prenom}</h1>
                   <div className='flex flex-row items-center justify-center mt-2'>
