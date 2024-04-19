@@ -94,7 +94,10 @@ const ReservationAdd = () => {
         e.preventDefault();
         let combinedDateTime = new Date(selectedDate);
         console.log(selectedDate)
-        combinedDateTime.setHours(parseInt(selectedHour), 0, 0, 0);
+        console.log(selectedHour)
+        const minutes = selectedHour.substring(3,5);
+        console.log(minutes)
+        combinedDateTime.setHours(parseInt(selectedHour), parseInt(minutes), 0, 0);
         combinedDateTime = combinedDateTime.toISOString();
         try {
             const response = await axios.post(`http://localhost:4000/res/reservation/add/${idUser}/${idTer}`,{

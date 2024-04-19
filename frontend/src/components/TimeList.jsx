@@ -48,7 +48,7 @@ const TimeList = ({ start, end, step , sendDataToParent,time}) => {
           id={formattedTime}
           className="mr-2 cursor-pointer"
           onChange={() => handleTimeSelection(formattedTime)}
-          checked={isSelected}
+          defaultChecked={isSelected}
         />
         {formattedTime}
       </label>
