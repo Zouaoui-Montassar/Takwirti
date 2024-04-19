@@ -6,7 +6,7 @@ const reservationSchema = new Schema({
     terrain: { type: Schema.Types.ObjectId, ref: 'Terrains' },
     date: { type: Date, required: true },
     status: { type: String, default: "En cours" },
-    participants: { type: [String], default: [] }
+    participants: [{ nom: String, prenom: String, tel: String, _id: String }]
 });
 
 module.exports.reservationModel = mongoose.model('Reservation', reservationSchema);

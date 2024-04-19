@@ -74,7 +74,7 @@ const Tachkila = ({handleTachkila , tachkila}) => {
             try {
                 const response = await axios.get(`http://localhost:4000/api/users/${user.userObj._id}/friends`);
                 setFriends(response.data);
-                console.log("Meine Freunde : ", response.data);
+                console.log("Meine Freunde mel tachkila : ", response.data);
             } catch (error) {
                 console.error(error);
             }

@@ -125,11 +125,13 @@ const ReservationEdit = () => {
             console.log(combinedDateTime);
             combinedDateTime.setHours(parseInt(selectedHour), 0, 0, 0);
             combinedDateTime = combinedDateTime.toISOString();
+            console.log("array el tachkila ",tachkila);
             try {
                 const response = await axios.patch(`http://localhost:4000/res/reservation/update/${idRes}`,{
                     date : new Date(combinedDateTime),
-                    participants: tachkila,
+                    participants: tachkila.map(player => ({ nom: player.nom, prenom: player.prenom, tel: player.tel, _id: player._id })),
                 });
+                console.log(response);
                 navigate('/reservation/listP');
             } catch (error) {
                 console.error('Failed to add reservation:', error);
@@ -173,7 +175,13 @@ const ReservationEdit = () => {
                 </Sidebar>
                 <div className={`relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] p-8`}>
                     <p>your reservation is on {new Date(reservationDetails.date).toLocaleString()}</p>
-                    <p>You reservation updated in {terrainItems.nom} on {Datee} at {selectedHour} with {reservationDetails.participants}</p>
+                    <p>Your reservation updated in {terrainItems.nom} on {Datee} at {selectedHour} with:</p>
+<ul>
+  {reservationDetails.participants.map((participant) => (
+    <li key={participant._id}>{participant.nom} {participant.prenom}</li>
+  ))}
+</ul>
+
                     <p>You can update you reservation here</p>
                     <form onSubmit={handleOnSubmit}>
                         <TeamProvider value={{ team, setTeam }}>
