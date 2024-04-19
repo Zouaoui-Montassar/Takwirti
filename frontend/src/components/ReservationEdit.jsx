@@ -86,7 +86,10 @@ const ReservationEdit = () => {
                 second: '2-digit'
               }));
             setReservationDetails(reservation.data.reservations);
-            setTachkila(reservation.data.reservations.participants)
+            console.log(reservation.data.reservations);
+            setTeam(reservation.data.reservations.participants);
+            setTachkila(reservation.data.reservations.participants);
+            console.log("el participants",reservation.data.reservations.participants);
         }catch(e){
             console.error(e);
         }
