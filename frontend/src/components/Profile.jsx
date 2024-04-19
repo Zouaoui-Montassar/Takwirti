@@ -61,15 +61,16 @@ const Profile = () => {
         <>
             <NavBar />
             <div className='flex flex-row '>
-              <Sidebar sendWidth={handleWidth} >
-                <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>} test={true}  />
-                <SidebarItem icon={<School />} text="Home" link={'particulier'} />
-                <SidebarItem icon={<ContactRound />} text="Profile " link={'profile'} />
-                <SidebarItem icon={<Bell />} text="Notifications" link={'notifications'} />
-                <SidebarItem icon={<ListPlus />} text="Reservations" link={'reservation/listP'} />
-                <SidebarItem icon={<CgUserList className='w-8 h-8' />} text="Friends" link={'friendslist'} />
-                <SidebarItem icon={<MessageCircleMore />} text="Messages" link={'chat'} />
-            </Sidebar>
+            <Sidebar sendWidth={handleWidth} >
+              <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>} test={true}  />
+              <SidebarItem icon={<School />} text="Home" link={'particulier'} />
+              <SidebarItem icon={<ContactRound />} text="Profile " link={'profile'} />
+              <SidebarItem icon={<Bell />} text="Notifications" link={'notifications'} />
+              <SidebarItem icon={<ListPlus />} text="Reservations" link={'reservation/listP'} />
+              <SidebarItem icon={<CgUserList className='w-8 h-8' />} text="Friends" link={'friendslist'} />
+              <SidebarItem icon={<MessageCircleMore />} text="Messages" link={'chat'} />
+
+           </Sidebar>
               <div className={`ml-[${w}px] mt-[82px] p-12 w-[100%] flex justify-center items-center`}>
                 <div className='m-2'>
                     <div className="">

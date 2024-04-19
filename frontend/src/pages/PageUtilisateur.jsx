@@ -35,7 +35,6 @@ const PageUtilisateur = () => {
     useEffect(() => {
       handleW(width);
     },[width]);
-    console.log(w);
     // Check if there is no user or their type is not Particulier
     useEffect(() => {
       if (!user || user.userObj.__t !== 'Particulier') {

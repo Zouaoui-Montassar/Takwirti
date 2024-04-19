@@ -10,13 +10,16 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { School ,Settings,LogOut} from 'lucide-react';
+import { Bell } from 'lucide-react';
+import { ContactRound , ListPlus , MessageCircleMore } from 'lucide-react';
+import { CgUserList } from "react-icons/cg";
 
 const ReservationAdd = () => {
     const params = useParams();
     const idUser = params.idUser;
     const idTer = params.idTer; 
     const { team, setTeam } = useContext(TeamContext);
-    const [selectedDate, setSelectedDate] = useState();
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedHour, setSelectedHour] = useState();
     const [terrainItems, setTerrainItems] = useState();
     const [searchTerm, setSearchTerm] = useState('');
@@ -104,18 +107,21 @@ const ReservationAdd = () => {
             console.error('Failed to add reservation:', error);
         }
     }
+    console.log(selectedDate)
   return (
     <>
         <NavBar />
                 <div className='flex flex-row'>
-                <Sidebar sendWidth={handleWidth} >
-                <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>} test={true}  />
-                <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
-                <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
-                <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
-                <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
-                <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
-            </Sidebar>
+            <Sidebar sendWidth={handleWidth} >
+              <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>} test={true}  />
+              <SidebarItem icon={<School />} text="Home" link={'particulier'} />
+              <SidebarItem icon={<ContactRound />} text="Profile " link={'profile'} />
+              <SidebarItem icon={<Bell />} text="Notifications" link={'notifications'} />
+              <SidebarItem icon={<ListPlus />} text="Reservations" link={'reservation/listP'} />
+              <SidebarItem icon={<CgUserList className='w-8 h-8' />} text="Friends" link={'friendslist'} />
+              <SidebarItem icon={<MessageCircleMore />} text="Messages" link={'chat'} />
+
+           </Sidebar>
             <div className={`px-[15%] p-[2%] ml-[${w}px] mt-[82px] w-auto justify-between items-center`}>
                 <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900">Reservation Date and Time</h1>
                 <p>Here you can make your reservation in { nom }</p>

@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {useParams,useLocation} from 'react-router-dom';
 import axios from 'axios';
+
 const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end, step , jour }) => {
   const [selectedHour, setSelectedHour] = useState('');
   const [reservations,setReservations] = useState([]);
   const [idUser,setIdUser] = useState();
   const modifiedDate = new Date(date);
-  let jourDate ;
-  if (selectedHour && typeof selectedHour === 'string') {
-    const [hour, minutes] = selectedHour.split(':');
-    jourDate = modifiedDate.setHours(parseInt(hour), parseInt(minutes));
-  }
   const idTer = useParams().terrainId;
   const location = useLocation();
   const isRespo = location.pathname === `/responsable/${idTer}`;

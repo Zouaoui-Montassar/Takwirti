@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 function TerrainList({ param, searchTerm, width }) {
-    console.log(width);
   const { user } = useAuthContext();
   const id = user.userObj._id;
   const [xxx , setXxx ] = useState(user.userObj.__t);

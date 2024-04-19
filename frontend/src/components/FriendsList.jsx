@@ -105,7 +105,7 @@ const FriendsList = () => {
     <>
       <NavBar />
       <div className='flex flex-row'>
-        <Sidebar sendWidth={handleWidth} >
+      <Sidebar sendWidth={handleWidth} >
               <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>} test={true}  />
               <SidebarItem icon={<School />} text="Home" link={'particulier'} />
               <SidebarItem icon={<ContactRound />} text="Profile " link={'profile'} />
@@ -113,6 +113,7 @@ const FriendsList = () => {
               <SidebarItem icon={<ListPlus />} text="Reservations" link={'reservation/listP'} />
               <SidebarItem icon={<CgUserList className='w-8 h-8' />} text="Friends" link={'friendslist'} />
               <SidebarItem icon={<MessageCircleMore />} text="Messages" link={'chat'} />
+
            </Sidebar>
         <div className={` ml-[${w}px] mt-[82px] w-[100%] p-12`}>
         <h2 className='text-bold text-2xl m-2'>Find People</h2>

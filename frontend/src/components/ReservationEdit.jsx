@@ -11,6 +11,9 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { School ,Settings,LogOut} from 'lucide-react';
 import SearchBox from './SearchBox';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { Bell } from 'lucide-react';
+import { ContactRound , ListPlus , MessageCircleMore } from 'lucide-react';
+import { CgUserList } from "react-icons/cg";
 
 const ReservationEdit = () => {
     const { idRes } = useParams();
@@ -160,11 +163,13 @@ const ReservationEdit = () => {
                 <div className='flex flex-row'>
                 <Sidebar sendWidth={handleWidth} >
                     <SidebarItem icon={<FontAwesomeIcon icon={faSearch}/>} text={<SearchBox onSearch={handleSearch}/>} test={true}  />
-                    <SidebarItem icon={<Settings />} text="Home" link={'particulier'} />
-                    <SidebarItem icon={<School />} text="Profile "  link={'profile'} />
-                    <SidebarItem icon={<Settings />} text="Notifications" link={'notifications'} />
-                    <SidebarItem icon={<Settings />} text="Reservations" link={'reservation/listP'} />
-                    <SidebarItem icon={<Settings />} text="Friends" link={'friendslist'} />
+                    <SidebarItem icon={<School />} text="Home" link={'particulier'} />
+                    <SidebarItem icon={<ContactRound />} text="Profile " link={'profile'} />
+                    <SidebarItem icon={<Bell />} text="Notifications" link={'notifications'} />
+                    <SidebarItem icon={<ListPlus />} text="Reservations" link={'reservation/listP'} />
+                    <SidebarItem icon={<CgUserList className='w-8 h-8' />} text="Friends" link={'friendslist'} />
+                    <SidebarItem icon={<MessageCircleMore />} text="Messages" link={'chat'} />
+
                 </Sidebar>
                 <div className={`relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] p-8`}>
                     <p>your reservation is on {new Date(reservationDetails.date).toLocaleString()}</p>
