@@ -125,24 +125,6 @@ const Sign_in = () => {
               {/* Affichage du message d'erreur */}
               {error && <p className="mt-4 text-center text-bold  text-red-500">{error}</p>}
             </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-primary-50 focus:ring-primary-50 border-green-300 rounded"
-                />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                  Remember me
-                </label>
-              </div>
-              <div className="text-sm">
-                <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
-                  Forgot your password?
-                </a>
-              </div>
-            </div>
             <div>
               <button
                 type="submit"
@@ -152,25 +134,6 @@ const Sign_in = () => {
               </button>
             </div>
             <hr className="my-6 border-gray-300" />
-            <p className="text-center text-sm text-gray-900">Or sign in with</p>
-            <div className="flex justify-center space-x-4">
-              <button
-                type="button"
-                className="flex items-center justify-center w-1/2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                onClick={handleGoogleSignIn}
-              >
-                <FontAwesomeIcon icon={faGoogle} className="mr-2" />
-                Google
-              </button>
-              <button
-                type="button"
-                className="flex items-center justify-center w-1/2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700"
-                onClick={handleAppleSignIn}
-              >
-                <FontAwesomeIcon icon={faApple} className="mr-2" />
-                Apple
-              </button>
-            </div>
           </form>
           <p className="mt-4 text-center text-sm text-gray-600">
             Don't have an account?{' '}
