@@ -158,7 +158,7 @@ const listReservationP = async (req, res) => {
     try {
         const { partId } = req.params;
 
-        const reservations = await reservationModel.find({ user: partId })
+        let reservations = await reservationModel.find({ user: partId })
         .populate({
             path: 'user',
             model: 'Particulier',
@@ -172,6 +172,18 @@ const listReservationP = async (req, res) => {
 
 
         console.log(reservations);
+        reservations = reservations.sort((a, b) => {
+            if (a.status === b.status) {
+                return 0;
+            } else if (a.status === "En cours") {
+                return -1;
+            } else if (a.status === "Annulée" && b.status !== "En cours") {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
+        console.log("after sort ",reservations);
         res.status(200).json({ reservations });
     } catch (error) {
         res.status(500).json({ message: "Failed to list reservations", error: error.message });

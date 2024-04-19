@@ -12,8 +12,14 @@ const Tachkila = ({handleTachkila , tachkila}) => {
     const { user } = useAuthContext();
     const [showSuggestions, setShowSuggestions] = useState(false);
     useEffect(() => {
-        setTeam(tachkila);
+        if (tachkila) {
+            setTeam(tachkila);
+        }
+        else {
+            setTeam([]);
+        }
     }, [tachkila, setTeam]);
+    
     const addPlayerFromInput = () => {
         const nameToAdd = newPlayerName.trim();
         if (nameToAdd !== '') {
