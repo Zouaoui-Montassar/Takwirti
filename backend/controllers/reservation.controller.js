@@ -200,7 +200,7 @@ const listReservationR = async (req, res) => {
         // Extract terrain IDs
         const terrainIds = terrains.map(terrain => terrain._id);
         // Find reservations associated with the found terrains
-        const reservations = await reservationModel.find({ terrain: { $in: terrainIds } })
+        let reservations = await reservationModel.find({ terrain: { $in: terrainIds } })
         .populate({
             path: 'user',
             model: 'Particulier',
@@ -211,6 +211,19 @@ const listReservationR = async (req, res) => {
             model: 'Terrain',
             select: 'nom '
         });
+        console.log(reservations);
+        reservations = reservations.sort((a, b) => {
+            if (a.status === b.status) {
+                return 0;
+            } else if (a.status === "En cours") {
+                return -1;
+            } else if (a.status === "Annulée" && b.status !== "En cours") {
+                return -1;
+            } else {
+                return 1;
+            }
+        });
+        console.log("after sort ",reservations);
 
         res.status(200).json({ reservations });
     } catch (error) {
