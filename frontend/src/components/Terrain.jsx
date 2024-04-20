@@ -20,7 +20,7 @@ import {
   list,
 } from "firebase/storage";
 import { storage } from "../firebase";
-
+import { v4 as uuidv4 } from 'uuid';
 const ville = [
   { name: 'Tunis' },
   { name: 'nabeul' },
@@ -34,7 +34,7 @@ const Terrain = ({ func }) => {
   const { user } = useAuthContext();
   const id = user.userObj._id;
   const idTer = useParams();
-  const [img, setImg] = useState("abc")
+  const [img, setImg] = useState("")
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
@@ -52,6 +52,7 @@ const Terrain = ({ func }) => {
   const [terrainItems, setTerrainItems] = useState([]);
   const [calendrier, setCalendrier] = useState([]);
   const [error, setError] = useState(null); // State to hold error messages
+  const [loading, setLoading] = useState(false);
   const location = useLocation().pathname;
   const idRes = useParams();
   useEffect(() => {
@@ -135,17 +136,22 @@ const Terrain = ({ func }) => {
   console.log(image);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       console.log(name)
       console.log(image)
       let response;
-      let imageUrl;
-      if (image) {
-        const storageRef = ref(storage, `terrainpictures/${user.userObj._id}`);
-        const imageSnapshot = await uploadBytes(storageRef, image);
-        imageUrl = await getDownloadURL(imageSnapshot.ref);
-        console.log(imageUrl);
-      }
+      let imageUrl = image; // Set the default value to the current image
+
+    if (image instanceof File) {
+      // Check if the image is a File object (indicating it has changed)
+      const imageName = `${uuidv4()}_${image.name}`;
+/*       console.log(image.name); */
+      const storageRef = ref(storage, `terrainpictures/${user.userObj._id}/${imageName}`);
+      const imageSnapshot = await uploadBytes(storageRef, image);
+      imageUrl = await getDownloadURL(imageSnapshot.ref);
+      console.log(imageUrl);
+    }
       if (func === "add") {
         response = await axios.post(`http://localhost:4000/ter/terrain/add/${id}`, {
           img: imageUrl,
@@ -176,13 +182,16 @@ const Terrain = ({ func }) => {
           status: status,
         });
       }
-  
+      
       if (response.data) {
         console.log(`Terrain ${func}ed successfully`);
+        setLoading(false);
       } else {
         console.error(`Failed to ${func} terrain`);
         handleError(`Failed to ${func} terrain`);
+        setLoading(false);
       }
+      setLoading(false);
       navigate(`/terrain/responsable`)
     } catch (error) {
       console.error(`Error ${func}ing terrain:`, error);
@@ -437,7 +446,7 @@ const Terrain = ({ func }) => {
             
             <div className=' justify-center items-center m-4 '>
               <div className='relative left-[350px]  w-[500px]'>
-                <Image onImageUpload={handleImageUpload} pic={func === "update" ? image: null} />
+                <Image onImageUpload={handleImageUpload} imageLink={image} />
               </div>
             </div>
 
@@ -464,7 +473,12 @@ const Terrain = ({ func }) => {
           <button className='p-2 border bg-green-500 text-white rounded-md text-xl' type="submit">
             Confirm
           </button>
+          {loading ? (
+  <div className="flex items-center justify-center text-black mt-4">Confirming. Please wait..</div>
+) : null}
         </div>
+        
+
         </form>
       </div>
       </div>
