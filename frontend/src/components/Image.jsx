@@ -24,10 +24,10 @@ const ImageUploader = ({ onImageUpload, imageLink }) => {
       >
         Sélectionner une image
       </label>
-      {image ? (
+      {image instanceof File ?  (
         <img src={URL.createObjectURL(image)} alt="Selected" className='w-[200px] h-[200px] mx-[140px]' />
       ) : (
-        <img src={imageLink} alt="Existing ( terrain supposé yabda fih taswira par defaut ltext hedha abaathou)" className='w-[200px] h-[200px] mx-[140px]' />
+        <img src={imageLink} alt="Existing ( supposé yabda fih taswira par defaut ltext hedha abaathou)" className='w-[200px] h-[200px] mx-[140px]' />
       )}
       <p className="text-sm text-gray-500">Note: Upon clicking confirm , the upload of the image may take some time. Please be patient.</p>
     </div>
