@@ -43,7 +43,7 @@ const Terrain = ({ func }) => {
   const [prix, setPrix] = useState(120)
   const [ouverture, setOuverture] = useState('08:00');
   const [fermeture, setFermeture] = useState('00:00');
-  const [time , setTime] = useState([]);
+  const [time , setTime] = useState(null);
   const [date, setDate] = useState("none");
   const [status, setStatus]=useState();
   const navigate = useNavigate();
@@ -114,6 +114,10 @@ const Terrain = ({ func }) => {
   const handleTime = (time) => {
     setTime(time);
   }
+  useEffect(() =>{
+    handleTime(time);
+  },[]);
+  console.log(time);
   const handleAddressChange = (event) => {
     setAddress(event.target.value);
   };
@@ -177,10 +181,11 @@ const Terrain = ({ func }) => {
           open: ouverture,
           close: fermeture,
           duree: data,
-          time: time,
+          time: time === undefined ? calendrier.time : time,
           date: date,
           status: status,
         });
+
       }
       
       if (response.data) {
@@ -214,7 +219,7 @@ const Terrain = ({ func }) => {
     }
   };
   console.log(terrainItems)
-
+  console.log(calendrier.time)
   return (
     <>
     <NavBar  />
@@ -420,7 +425,7 @@ const Terrain = ({ func }) => {
                 </h3>
                 <br />
                 {/* Placez le composant TimeList ici */}
-                <TimeList start={ouverture} end={fermeture} step={data} label="Time Slots:" sendDataToParent={handleTime} time={func==="update"?time : null} />
+                <TimeList start={ouverture} end={fermeture} step={data} label="Time Slots:" sendDataToParent={handleTime} time={func==="update"?calendrier.time : null} />
               </div>
               <div className='flex flex-col m-5 w-[40%]'>
                 <h3 className='text-bold text-xl relative right-11'>
@@ -432,14 +437,14 @@ const Terrain = ({ func }) => {
                   defaultValue={func==="update" ? calendrier.date : date}
                   onChange={(e) => {setDate(e.target.value)}}
                 >
-                  <option value={"Monday"}>Monday</option>
-                  <option value={"tuesday"}>tuesday</option>
-                  <option value={"wednesday"}>wednesday</option>
-                  <option value={"thursday"}>thursday</option>
-                  <option value={"friday"}>friday</option>
-                  <option value={"saturday"}>saturday</option>
-                  <option value={"sunday"}>sunday</option>
-                  <option value={"none"}>none</option>
+                  <option value={"monday"} selected={func==="update" && calendrier.date === "monday"}>Monday</option>
+                  <option value={"tuesday"} selected={func==="update" && calendrier.date === "tuesday"}>tuesday</option>
+                  <option value={"wednesday"} selected={func==="update" && calendrier.date === "wednesday"}>wednesday</option>
+                  <option value={"thursday"} selected={func==="update" && calendrier.date === "thursday"}>thursday</option>
+                  <option value={"friday"} selected={func==="update" && calendrier.date === "friday"}>friday</option>
+                  <option value={"saturday"} selected={func==="update" && calendrier.date === "saturday"}>saturday</option>
+                  <option value={"sunday"} selected={func==="update" && calendrier.date === "sunday"}>sunday</option>
+                  <option value={"none"} selected={func==="update" && calendrier.date === "none"}>none</option>
                 </select>
               </div>
             </div>

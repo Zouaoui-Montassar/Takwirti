@@ -17,7 +17,8 @@ const TimeList = ({ start, end, step , sendDataToParent,time}) => {
   // Function to handle the selection of a time
   const handleTimeSelection = (time) => {
     let updatedSelectedTimes = []; // Create a copy of selectedTimes array
-  
+    console.log(time)
+    console.log(selectedTimes)
     if (selectedTimes.includes(time)) {
       // If selected, remove it from the selectedTimes array
       updatedSelectedTimes = selectedTimes.filter(selectedTime => selectedTime !== time);
@@ -25,13 +26,19 @@ const TimeList = ({ start, end, step , sendDataToParent,time}) => {
       // If not selected, add it to the selectedTimes array
       updatedSelectedTimes = [...selectedTimes, time];
     }
-  
+    console.log(updatedSelectedTimes)
     // Update the state with the new selected times
     setSelectedTimes(updatedSelectedTimes);
   
     // Pass the updated selected times to the parent component
     sendDataToParent(updatedSelectedTimes);
   };
+
+  useEffect(() => {
+    handleTimeSelection(time);
+  },[]);
+  console.log(selectedTimes)
+  console.log(time);
   while (currentTime < end) {
     const formattedTime = currentTime.toLocaleTimeString('it-IT', {
       hour12: false,
@@ -39,6 +46,7 @@ const TimeList = ({ start, end, step , sendDataToParent,time}) => {
       minute: '2-digit',
     });
     const isSelected = selectedTimes.includes(formattedTime) && (time != null )? time.includes(formattedTime): null;
+    console.log(isSelected);
     timeList.push(
       
       <div key={formattedTime} className="w-full sm:w-1/2 md:w-1/4 lg:w-1/6 mb-4 lg:mb-0">
