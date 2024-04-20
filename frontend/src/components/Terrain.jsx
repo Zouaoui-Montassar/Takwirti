@@ -206,7 +206,7 @@ const Terrain = ({ func }) => {
                   type='text'
                   placeholder='NOM DU TERRAIN'
                   onChange={(e) => {setName(e.target.value)}}
-                  value={func==="update"? terrainItems.nom : null}
+                  defaultValue={func==="update"? terrainItems.nom : null}
                 />
               </div>
               <div className='flex flex-col m-5 w-[40%]'>
@@ -218,7 +218,7 @@ const Terrain = ({ func }) => {
                   type='phone'
                   placeholder='12345678'
                   onChange={(e) => {setPhone(e.target.value)}}
-                  value={func==="update"? terrainItems.phone : null}
+                  defaultValue={func==="update"? terrainItems.phone : null}
 
                 />
               </div>
@@ -236,7 +236,7 @@ const Terrain = ({ func }) => {
                   onChange={handleAddressChange}
                   disabled={func === 'update'}
                   title={func === 'update' ? 'Ce champ est inaccessible en mode édition de terrain' : ''}
-                  value={func==="update"? terrainItems.position : null}
+                  defaultValue={func==="update"? terrainItems.position : null}
 
                 />
               </div>
@@ -244,7 +244,7 @@ const Terrain = ({ func }) => {
                 <h3 className='text-bold text-xl relative right-1'>
                   city
                 </h3>
-                <Listbox value={selected.name} onChange={setSelected} disabled={func === 'update'} title={func === 'update' ? 'Ce champ est inaccessible en mode édition de terrain' : ''}>
+                <Listbox defaultValue={selected.name} onChange={setSelected} disabled={func === 'update'} title={func === 'update' ? 'Ce champ est inaccessible en mode édition de terrain' : ''}>
                   <div className='relative mt-1 bg-white'>
                     <Listbox.Button className='relative w-full h-full cursor-default rounded-md bg-transparent py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
                       <span className='block truncate'>{selected.name}</span>
@@ -309,7 +309,7 @@ const Terrain = ({ func }) => {
                 <select
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
                   onChange={(e) => {handleDurationChange(e)}}
-                  value={func==="update"? calendrier.duree : 90}
+                  defaultValue={func==="update"? calendrier.duree : 90}
 
                 >
                   <option value={60}>60 minutes</option>
@@ -326,7 +326,7 @@ const Terrain = ({ func }) => {
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
                   type='number'
                   onChange= {(e) => {setPrix(e.target.value)}}
-                  value={func==="update"? terrainItems.prix : 120}
+                  defaultValue={func==="update"? terrainItems.prix : 120}
                   
                 />
               </div>
@@ -341,7 +341,7 @@ const Terrain = ({ func }) => {
                   type='time'
                   step="60"
                   onChange={(e) => setOuverture(e.target.value)}
-                  value={func==="update"? calendrier.open : ouverture}
+                  defaultValue={func==="update"? calendrier.open : ouverture}
 
                 />
               </div>
@@ -353,7 +353,7 @@ const Terrain = ({ func }) => {
                 className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
                 type='time'
                 step="60"
-                value={func==="update"? calendrier.close : fermeture}
+                defaultValue={func==="update"? calendrier.close : fermeture}
                 onChange={(e) => setFermeture(e.target.value)}
               />
             </div>

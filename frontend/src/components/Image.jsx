@@ -25,7 +25,7 @@ const ImageUploader = ( { onImageUpload ,pic }) => {
                 htmlFor="upload-button" // Utilisez l'ID de l'input comme référence pour le label
                 className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded inline-block cursor-pointer m-2"
             >
-                Sélectionner une image
+                Select an image
             </label>
             {image && <img src={URL.createObjectURL(image)} alt="Selected" className='w-[200px] h-[200px] mx-[140px]' />}
         </div>

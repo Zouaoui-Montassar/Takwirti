@@ -190,7 +190,7 @@ const ProfileModif = () => {
       <div className='flex flex-row'>
       {role === 'Responsable' ? (
         <Sidebar sendWidth={handleWidth}>
-          <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
+          <SidebarItem icon={<School />} text="Dashboard" link={'responsable'} />
           <SidebarItem icon={< Dribbble />} text="list terrain" link={`terrain/responsable`} />
           <SidebarItem icon={<ListPlus /> } text="reservation list" link={'reservation/listR'} />
         </Sidebar>

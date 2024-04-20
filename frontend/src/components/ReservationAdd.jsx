@@ -28,7 +28,17 @@ const ReservationAdd = () => {
     const [width, setWidth] = useState();
     const [w, setW] = useState();
     const [nom, setNom] = useState();
+    const [error, setError] = useState(null); // State to hold error messages
+
     
+    
+
+    const handleError = (errorMessage) => {
+        setError(errorMessage);
+        setTimeout(() => {
+          setError(null); // Clear error after some time
+        }, 5000); 
+      };
 
     //handle de la date selecteé rom calandar component
     const handleDateSelect = (date) => {
@@ -92,11 +102,14 @@ const ReservationAdd = () => {
     //action de boutton submit : envoie d'une post de creation d'une nouvelle reservation
     const handleOnSubmit = async (e) => { 
         e.preventDefault();
+        
         let combinedDateTime = new Date(selectedDate);
         console.log(selectedDate)
         combinedDateTime.setHours(parseInt(selectedHour), 0, 0, 0);
         combinedDateTime = combinedDateTime.toISOString();
+        
         try {
+            
             const response = await axios.post(`http://localhost:4000/res/reservation/add/${idUser}/${idTer}`,{
                 date : new Date(combinedDateTime),
                 participants: tachkila,
@@ -104,7 +117,8 @@ const ReservationAdd = () => {
             console.log(response.data); // Assuming you want to log the response
             navigate('/reservation/listP');
         } catch (error) {
-            console.error('Failed to add reservation:', error);
+            console.error('Failed to add reservation:', error);   
+            
         }
     }
     console.log(selectedDate)
@@ -136,8 +150,9 @@ const ReservationAdd = () => {
                         />
                         <Tachkila handleTachkila ={handleTachkila}/>
                     </TeamProvider>
+                     <div className="text-red-500">To ensure your reservation is successful, you need to choose and fill all the items.</div>
                     <div className="flex flex-col md:flex-row md:justify-end mt-4"> {/* Stack vertically on small screens, align to end on medium screens and above */}
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 md:mb-0 md:mr-2 rounded" type='submit'> {/* Margin on bottom on small screens, margin on right on medium screens and above */}
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 md:mb-0 md:mr-2 rounded" type='submit' > {/* Margin on bottom on small screens, margin on right on medium screens and above */}
                             Submit
                         </button>
                         <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" type='reset'>

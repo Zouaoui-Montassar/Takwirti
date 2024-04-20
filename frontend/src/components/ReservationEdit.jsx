@@ -176,16 +176,16 @@ const ReservationEdit = () => {
                     <SidebarItem icon={<MessageCircleMore />} text="Messages" link={'chat'} />
 
                 </Sidebar>
-                <div className={`relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] p-8`}>
-                    <p>your reservation is on {new Date(reservationDetails.date).toLocaleString()}</p>
-                    <p>Your reservation updated in {terrainItems.nom} on {Datee} at {selectedHour} with:</p>
-<ul>
-  {reservationDetails.participants.map((participant) => (
-    <li key={participant._id}>{participant.nom} {participant.prenom}</li>
-  ))}
-</ul>
+                <div className={`relative left-[${w}px] top-[82px] w-full p-8  items-center justify-center`}>
+                    <p className='text-xl'>your reservation is on {new Date(reservationDetails.date).toLocaleString()}</p>
+                    <p className='text-2xl my-2'>Your reservation updated in {terrainItems.nom} on {Datee} at {selectedHour} with:</p>
+                    <ul>
+                    {reservationDetails.participants.map((participant) => (
+                        <li key={participant._id}>{participant.nom} {participant.prenom}</li>
+                    ))}
+                    </ul>
 
-                    <p>You can update you reservation here</p>
+                    <p className='text-3xl text-green-500 my-2'>You can update you reservation here</p>
                     <form onSubmit={handleOnSubmit}>
                         <TeamProvider value={{ team, setTeam }}>
                             <Reservation 
