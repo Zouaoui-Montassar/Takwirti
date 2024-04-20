@@ -174,7 +174,7 @@ const listReservationP = async (req, res) => {
         console.log(reservations);
         reservations = reservations.sort((a, b) => {
             if (a.status === b.status) {
-                return 0;
+                return b._id.getTimestamp() - a._id.getTimestamp();
             } else if (a.status === "En cours") {
                 return -1;
             } else if (a.status === "Annulée" && b.status !== "En cours") {
@@ -214,7 +214,7 @@ const listReservationR = async (req, res) => {
         console.log(reservations);
         reservations = reservations.sort((a, b) => {
             if (a.status === b.status) {
-                return 0;
+                return b._id.getTimestamp() - a._id.getTimestamp();
             } else if (a.status === "En cours") {
                 return -1;
             } else if (a.status === "Annulée" && b.status !== "En cours") {

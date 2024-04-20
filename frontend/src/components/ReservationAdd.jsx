@@ -13,14 +13,18 @@ import { School ,Settings,LogOut} from 'lucide-react';
 import { Bell } from 'lucide-react';
 import { ContactRound , ListPlus , MessageCircleMore } from 'lucide-react';
 import { CgUserList } from "react-icons/cg";
+import { useAuthContext } from '../hooks/useAuthContext';
+
 
 const ReservationAdd = () => {
     const params = useParams();
     const idUser = params.idUser;
     const idTer = params.idTer; 
     const { team, setTeam } = useContext(TeamContext);
+    const { user } =useAuthContext();
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedHour, setSelectedHour] = useState();
+    const [toNotify, setToNotify] = useState([]);
     const [terrainItems, setTerrainItems] = useState();
     const [searchTerm, setSearchTerm] = useState('');
     const [tachkila, setTachkila] = useState();
@@ -31,6 +35,7 @@ const ReservationAdd = () => {
     const [error, setError] = useState(null); // State to hold error messages
 
     
+<<<<<<< HEAD
     
 
     const handleError = (errorMessage) => {
@@ -40,6 +45,8 @@ const ReservationAdd = () => {
         }, 5000); 
       };
 
+=======
+>>>>>>> 8092f675db7d69da4a21664221d31f15dd9d36ee
     //handle de la date selecteé rom calandar component
     const handleDateSelect = (date) => {
         setSelectedDate(date);
@@ -98,14 +105,57 @@ const ReservationAdd = () => {
         };
         fetchTerrainInfo();
     }, [idTer]);
-
+    const notifyUsers = async (e) => {
+        e.preventDefault();
+        const filteredUsers = tachkila.filter(user => user._id !== null);
+        if (!selectedDate || !selectedHour) {
+            alert("Please select a time.");
+            return;
+        }
+        if (filteredUsers.length === 0) {
+        alert("Please select players to notify.");
+        return;
+        }
+        let combinedDateTime = new Date(selectedDate);
+        console.log(selectedDate)
+        console.log(selectedHour)
+        const minutes = selectedHour.substring(3,5);
+        console.log(minutes)
+        combinedDateTime.setHours(parseInt(selectedHour), parseInt(minutes), 0, 0);
+        combinedDateTime = combinedDateTime.toISOString();
+        setToNotify(filteredUsers);
+        console.log("friends eli bech notifehom : ",filteredUsers);
+        try {
+            const response = await axios.post('http://localhost:4000/noti/sendnoti', {
+                sender: user.userObj._id,
+                receivers: toNotify,
+                message: `${user.userObj.nom} ${user.userObj.prenom} has invited you to a Takwira on ${new Date(combinedDateTime)} `
+            });
+            console.log(response.data); // Assuming you want to log the response
+            alert("The players were notified");
+        } catch (error) {
+            console.error('Failed to notify users:', error);
+        }
+    };
+    
+    
     //action de boutton submit : envoie d'une post de creation d'une nouvelle reservation
     const handleOnSubmit = async (e) => { 
         e.preventDefault();
+<<<<<<< HEAD
         
+=======
+        if (!selectedDate || !selectedHour) {
+            alert("Please select a time.");
+            return;
+        }
+>>>>>>> 8092f675db7d69da4a21664221d31f15dd9d36ee
         let combinedDateTime = new Date(selectedDate);
         console.log(selectedDate)
-        combinedDateTime.setHours(parseInt(selectedHour), 0, 0, 0);
+        console.log(selectedHour)
+        const minutes = selectedHour.substring(3,5);
+        console.log(minutes)
+        combinedDateTime.setHours(parseInt(selectedHour), parseInt(minutes), 0, 0);
         combinedDateTime = combinedDateTime.toISOString();
         
         try {
@@ -121,7 +171,6 @@ const ReservationAdd = () => {
             
         }
     }
-    console.log(selectedDate)
   return (
     <>
         <NavBar />
@@ -152,12 +201,23 @@ const ReservationAdd = () => {
                     </TeamProvider>
                      <div className="text-red-500">To ensure your reservation is successful, you need to choose and fill all the items.</div>
                     <div className="flex flex-col md:flex-row md:justify-end mt-4"> {/* Stack vertically on small screens, align to end on medium screens and above */}
+<<<<<<< HEAD
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 md:mb-0 md:mr-2 rounded" type='submit' > {/* Margin on bottom on small screens, margin on right on medium screens and above */}
+=======
+                    <button
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mb-2 md:mb-0 md:mr-2 rounded"
+                onClick={notifyUsers}
+            >
+                Notify Players
+            </button>
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 md:mb-0 md:mr-2 rounded" type='submit'> {/* Margin on bottom on small screens, margin on right on medium screens and above */}
+>>>>>>> 8092f675db7d69da4a21664221d31f15dd9d36ee
                             Submit
                         </button>
                         <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" type='reset'>
                             Reset
                         </button>
+                        
                     </div>
                 </form>
             </div>

@@ -3,6 +3,7 @@ import {useParams,useLocation} from 'react-router-dom';
 import axios from 'axios';
 
 const List = ({ date, reservedHours, isReservationPage, onHourSelect, start, end, step , jour }) => {
+  console.log(reservedHours)
   const [selectedHour, setSelectedHour] = useState('');
   const [reservations,setReservations] = useState([]);
   const [idUser,setIdUser] = useState();

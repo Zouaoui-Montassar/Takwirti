@@ -22,7 +22,7 @@ const GetAllNotifUser  = async (req, res) => {
         });
     }
 };
-const SendNotif  = async (req, res) => {
+/* const SendNotif  = async (req, res) => {
     console.log("send noti here")
     try {
         const { sender, receiver, message } = req.body;
@@ -43,7 +43,50 @@ const SendNotif  = async (req, res) => {
             error: error.message
         });
     }
+};   le9dima 1 user khw */ 
+
+const SendNotif = async (req, res) => {
+    try {
+        const { sender, receivers, message } = req.body;
+        console.log(receivers);
+        const notifications = await Promise.all(receivers.map(async receiverId => {
+            // Check if a notification already exists for this sender, receiver, and message
+            const existingNotification = await NotifModel.findOne({
+                sender: sender,
+                receiver: receiverId,
+                message: message
+            });
+
+            if (!existingNotification) {
+                // Create a new notification if it doesn't exist
+                const notification = await NotifModel.create({
+                    sender: sender,
+                    receiver: receiverId,
+                    message: message
+                });
+                return notification;
+            } else {
+                // Return null for existing notifications
+                return null;
+            }
+        }));
+
+        // Filter out null values (existing notifications) from the notifications array
+        const newNotifications = notifications.filter(notification => notification !== null);
+
+        res.status(200).json({
+            message: "Notifications sent successfully",
+            notifications: newNotifications
+        });
+    } catch (error) {
+        res.status(400).json({
+            message: "Failed to send notifications",
+            error: error.message
+        });
+    }
 };
+
+
 
 
 module.exports.notifController = {

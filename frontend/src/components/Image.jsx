@@ -1,16 +1,7 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
 
-const ImageUploader = ( { onImageUpload ,pic }) => {
-    const [image, setImage] = useState(null);
-    useEffect (()=> {
-        if (pic!=null) {
-            setImage(pic);
-    }},[pic])
-    const handleImageUpload = event => {
-        const file = event.target.files[0];
-        setImage(file);
-        onImageUpload(file);
-    };
+const ImageUploader = ({ onImageUpload, imageLink }) => {
+  const [image, setImage] = useState(imageLink);
 
     return (
         <div className='border border-5 border-slate-500 w-[500px] mb-2 rounded-2xl p-2 shadow-md shadow-slate-200 '>

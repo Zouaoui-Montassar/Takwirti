@@ -8,7 +8,7 @@ router.use(requireAuth);  */
 
 
 router.post('/terrain/add/:idRes', terrainController.addTerrain);
-router.put('/terrain/update/:terrainId', terrainController.updateTerrain);
+router.patch('/terrain/update/:terrainId', terrainController.updateTerrain);
 router.delete('/terrain/delete/:terrainId', terrainController.deleteTerrain);
 router.get(`/terrain/search`, terrainController.searchTerrain);
 router.get('/terrain/list/:respId', terrainController.listTerrain);

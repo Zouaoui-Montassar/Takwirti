@@ -269,7 +269,7 @@ const ProfileModif = () => {
               }}
             />
             <label htmlFor="Photo" className='text-2xl text-bold m-2'>Photo</label>
-            <Image onImageUpload={handleImageUpload} />
+            <Image onImageUpload={handleImageUpload} imageLink ={user.userObj.image}/>
             <label htmlFor='password' className='text-2xl text-bold m-2'>
               Password
             </label>

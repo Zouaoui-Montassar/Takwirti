@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
 const Reservation = ({idTer, idRes, jour, sendselectedDate, sendselectedHour, sendterrainItems }) => {
-    const [selectedDate, setSelectedDate] = useState(new Date(jour));  
+    const [selectedDate, setSelectedDate] = useState(new Date());  
     const [selectedHour, setSelectedHour] = useState();
     const [terrainItems, setTerrainItems] = useState();
     const [loading, setLoading] = useState(true);
@@ -16,11 +16,10 @@ const Reservation = ({idTer, idRes, jour, sendselectedDate, sendselectedHour, se
     const [stepDuration, setStepDuration] = useState();
     const [date, setDate] = useState();
     const [heure, setHeure] = useState();
-
     const locate = useLocation();
-    
+    console.log(jour)
     useEffect (()=> {
-        if (jour !== undefined) {
+        if (jour !== null) {
             const y = new Date(jour);
             const options = { hour: 'numeric', minute: 'numeric' }; // Options de formatage pour toLocaleTimeString
             const x = y.toLocaleTimeString('fr-FR', options); // Utilisation de toLocaleTimeString avec les options spécifiées
@@ -29,7 +28,7 @@ const Reservation = ({idTer, idRes, jour, sendselectedDate, sendselectedHour, se
             const x2 = y.toLocaleTimeString('fr-FR', options2); // Utilisation de toLocaleTimeString avec les options spécifiées
             setSelectedDate(x2);
         }
-    },[jour])
+    },[idRes])
 
     //for fetching the terrain infos and setting the rest hours in the reseerved hours hook
     const fetchTerrainInfo = async () => {
@@ -52,11 +51,12 @@ const Reservation = ({idTer, idRes, jour, sendselectedDate, sendselectedHour, se
       //for reservation fetching and setting the reserved hours in the reseerved hours hook
       const handleFetchReservations = async () => {
         try {
+          console.log(selectedDate)
           const response = await axios.get(`http://localhost:4000/res/reservation/getInfo/${idTer}/${selectedDate.toISOString()}`, {
             params: {
               date: selectedDate.toISOString() // Assuming selectedDate is a valid Date object
             }
-          });
+          });console.log(response)
           if (response.data.reservations && response.data.reservations.length > 0) {
             const reservationTimes = response.data.reservations.map(reservation => {
               const reservationDateTime = new Date(reservation.date);

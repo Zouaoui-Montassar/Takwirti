@@ -7,7 +7,7 @@ import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import Dailog from './Dailog';
 import TimeList from './TimeList';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Image from './Image';
 import { ListPlus , Dribbble } from 'lucide-react';
@@ -20,7 +20,7 @@ import {
   list,
 } from "firebase/storage";
 import { storage } from "../firebase";
-
+import { v4 as uuidv4 } from 'uuid';
 const ville = [
   { name: 'Tunis' },
   { name: 'nabeul' },
@@ -34,7 +34,7 @@ const Terrain = ({ func }) => {
   const { user } = useAuthContext();
   const id = user.userObj._id;
   const idTer = useParams();
-  const [img, setImg] = useState("abc")
+  const [img, setImg] = useState("")
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
@@ -43,7 +43,7 @@ const Terrain = ({ func }) => {
   const [prix, setPrix] = useState(120)
   const [ouverture, setOuverture] = useState('08:00');
   const [fermeture, setFermeture] = useState('00:00');
-  const [time , setTime] = useState([]);
+  const [time , setTime] = useState(null);
   const [date, setDate] = useState("none");
   const [status, setStatus]=useState();
   const navigate = useNavigate();
@@ -52,6 +52,15 @@ const Terrain = ({ func }) => {
   const [terrainItems, setTerrainItems] = useState([]);
   const [calendrier, setCalendrier] = useState([]);
   const [error, setError] = useState(null); // State to hold error messages
+  const [loading, setLoading] = useState(false);
+  const location = useLocation().pathname;
+  const idRes = useParams();
+  useEffect(() => {
+    console.log('Terrain')
+    getTerrain();
+    return () => getTerrain();
+  },[idTer]) 
+  console.log(calendrier,terrainItems)
 
   // Function to handle errors
   const handleError = (errorMessage) => {
@@ -80,15 +89,24 @@ const Terrain = ({ func }) => {
   const getTerrain = async() => {
     try { 
       const response = await axios.get(`http://localhost:4000/ter/terrain/getInfo/${idTer.id}`);
+      console.log(response)
       setTerrainItems(response.data.terrain);
       setCalendrier(response.data.terrain.calendrier); 
+      if (location === `/terrain/update/${idRes.id}`){
+        setName(response.data.terrain.nom);
+        setPhone(response.data.terrain.phone);
+        setImage(response.data.terrain.img);
+        setStatus(response.data.terrain.status);
+        setData(response.data.terrain.calendrier.duree);
+        setPrix(response.data.terrain.prix);
+        setOuverture(response.data.terrain.calendrier.open); 
+        setFermeture(response.data.terrain.calendrier.close); 
+        setTime(response.data.terrain.calendrier.Time);
+      }
     }catch(e) { 
       console.error('Error fetching terrain items:', e);
     }
   }
-  useEffect(() => {
-    getTerrain();
-  },[])
 
   const handleImageUpload = async (file) => {
     setImage(file); // Set the uploaded image in state
@@ -96,6 +114,10 @@ const Terrain = ({ func }) => {
   const handleTime = (time) => {
     setTime(time);
   }
+  useEffect(() =>{
+    handleTime(time);
+  },[]);
+  console.log(time);
   const handleAddressChange = (event) => {
     setAddress(event.target.value);
   };
@@ -115,18 +137,25 @@ const Terrain = ({ func }) => {
       setShow(true);
     }
   };
-
+  console.log(image);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
+      console.log(name)
+      console.log(image)
       let response;
-      let imageUrl;
-      if (image) {
-        const storageRef = ref(storage, `terrainpictures/${user.userObj._id}`);
-        const imageSnapshot = await uploadBytes(storageRef, image);
-        imageUrl = await getDownloadURL(imageSnapshot.ref);
-        console.log(imageUrl);
-      }
+      let imageUrl = image; // Set the default value to the current image
+
+    if (image instanceof File) {
+      // Check if the image is a File object (indicating it has changed)
+      const imageName = `${uuidv4()}_${image.name}`;
+/*       console.log(image.name); */
+      const storageRef = ref(storage, `terrainpictures/${user.userObj._id}/${imageName}`);
+      const imageSnapshot = await uploadBytes(storageRef, image);
+      imageUrl = await getDownloadURL(imageSnapshot.ref);
+      console.log(imageUrl);
+    }
       if (func === "add") {
         response = await axios.post(`http://localhost:4000/ter/terrain/add/${id}`, {
           img: imageUrl,
@@ -143,7 +172,8 @@ const Terrain = ({ func }) => {
         });
       } else if (func === "update") {
         console.log(time);
-        response = await axios.put(`http://localhost:4000/ter/terrain/update/${idTer.id}`, {
+        console.log(imageUrl)
+        response = await axios.patch(`http://localhost:4000/ter/terrain/update/${idTer.id}`, {
           img: imageUrl,
           nom: name,
           phone: phone,
@@ -151,18 +181,22 @@ const Terrain = ({ func }) => {
           open: ouverture,
           close: fermeture,
           duree: data,
-          time: time,
+          time: time === undefined ? calendrier.time : time,
           date: date,
           status: status,
         });
+
       }
-  
+      
       if (response.data) {
         console.log(`Terrain ${func}ed successfully`);
+        setLoading(false);
       } else {
         console.error(`Failed to ${func} terrain`);
         handleError(`Failed to ${func} terrain`);
+        setLoading(false);
       }
+      setLoading(false);
       navigate(`/terrain/responsable`)
     } catch (error) {
       console.error(`Error ${func}ing terrain:`, error);
@@ -184,8 +218,8 @@ const Terrain = ({ func }) => {
       console.error('Error deleting terrain:', error);
     }
   };
-  
-
+  console.log(terrainItems)
+  console.log(calendrier.time)
   return (
     <>
     <NavBar  />
@@ -368,8 +402,7 @@ const Terrain = ({ func }) => {
                   type="radio"
                   id="disponible"
                   name="status"
-                  value="disponible"
-                  checked={terrainItems.status === 'disponible'}
+                  defaultChecked={terrainItems.status === 'disponible'}
                   onChange={(e) => setStatus(e.target.value)}
                 />
                 <label htmlFor="disponible">Disponible</label>
@@ -379,8 +412,7 @@ const Terrain = ({ func }) => {
                   type="radio"
                   id="indisponible"
                   name="status"
-                  value="indisponible"
-                  checked={terrainItems.status === 'indisponible'}
+                  defaultChecked={terrainItems.status === 'indisponible'}
                   onChange={(e) => setStatus(e.target.value)}
                 />
                 <label htmlFor="indisponible">Indisponible</label>
@@ -402,24 +434,24 @@ const Terrain = ({ func }) => {
                 <br />
                 <select
                   className='border b-2  m-2 bg-white shadow-md  w-200 p-2 rounded-md'
-                  value={func==="update" ? calendrier.date : date}
+                  defaultValue={func==="update" ? calendrier.date : date}
                   onChange={(e) => {setDate(e.target.value)}}
                 >
-                  <option value={"Monday"}>Monday</option>
-                  <option value={"tuesday"}>tuesday</option>
-                  <option value={"wednesday"}>wednesday</option>
-                  <option value={"thursday"}>thursday</option>
-                  <option value={"friday"}>friday</option>
-                  <option value={"saturday"}>saturday</option>
-                  <option value={"sunday"}>sunday</option>
-                  <option value={"none"}>none</option>
+                  <option value={"monday"} selected={func==="update" && calendrier.date === "monday"}>Monday</option>
+                  <option value={"tuesday"} selected={func==="update" && calendrier.date === "tuesday"}>tuesday</option>
+                  <option value={"wednesday"} selected={func==="update" && calendrier.date === "wednesday"}>wednesday</option>
+                  <option value={"thursday"} selected={func==="update" && calendrier.date === "thursday"}>thursday</option>
+                  <option value={"friday"} selected={func==="update" && calendrier.date === "friday"}>friday</option>
+                  <option value={"saturday"} selected={func==="update" && calendrier.date === "saturday"}>saturday</option>
+                  <option value={"sunday"} selected={func==="update" && calendrier.date === "sunday"}>sunday</option>
+                  <option value={"none"} selected={func==="update" && calendrier.date === "none"}>none</option>
                 </select>
               </div>
             </div>
             
             <div className=' justify-center items-center m-4 '>
               <div className='relative left-[350px]  w-[500px]'>
-                <Image onImageUpload={handleImageUpload} pic={func === "upade" ? terrainItems.img: null} />
+                <Image onImageUpload={handleImageUpload} imageLink={image} />
               </div>
             </div>
 
@@ -446,7 +478,12 @@ const Terrain = ({ func }) => {
           <button className='p-2 border bg-green-500 text-white rounded-md text-xl' type="submit">
             Confirm
           </button>
+          {loading ? (
+  <div className="flex items-center justify-center text-black mt-4">Confirming. Please wait..</div>
+) : null}
         </div>
+        
+
         </form>
       </div>
       </div>
