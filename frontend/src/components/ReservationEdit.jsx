@@ -40,6 +40,11 @@ const ReservationEdit = () => {
     useEffect(() => {
         handleWidth(width);
     },[width]);
+    useEffect(() => {
+        const filteredUsers = tachkila.filter(user => user._id !== null);
+        setToNotify(filteredUsers);
+    }, [tachkila]);
+    
     const handleW = (width) => {
         if (width === 284){
             setW(435);
@@ -145,7 +150,7 @@ const ReservationEdit = () => {
                     message: `${user.userObj.nom} ${user.userObj.prenom} has invited you to a Takwira on ${new Date(combinedDateTime)} `
                 });
                 console.log(response.data); // Assuming you want to log the response
-                alert("The players were notified");
+                alert("Notifications sent to the respective players");
             } catch (error) {
                 console.error('Failed to notify users:', error);
             }

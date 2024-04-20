@@ -50,17 +50,33 @@ const SendNotif = async (req, res) => {
         const { sender, receivers, message } = req.body;
         console.log(receivers);
         const notifications = await Promise.all(receivers.map(async receiverId => {
-            const notification = await NotifModel.create({
+            // Check if a notification already exists for this sender, receiver, and message
+            const existingNotification = await NotifModel.findOne({
                 sender: sender,
                 receiver: receiverId,
                 message: message
             });
-            return notification;
+
+            if (!existingNotification) {
+                // Create a new notification if it doesn't exist
+                const notification = await NotifModel.create({
+                    sender: sender,
+                    receiver: receiverId,
+                    message: message
+                });
+                return notification;
+            } else {
+                // Return null for existing notifications
+                return null;
+            }
         }));
+
+        // Filter out null values (existing notifications) from the notifications array
+        const newNotifications = notifications.filter(notification => notification !== null);
 
         res.status(200).json({
             message: "Notifications sent successfully",
-            notifications: notifications
+            notifications: newNotifications
         });
     } catch (error) {
         res.status(400).json({
@@ -69,6 +85,7 @@ const SendNotif = async (req, res) => {
         });
     }
 };
+
 
 
 
