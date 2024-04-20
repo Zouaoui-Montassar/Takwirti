@@ -22,7 +22,7 @@ const GetAllNotifUser  = async (req, res) => {
         });
     }
 };
-const SendNotif  = async (req, res) => {
+/* const SendNotif  = async (req, res) => {
     console.log("send noti here")
     try {
         const { sender, receiver, message } = req.body;
@@ -43,7 +43,33 @@ const SendNotif  = async (req, res) => {
             error: error.message
         });
     }
+};   le9dima 1 user khw */ 
+
+const SendNotif = async (req, res) => {
+    try {
+        const { sender, receivers, message } = req.body;
+        console.log(receivers);
+        const notifications = await Promise.all(receivers.map(async receiverId => {
+            const notification = await NotifModel.create({
+                sender: sender,
+                receiver: receiverId,
+                message: message
+            });
+            return notification;
+        }));
+
+        res.status(200).json({
+            message: "Notifications sent successfully",
+            notifications: notifications
+        });
+    } catch (error) {
+        res.status(400).json({
+            message: "Failed to send notifications",
+            error: error.message
+        });
+    }
 };
+
 
 
 module.exports.notifController = {
