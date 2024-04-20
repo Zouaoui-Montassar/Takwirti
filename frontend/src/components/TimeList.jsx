@@ -1,8 +1,9 @@
 import { React , useState, useEffect } from 'react';
 
 const TimeList = ({ start, end, step , sendDataToParent,time}) => {
-  const [selectedTimes, setSelectedTimes] = useState([]); 
-  useEffect(() => {
+  console.log(time)
+  const [selectedTimes, setSelectedTimes] = useState([]);  
+  useEffect(() => { 
     if(time!=null)
       setSelectedTimes(time);
   },[time]);
@@ -34,18 +35,17 @@ const TimeList = ({ start, end, step , sendDataToParent,time}) => {
     sendDataToParent(updatedSelectedTimes);
   };
 
-  useEffect(() => {
+/*   useEffect(() => {
     handleTimeSelection(time);
-  },[]);
+  },[]); */
   console.log(selectedTimes)
-  console.log(time);
   while (currentTime < end) {
     const formattedTime = currentTime.toLocaleTimeString('it-IT', {
       hour12: false,
       hour: '2-digit',
       minute: '2-digit',
     });
-    const isSelected = selectedTimes.includes(formattedTime) && (time != null )? time.includes(formattedTime): null;
+    const isSelected = selectedTimes.includes(formattedTime) && (time != null )? time.includes(formattedTime): false;
     console.log(isSelected);
     timeList.push(
       
@@ -56,7 +56,8 @@ const TimeList = ({ start, end, step , sendDataToParent,time}) => {
           id={formattedTime}
           className="mr-2 cursor-pointer"
           onChange={() => handleTimeSelection(formattedTime)}
-          defaultChecked={isSelected}
+          checked={isSelected?true : null}
+          defaultChecked={!isSelected?false:null}
         />
         {formattedTime}
       </label>
