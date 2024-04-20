@@ -19,6 +19,8 @@ const ReservationList = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const { user } = useAuthContext();
     const id = user.userObj._id;
+    const role = user.userObj.__t;
+    console.log(role);
     const [yyy , setyyy ] = useState(user.userObj.__t);
     const [xxx , setxxx ] = useState();
     const date = new Date(searchTerm);
@@ -110,7 +112,7 @@ const ReservationList = () => {
                 <div className={`ml-[${w}px] mt-[82px] w-[100%] items-center justify-center p-12`}>
                     <div className="flex flex-row bg-white text-sm text-gray-500 font-bold px-5 py-2 shadow border-b border-gray-300 items-center justify-between">
                         <p className='flex-grow-0'>Reservation list</p>
-                        <SearchBox className="py-4" onSearch={handleSearch} isReservation={true} />
+                        {!role==="Responsable" && <SearchBox className="py-4" onSearch={handleSearch} isReservation={true} />}
                     </div>
 
                     <div className="w-full h-auto overflow-auto shadow bg-white px-12" id="journal-scroll">
@@ -127,7 +129,7 @@ const ReservationList = () => {
                                             <td className="px-2 py-2 whitespace-no-wrap">
                                             <div className="leading-5 text-gray-500 font-medium text-lg mb-1">By : {item.user?.nom} {item.user?.prenom}</div>
                                                         <div className="leading-5 text-gray-900 text-lg mb-1"> Nom terrain : {' '}
-                                                        <a className="text-blue-500 hover:underline" href={`/terrain/detail/${item.terrain?._id}`} onClick={(e) => e.stopPropagation()}>
+                                                        <a className="text-blue-500 hover:underline" href={role==="Responsable"?`/responsable/${item.terrain?._id}`:`/terrain/detail/${item.terrain?._id}`} onClick={(e) => e.stopPropagation()}>
                                                             {item.terrain?.nom}
                                                                                 </a>
                                                     <a className="text-blue-500 hover:underline" href="#">{item.lien_terrain}</a>
