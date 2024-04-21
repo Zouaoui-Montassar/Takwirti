@@ -21,9 +21,9 @@ const FriendsCard = ({ data, onAddFriend, onRemoveFriend, showAddButton }) => {
 
   return (
     <div className="w-full flex justify-center">
-      <div className="max-w-sm w-full bg-white rounded-lg shadow-md p-4 flex flex-col justify-between mb-4">
-        <div className="flex items-center mb-4">
-          <img src={data.image} alt='Friend' className='w-12 h-12 rounded-full' />
+      <div className=" w-[500px] bg-white rounded-lg shadow-md shadow-slate-400 p-4 flex flex-col justify-between my-4">
+        <div className="flex items-center ">
+          <img src={data.image} alt='Friend' className='w-[70px] h-[70px] rounded-full' />
           <div className='ml-4'>
             <h3 className='text-lg font-semibold'>{data.nom} {data.prenom}</h3>
             <div className='flex items-center mt-1'>

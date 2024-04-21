@@ -190,7 +190,7 @@ const ProfileModif = () => {
       <div className='flex flex-row'>
       {role === 'Responsable' ? (
         <Sidebar sendWidth={handleWidth}>
-          <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
+          <SidebarItem icon={<School />} text="Dashboard" link={'responsable'} />
           <SidebarItem icon={< Dribbble />} text="list terrain" link={`terrain/responsable`} />
           <SidebarItem icon={<ListPlus /> } text="reservation list" link={'reservation/listR'} />
         </Sidebar>
@@ -269,7 +269,7 @@ const ProfileModif = () => {
               }}
             />
             <label htmlFor="Photo" className='text-2xl text-bold m-2'>Photo</label>
-            <Image onImageUpload={handleImageUpload} />
+            <Image onImageUpload={handleImageUpload} imageLink ={user.userObj.image}/>
             <label htmlFor='password' className='text-2xl text-bold m-2'>
               Password
             </label>

@@ -47,11 +47,11 @@ return (
             <div className='flex items-center space-x-3 mt-2'> {/* Utilisation de space-x-2 pour l'espacement horizontal */}
                 <div className='bg-gray-200 flex flex-row border b-2 shadow-md p-2 h-[50px] ml-4'>
                     <button className="mr-4" onClick={() => setView('list')}>List View</button> 
-                    <BsList className='relative top-[9px]' />
+                    <BsList className='relative top-[9px]'  onClick={() => setView('list')}/>
                 </div>
                 <div className='bg-gray-200 flex flex-row border b-2 shadow-md p-2 h-[50px]'>
                     <button className="mr-4" onClick={() => setView('board')}>Board View</button> 
-                    <BiSolidDashboard className='relative top-[9px]'/>
+                    <BiSolidDashboard className='relative top-[9px]' onClick={() => setView('board')}/>
                 </div>
             </div>
         </div>

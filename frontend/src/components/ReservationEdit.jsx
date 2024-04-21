@@ -32,7 +32,7 @@ const ReservationEdit = () => {
     const [width, setWidth] = useState();
     const [w, setW] = useState();
     const [ancien, setAncien] = useState();
-
+    const [toNotify, setToNotify] = useState([]);
     // width for the frontend layout
     const handleWidth = (width) => {
         setWidth(width);
@@ -40,6 +40,11 @@ const ReservationEdit = () => {
     useEffect(() => {
         handleWidth(width);
     },[width]);
+    useEffect(() => {
+        const filteredUsers = tachkila.filter(user => user._id !== null);
+        setToNotify(filteredUsers);
+    }, [tachkila]);
+    
     const handleW = (width) => {
         if (width === 284){
             setW(435);
@@ -116,7 +121,40 @@ const ReservationEdit = () => {
                 console.error('Error cancelling reservation:', error);
             }
         };
-
+        const notifyUsers = async (e) => {
+            e.preventDefault();
+            const filteredUsers = tachkila.filter(user => user._id !== null);
+            if (!selectedDate || !selectedHour) {
+                alert("Please select a time.");
+                return;
+            }
+            if (filteredUsers.length === 0) {
+            alert("Please select players to notify.");
+            return;
+            }
+            const dateParts = Datee.split('/'); // Séparer la chaîne en parties (jour, mois, année)
+            const day = parseInt(dateParts[0], 10); // Récupérer le jour et le convertir en nombre entier
+            const month = parseInt(dateParts[1], 10) - 1; // Récupérer le mois (soustraire 1 car les mois sont indexés à partir de zéro)
+            const year = parseInt(dateParts[2], 10) + 2000; // Récupérer l'année (ajouter 2000 car l'année est sur deux chiffres)
+            let combinedDateTime = new Date(year, month, day);
+            console.log(selectedDate);
+            console.log(combinedDateTime);
+            combinedDateTime.setHours(parseInt(selectedHour), 0, 0, 0);
+            combinedDateTime = combinedDateTime.toISOString();
+            setToNotify(filteredUsers);
+            console.log("friends eli bech notifehom : ",filteredUsers);
+            try {
+                const response = await axios.post('http://localhost:4000/noti/sendnoti', {
+                    sender: user.userObj._id,
+                    receivers: toNotify,
+                    message: `${user.userObj.nom} ${user.userObj.prenom} has invited you to a Takwira on ${new Date(combinedDateTime)} `
+                });
+                console.log(response.data); // Assuming you want to log the response
+                alert("Notifications sent to the respective players");
+            } catch (error) {
+                console.error('Failed to notify users:', error);
+            }
+        };
         const handleOnSubmit = async (e) => { 
             e.preventDefault();
             const dateParts = Datee.split('/'); // Séparer la chaîne en parties (jour, mois, année)
@@ -176,16 +214,16 @@ const ReservationEdit = () => {
                     <SidebarItem icon={<MessageCircleMore />} text="Messages" link={'chat'} />
 
                 </Sidebar>
-                <div className={`relative left-[${w}px] top-[82px] w-[calc(100vw-${w}px)] p-8`}>
-                    <p>your reservation is on {new Date(reservationDetails.date).toLocaleString()}</p>
-                    <p>Your reservation updated in {terrainItems.nom} on {Datee} at {selectedHour} with:</p>
-<ul>
-  {reservationDetails.participants.map((participant) => (
-    <li key={participant._id}>{participant.nom} {participant.prenom}</li>
-  ))}
-</ul>
+                <div className={`relative left-[${w}px] top-[82px] w-full p-8  items-center justify-center`}>
+                    <p className='text-xl'>your reservation is on {new Date(reservationDetails.date).toLocaleString()}</p>
+                    <p className='text-2xl my-2'>Your reservation updated in {terrainItems.nom} on {Datee} at {selectedHour} with:</p>
+                    <ul>
+                    {reservationDetails.participants.map((participant) => (
+                        <li key={participant._id}>{participant.nom} {participant.prenom}</li>
+                    ))}
+                    </ul>
 
-                    <p>You can update you reservation here</p>
+                    <p className='text-3xl text-green-500 my-2'>You can update you reservation here</p>
                     <form onSubmit={handleOnSubmit}>
                         <TeamProvider value={{ team, setTeam }}>
                             <Reservation 
@@ -199,6 +237,12 @@ const ReservationEdit = () => {
                             <Tachkila handleTachkila ={handleTachkila} tachkila={reservationDetails.participants}/>
                         </TeamProvider>
                         <div className="flex flex-col md:flex-row md:justify-end mt-4">
+                        <button
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mb-2 md:mb-0 md:mr-2 rounded"
+                onClick={notifyUsers}
+            >
+                Notify Players
+            </button>
                             <button onClick={cancelReservation} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 md:mb-0 md:mr-2 rounded">
                                 Cancel Reservation
                             </button>

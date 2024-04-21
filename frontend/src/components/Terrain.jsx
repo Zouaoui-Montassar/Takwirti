@@ -270,7 +270,7 @@ const Terrain = ({ func }) => {
                   onChange={handleAddressChange}
                   disabled={func === 'update'}
                   title={func === 'update' ? 'Ce champ est inaccessible en mode édition de terrain' : ''}
-                  value={func==="update"? terrainItems.position : null}
+                  defaultValue={func==="update"? terrainItems.position : null}
 
                 />
               </div>
@@ -278,7 +278,7 @@ const Terrain = ({ func }) => {
                 <h3 className='text-bold text-xl relative right-1'>
                   city
                 </h3>
-                <Listbox value={selected.name} onChange={setSelected} disabled={func === 'update'} title={func === 'update' ? 'Ce champ est inaccessible en mode édition de terrain' : ''}>
+                <Listbox defaultValue={selected.name} onChange={setSelected} disabled={func === 'update'} title={func === 'update' ? 'Ce champ est inaccessible en mode édition de terrain' : ''}>
                   <div className='relative mt-1 bg-white'>
                     <Listbox.Button className='relative w-full h-full cursor-default rounded-md bg-transparent py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
                       <span className='block truncate'>{selected.name}</span>

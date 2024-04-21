@@ -94,6 +94,7 @@ const Tachkila = ({handleTachkila , tachkila}) => {
         <div className="flex flex-col w-full p-4">
             <h1 className="text-3xl font-bold mb-4">Tachkila list</h1>
             <div className="flex flex-col md:flex-row w-full mb-4 items-center justify-center">
+                <p>You can select from your friends list or manually type to add players , only your friends can be notified</p>
                 <input
                     type="text"
                     value={newPlayerName}
@@ -104,11 +105,11 @@ const Tachkila = ({handleTachkila , tachkila}) => {
                     onClick={handleInputClick}
                 />
                 {showSuggestions && (
-                    <ul className="mt-1 max-h-40 max-w-1/2 overflow-y-auto bg-white border border-gray-300 rounded-md shadow-md">
+                    <ul className="mt-1 max-h-40 w-[250px] divide-y-2 overflow-y-auto bg-white border border-gray-300 rounded-md shadow-md relative top-[100px] right-[400px]">
                         {friends
                         .filter((friend) => !team.some((player) => player._id === friend._id)) // ken suggestion deja 7atitha twali maadch todhher
                         .map((friend, index) => (
-                            <li key={index} onClick={() => addPlayerFromSuggestion(friend)} className="cursor-pointer p-2 hover:bg-gray-100">
+                            <li key={index} onClick={() => addPlayerFromSuggestion(friend)} className="cursor-pointer p-2 hover:bg-gray-100 text-xl">
                                 {friend.nom} {friend.prenom}
                             </li>
                         ))}
