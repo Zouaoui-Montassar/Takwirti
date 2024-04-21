@@ -17,7 +17,8 @@ const NavBar = ({ isHomePage }) => {
     logout();
     alert("logged out successfully");
   }
-  const isParticulier = user.userObj.__t === 'Particulier';
+  const isParticulier = user && user.userObj && user.userObj.__t === 'Particulier';
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };

@@ -272,7 +272,7 @@ const Sign_up = ({xxx}) => {
           </form>
           <p className="mt-4 text-center text-sm text-gray-600">
             Already have an account?{' '}
-            <a onClick={toSignIn} className="font-medium text-blue-600 hover:text-blue-500">
+            <a onClick={toSignIn} className="font-medium text-blue-600 hover:text-blue-500 cursor-pointer">
               Sign in
             </a>
           </p>
