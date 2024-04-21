@@ -32,7 +32,7 @@ const NavBar = ({ isHomePage }) => {
   return (
     <nav className={`bg-primary-50 fixed top-0 z-40 h-[82px] w-[100%] flex justify-between items-center py-3 max-container text-white ${isHomePage ? 'px-[10%]' : 'px-[3%]'}`}>
       
-      <Link to="#">
+      <Link to="/">
     <div className='flex flex-row'>
       <img src={whitelogo} alt="logo" width={74} height={50} />
       <h1 className='text-2xl font-bold pt-4'> Takwirti |</h1>
