@@ -92,7 +92,7 @@ const Tachkila = ({handleTachkila , tachkila}) => {
 
     return (
         <div className="flex flex-col w-full p-4">
-            <h1 className="text-3xl font-bold mb-4">Tachkila list</h1>
+            <h1 className="text-xl font-bold mb-4">Tachkila list</h1>
             <p>You can select from your friends list or manually type to add players , only your friends can be notified</p><br/>
             <div className="flex flex-col md:flex-row w-full mb-4 items-center justify-center">
                 <input

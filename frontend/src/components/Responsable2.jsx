@@ -37,7 +37,7 @@ const links = [
     }
 console.log(data._id)
     return (
-      <div className='items-center justify-center  w-full'>
+      <div className='items-center justify-center  w-full bg-white'>
         <h1 className='bold-36 my-2'> calender terrain : {data.nom}</h1> 
         <ParentCalender2 dayBlocked={data.calendrier.date} openTime={data.calendrier.open} closeTime={data.calendrier.close} time={data.calendrier.duree} date={data.calendrier.date} rh={data.calendrier.time} idTer={data._id} />
         <div className='flex flex-row items-center justify-center'>
@@ -100,7 +100,7 @@ const Responsable2 = () => {
           <SidebarItem icon={< Dribbble />} text="list terrain" link={`terrain/responsable`} />
           <SidebarItem icon={<ListPlus /> } text="reservation list" link={'reservation/listR'} />
         </SideBar>
-        <div className={`ml-[${w}px] flex mt-[82px] w-[100%] justify-center items-center`}>
+        <div className={`ml-[${w}px] flex mt-[82px] w-[100%] justify-center items-center bg-white`}>
           <ResponsableContent data={terrainInfo} user={user} /> {/* Pass terrainInfo as data */}
         </div>
       </div>

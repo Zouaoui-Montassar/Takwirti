@@ -112,7 +112,7 @@ const ReservationList = () => {
                 <div className={`ml-[${w}px] mt-[82px] w-[100%] items-center justify-center p-12`}>
                     <div className="flex flex-row bg-white text-sm text-gray-500 font-bold px-5 py-2 shadow border-b border-gray-300 items-center justify-between">
                         <p className='flex-grow-0'>Reservation list</p>
-                        {!role==="Responsable" && <SearchBox className="py-4" onSearch={handleSearch} isReservation={true} />}
+                        {role==="Particulier" && <SearchBox className="py-4" onSearch={handleSearch} isReservation={true} />}
                     </div>
 
                     <div className="w-full h-auto overflow-auto shadow bg-white px-12" id="journal-scroll">

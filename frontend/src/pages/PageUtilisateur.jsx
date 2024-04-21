@@ -69,7 +69,7 @@ const PageUtilisateur = () => {
            <div className={`ml-[${w}px] flex mt-[82px] w-[100%] justify-center items-center`}>
            {searchTerm ? <TerrainList param={"search"} searchTerm={searchTerm} width={w} /> :(
               <div className=''>
-                <h1 className='text-3xl font-bold my-2'>Cheapest fields</h1>
+                <h1 className='text-3xl font-bold my-2'>fields</h1>
                 <TerrainList param={"get"} width={w}/>
               </div>)}
             </div>

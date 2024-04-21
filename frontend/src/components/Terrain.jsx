@@ -206,9 +206,10 @@ const Terrain = ({ func }) => {
   
   const handleDeleteTerrain = async () => {
     try {
-      const response = await axios.delete(`http://localhost:4000/ter/terrain/delete/${id}`);
+      const response = await axios.delete(`http://localhost:4000/ter/terrain/delete/${idTer.id}`);
       if (response.status === 200) {
         console.log('Terrain deleted successfully');
+        navigate('/terrain/responsable')
         // Optionally, perform any other actions after successful deletion
       } else {
         console.error('Failed to delete terrain');
@@ -411,7 +412,7 @@ const Terrain = ({ func }) => {
                   type="radio"
                   id="indisponible"
                   name="status"
-                  defaultChecked={terrainItems.status === 'on'}
+                  defaultChecked={terrainItems.status === 'Indisponible'}
                   onChange={(e) => setStatus(e.target.value)}
                 />
                 <label htmlFor="indisponible">Indisponible</label>
