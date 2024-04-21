@@ -104,8 +104,8 @@ const ReservationList = () => {
                 ) : (
                     <Sidebar sendWidth={handleWidth}>
                         <SidebarItem icon={<School />} text="Dashboard" link={'responsable'} />
-                        <SidebarItem icon={< Dribbble />} text="list terrain" link={`terrain/responsable`} />
-                        <SidebarItem icon={<ListPlus /> } text="reservation list" link={'reservation/listR'} />
+                        <SidebarItem icon={< Dribbble />} text="Terrain list" link={`terrain/responsable`} />
+                        <SidebarItem icon={<ListPlus /> } text="Reservation list" link={'reservation/listR'} />
                     </Sidebar>
                 )
                 }
