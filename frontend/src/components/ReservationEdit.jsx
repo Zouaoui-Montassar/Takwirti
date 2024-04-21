@@ -14,6 +14,7 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import { Bell } from 'lucide-react';
 import { ContactRound , ListPlus , MessageCircleMore } from 'lucide-react';
 import { CgUserList } from "react-icons/cg";
+import Message from './Message';
 
 const ReservationEdit = () => {
     const { idRes } = useParams();
@@ -33,6 +34,7 @@ const ReservationEdit = () => {
     const [w, setW] = useState();
     const [ancien, setAncien] = useState();
     const [toNotify, setToNotify] = useState([]);
+    const [message, setMessage] = useState(''); // State for the message
     // width for the frontend layout
     const handleWidth = (width) => {
         setWidth(width);
@@ -123,14 +125,14 @@ const ReservationEdit = () => {
         };
         const notifyUsers = async (e) => {
             e.preventDefault();
+            setMessage(''); 
             const filteredUsers = tachkila.filter(user => user._id !== null);
             if (!selectedDate || !selectedHour) {
-                alert("Please select a time.");
-                return;
+                return setMessage("Please select a time.");
             }
-            if (filteredUsers.length === 0) {
-            alert("Please select players to notify.");
-            return;
+            // Check if players are selected
+            if (tachkila.length === 0) {
+                return setMessage("Please select players to notify.");
             }
             const dateParts = Datee.split('/'); // Séparer la chaîne en parties (jour, mois, année)
             const day = parseInt(dateParts[0], 10); // Récupérer le jour et le convertir en nombre entier
@@ -150,9 +152,10 @@ const ReservationEdit = () => {
                     message: `${user.userObj.nom} ${user.userObj.prenom} has invited you to a Takwira on ${new Date(combinedDateTime)} `
                 });
                 console.log(response.data); // Assuming you want to log the response
-                alert("Notifications sent to the respective players");
+                return setMessage("Notifications sent to the respective players");
             } catch (error) {
                 console.error('Failed to notify users:', error);
+                setMessage("Failed to notify users."); // Set the error message
             }
         };
         const handleOnSubmit = async (e) => { 
@@ -216,12 +219,12 @@ const ReservationEdit = () => {
                 </Sidebar>
                 <div className={`relative left-[${w}px] top-[82px] w-full p-8  items-center justify-center`}>
                     <p className='text-xl'>your reservation is on {new Date(reservationDetails.date).toLocaleString()}</p>
-                    <p className='text-2xl my-2'>Your reservation updated in {terrainItems.nom} on {Datee} at {selectedHour} with:</p>
-                    <ul>
+                    <p className='text-2xl my-2'>Your reservation updated in {terrainItems.nom} on {Datee} at {selectedHour} {/* with: */}</p>
+                    {/* <ul>
                     {reservationDetails.participants.map((participant) => (
                         <li key={participant._id}>{participant.nom} {participant.prenom}</li>
                     ))}
-                    </ul>
+                    </ul> */}
 
                     <p className='text-3xl text-green-500 my-2'>You can update you reservation here</p>
                     <form onSubmit={handleOnSubmit}>
@@ -253,6 +256,7 @@ const ReservationEdit = () => {
                         </form>
                     </div>
                 </div>
+                {message && <Message message={message} noRefresh={true} />}
             </div>
         );
     }

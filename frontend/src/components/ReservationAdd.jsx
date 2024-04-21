@@ -14,7 +14,7 @@ import { Bell } from 'lucide-react';
 import { ContactRound , ListPlus , MessageCircleMore } from 'lucide-react';
 import { CgUserList } from "react-icons/cg";
 import { useAuthContext } from '../hooks/useAuthContext';
-
+import Message from './Message';
 
 const ReservationAdd = () => {
     const params = useParams();
@@ -33,7 +33,7 @@ const ReservationAdd = () => {
     const [w, setW] = useState();
     const [nom, setNom] = useState();
     const [error, setError] = useState(null); // State to hold error messages
-
+    const [message, setMessage] = useState(''); // State for the message
     
     
 
@@ -104,14 +104,14 @@ const ReservationAdd = () => {
     }, [idTer]);
     const notifyUsers = async (e) => {
         e.preventDefault();
+        setMessage('');
         const filteredUsers = tachkila.filter(user => user._id !== null);
         if (!selectedDate || !selectedHour) {
-            alert("Please select a time.");
-            return;
+            return setMessage("Please select a time.");
         }
-        if (filteredUsers.length === 0) {
-        alert("Please select players to notify.");
-        return;
+        // Check if players are selected
+        if (tachkila.length === 0) {
+            return setMessage("Please select player to notify.");
         }
         let combinedDateTime = new Date(selectedDate);
         console.log(selectedDate)
@@ -125,11 +125,11 @@ const ReservationAdd = () => {
         try {
             const response = await axios.post('http://localhost:4000/noti/sendnoti', {
                 sender: user.userObj._id,
-                receivers: toNotify,
+                receivers: filteredUsers,
                 message: `${user.userObj.nom} ${user.userObj.prenom} has invited you to a Takwira on ${new Date(combinedDateTime)} `
             });
             console.log(response.data); // Assuming you want to log the response
-            alert("The players were notified");
+            return setMessage("Notifications sent to the respective players");
         } catch (error) {
             console.error('Failed to notify users:', error);
         }
@@ -140,8 +140,7 @@ const ReservationAdd = () => {
     const handleOnSubmit = async (e) => { 
         e.preventDefault();
         if (!selectedDate || !selectedHour) {
-            alert("Please select a time.");
-            return;
+            return setMessage("Please select a time.");
         }
         let combinedDateTime = new Date(selectedDate);
         console.log(selectedDate)
@@ -210,6 +209,7 @@ const ReservationAdd = () => {
                     </div>
                 </form>
             </div>
+            {message && <Message message={message} noRefresh={true} />}
         </div>
     </>
   )

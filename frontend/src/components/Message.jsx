@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Check } from 'lucide-react';
 
-const Message = ({message}) => {
+const Message = ({message ,noRefresh}) => {
   const [isVisible, setIsVisible] = useState(true);
 
   const handleClose = () => {
     setIsVisible(false);
-    window.location.reload();
+    if (!noRefresh) {
+      window.location.reload();
+    }
   };
 
   return (
