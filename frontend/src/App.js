@@ -28,7 +28,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import Admin from './pages/Admin';
 import Chatapp from './components/Chatapp';
-
+import NotFound from './components/NotFound';
 const data = [
   { id: 1, name: 'Item 1', image:'/Section 1 image.jpg' },
   { id: 2, name: 'Item 2', image:'/Section 2 image.png' },
@@ -93,9 +93,10 @@ function App() {
           <Route path='/terrain/update/:id' element={<Terrain func={"update"}/>}/>
           <Route path='/friendslist' element={<FriendsList/>}/>
           // eslint-disable-next-line react/jsx-no-comment-textnodes
-          <Route path='/tachkila' element={<Tachkila/>}/>
+          {/* <Route path='/tachkila' element={<Tachkila/>}/>  nest7aouhech normalement*/}
           <Route path='/admin' element={<Admin/>}/>
-          <Route path='/chat' element={<Chatapp/>}/>
+{/*           <Route path='/chat' element={<Chatapp/>}/> kifkif amalneha integré */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </div>
