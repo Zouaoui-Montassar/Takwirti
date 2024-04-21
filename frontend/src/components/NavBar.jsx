@@ -12,21 +12,20 @@ const NavBar = ({ isHomePage }) => {
   /* const [isHomePage, setIsHomePage] = useState(false); */
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNotificationMenuOpen, setIsNotificationMenuOpen] = useState(false);
-
   const { logout } = useLogout()
   const handleClick = () => {
     logout();
     alert("logged out successfully");
   }
-
+  const isParticulier = user.userObj.__t === 'Particulier';
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const toggleNotificationMenu = () => {
+/*   const toggleNotificationMenu = () => {
     setIsNotificationMenuOpen(!isNotificationMenuOpen);
   };
-
+ */
 
 
   return (
@@ -103,8 +102,13 @@ const NavBar = ({ isHomePage }) => {
 
             {/* Notification Menu */}
             <div className="relative px-5">
-              <FontAwesomeIcon icon={faBell} className="me-4 flex items-center text-3xl  dark:text-white cursor-pointer" onClick={toggleNotificationMenu} />
-              {isNotificationMenuOpen && (
+            {isParticulier && (
+              <div className="relative px-5">
+                <Link to="/notifications">
+                  <FontAwesomeIcon icon={faBell} className="me-4 flex items-center text-3xl dark:text-white cursor-pointer" />
+                </Link>
+              </div>)}
+              {/* {isNotificationMenuOpen && (
                 <ul
                   className="absolute z-[1000] top-14 right-0 m-0 min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-black shadow-lg"
                   data-twe-dropdown-menu-ref
@@ -119,7 +123,7 @@ const NavBar = ({ isHomePage }) => {
                     <Link to="/notifications" className="block py-2 px-4 hover:bg-gray-100 transition duration-300">Notification 3</Link>
                   </li>
                 </ul>
-              )}
+              )} */}
             </div>
           </>
         )}
