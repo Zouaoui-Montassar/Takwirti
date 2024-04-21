@@ -35,7 +35,6 @@ const ReservationAdd = () => {
     const [error, setError] = useState(null); // State to hold error messages
 
     
-<<<<<<< HEAD
     
 
     const handleError = (errorMessage) => {
@@ -45,8 +44,6 @@ const ReservationAdd = () => {
         }, 5000); 
       };
 
-=======
->>>>>>> 8092f675db7d69da4a21664221d31f15dd9d36ee
     //handle de la date selecteé rom calandar component
     const handleDateSelect = (date) => {
         setSelectedDate(date);
@@ -142,14 +139,10 @@ const ReservationAdd = () => {
     //action de boutton submit : envoie d'une post de creation d'une nouvelle reservation
     const handleOnSubmit = async (e) => { 
         e.preventDefault();
-<<<<<<< HEAD
-        
-=======
         if (!selectedDate || !selectedHour) {
             alert("Please select a time.");
             return;
         }
->>>>>>> 8092f675db7d69da4a21664221d31f15dd9d36ee
         let combinedDateTime = new Date(selectedDate);
         console.log(selectedDate)
         console.log(selectedHour)
@@ -201,9 +194,6 @@ const ReservationAdd = () => {
                     </TeamProvider>
                      <div className="text-red-500">To ensure your reservation is successful, you need to choose and fill all the items.</div>
                     <div className="flex flex-col md:flex-row md:justify-end mt-4"> {/* Stack vertically on small screens, align to end on medium screens and above */}
-<<<<<<< HEAD
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 md:mb-0 md:mr-2 rounded" type='submit' > {/* Margin on bottom on small screens, margin on right on medium screens and above */}
-=======
                     <button
                 className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mb-2 md:mb-0 md:mr-2 rounded"
                 onClick={notifyUsers}
@@ -211,7 +201,6 @@ const ReservationAdd = () => {
                 Notify Players
             </button>
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 md:mb-0 md:mr-2 rounded" type='submit'> {/* Margin on bottom on small screens, margin on right on medium screens and above */}
->>>>>>> 8092f675db7d69da4a21664221d31f15dd9d36ee
                             Submit
                         </button>
                         <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" type='reset'>

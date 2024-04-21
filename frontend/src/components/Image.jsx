@@ -8,7 +8,7 @@ const ImageUploader = ({ onImageUpload, imageLink }) => {
             <input 
                 type="file" 
                 accept="image/*" 
-                onChange={handleImageUpload} 
+                /* onChange={handleImageUpload}  */
                 className='hidden' // Cachez l'élément de type "file" natif
                 id="upload-button" // Associez un ID pour l'élément de style personnalisé
             />

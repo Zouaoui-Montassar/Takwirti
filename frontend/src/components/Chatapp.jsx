@@ -28,7 +28,7 @@ const Chatapp = () => {
     const [w, setW] = useState();
     const handleW = (width) => {
       if (width === 284){
-      setW(284);}
+      setW(500);}
       else {setW(102);}
     }
     useEffect(() => {
@@ -51,7 +51,7 @@ const Chatapp = () => {
               <SidebarItem icon={<MessageCircleMore />} text="Messages" link={'chat'} />
 
            </Sidebar>
-      <div className={`flex h-[100%] md:h-[630px] sm:h-[450px] rounded-lg overflow-hidden  bg-opacity-50 backdrop-filter backdrop-blur-lg ml-[${w}px] mt-[90px] justify-start p-8 w-[90%] `}>
+      <div className={`flex h-[100%] md:h-[630px] sm:h-[450px] rounded-lg overflow-hidden  bg-opacity-50 backdrop-filter backdrop-blur-lg ml-[${w}px] mt-[90px] justify-start p-8 w-[100%] `}>
         <SidebarChat />
         <MessageContainer />
       </div>

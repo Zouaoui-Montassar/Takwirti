@@ -101,13 +101,13 @@ const Terrain = ({ func }) => {
         setPrix(response.data.terrain.prix);
         setOuverture(response.data.terrain.calendrier.open); 
         setFermeture(response.data.terrain.calendrier.close); 
-        setTime(response.data.terrain.calendrier.Time);
+        setTime(response.data.terrain.calendrier.time);
+        setDate(response.data.terrain.calendrier.date);
       }
     }catch(e) { 
       console.error('Error fetching terrain items:', e);
     }
   }
-
   const handleImageUpload = async (file) => {
     setImage(file); // Set the uploaded image in state
   };
@@ -219,7 +219,6 @@ const Terrain = ({ func }) => {
     }
   };
   console.log(terrainItems)
-  console.log(calendrier.time)
   return (
     <>
     <NavBar  />
@@ -402,7 +401,7 @@ const Terrain = ({ func }) => {
                   type="radio"
                   id="disponible"
                   name="status"
-                  defaultChecked={terrainItems.status === 'disponible'}
+                  defaultChecked={terrainItems.status === 'Disponible'}
                   onChange={(e) => setStatus(e.target.value)}
                 />
                 <label htmlFor="disponible">Disponible</label>
@@ -412,7 +411,7 @@ const Terrain = ({ func }) => {
                   type="radio"
                   id="indisponible"
                   name="status"
-                  defaultChecked={terrainItems.status === 'indisponible'}
+                  defaultChecked={terrainItems.status === 'on'}
                   onChange={(e) => setStatus(e.target.value)}
                 />
                 <label htmlFor="indisponible">Indisponible</label>
