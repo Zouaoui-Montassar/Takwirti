@@ -140,13 +140,13 @@ const Sign_in = () => {
           </form>
           <p className="mt-4 text-center text-sm text-gray-600">
             Need to a responsable account?{' '}
-            <a onClick={toSignUpR} className="font-medium text-blue-600 hover:text-blue-500">
+            <a onClick={toSignUpR} className="font-medium text-blue-600 hover:text-blue-500 cursor-pointer">
               Get yours now !
             </a>
           </p>
           <p className="mt-4 text-center text-sm text-gray-600">
           Need to book fields ?{' '}
-            <a onClick={toSignUpP} className="font-medium text-blue-600 hover:text-blue-500">
+            <a onClick={toSignUpP} className="font-medium text-blue-600 hover:text-blue-500 cursor-pointer">
               Sign up
             </a>
             </p>

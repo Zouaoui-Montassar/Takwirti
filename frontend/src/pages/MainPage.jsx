@@ -62,7 +62,7 @@ return (
             or list your field for rent with ease. Our platform simplifies the rental <br />
             process and fosters connections between players. Join us and elevate your football experience today!
           </p>
-          <Link to="/signin" className='rounded-xl bg-white text-xl text-primary-50 w-full md:w-1/3 p-3 mt-5'>Get Started as a client</Link>
+          <Link to="/signupparti" className='rounded-xl bg-white text-xl text-primary-50 w-full md:w-1/3 p-3 mt-5'>Get Started as a client</Link>
         </div>
         <motion.img src="/Section 1 image.jpg" alt="img1" className='rounded-full ml-4 w-full md:w-auto'
           variants={imageVariants} initial="hidden" animate="visible" />

@@ -145,8 +145,8 @@ const ResponsableContent = ({ user }) => {
       <div className='flex flex-row'>
         <SideBar sendWidth={handleWidth}>
           <SidebarItem icon={<School />} text="Dashboard" link={'responsable'} />
-          <SidebarItem icon={< Dribbble />} text="list terrain" link={`terrain/responsable`} />
-          <SidebarItem icon={<ListPlus /> } text="reservation list" link={'reservation/listR'} />
+          <SidebarItem icon={< Dribbble />} text="Terrain list" link={`terrain/responsable`} />
+          <SidebarItem icon={<ListPlus /> } text="Reservation list" link={'reservation/listR'} />
         </SideBar>
         <div className={`ml-[${w}px] flex mt-[82px] w-[100%] justify-center items-center`}>
           <div className='flex flex-col'>

@@ -37,6 +37,7 @@ const FriendsList = () => {
 
   const removeFriend = async (friendId) => {
     try {
+      console.log("remove friend ?");
       const response = await fetch('http://localhost:4000/api/users/remove_friend', {
         method: 'DELETE',
         headers: {
@@ -76,9 +77,11 @@ const FriendsList = () => {
       
       const data = await response.json();
       console.log(data.message);
-      alert(data.message);
+/*       alert(data.message); */
+      return data.message
     } catch (error) {
       console.error('Failed to sent a friend request', error);
+      return 'Failed to send a friend request'
     }
   };
 

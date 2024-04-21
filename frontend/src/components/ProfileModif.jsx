@@ -110,7 +110,7 @@ const ProfileModif = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent the default form submission
-
+    setIsSuccess(false);
     try {
       console.log("click : entrain de modifier le profile");
       let url;
@@ -147,7 +147,7 @@ const ProfileModif = () => {
       console.log(response);
     } catch (error) {
       console.error('Failed to update profile:', error);
-      setError('Failed to update profile');
+      setError(`Failed to update profile : ${error.response.data.message}`);
     }
   };
 
@@ -320,7 +320,7 @@ const ProfileModif = () => {
           </form>
           {/* Error message */}
           {error && <p className='text-red-500 text-xl text-bold'>{error}</p>}
-          {isSuccess && <Message />}
+          {isSuccess === true && <Message message={"Profil updated successfully"}/>}
         </div>
       </div>
     </>

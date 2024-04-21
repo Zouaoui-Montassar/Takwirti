@@ -226,8 +226,8 @@ const Terrain = ({ func }) => {
       <div className='flex flex-row'>
         <SideBar sendWidth={handleWidth}>
           <SidebarItem icon={<School />} text="Dashboard" link={'responsable'} />
-          <SidebarItem icon={< Dribbble />} text="list terrain" link={`terrain/responsable`} />
-          <SidebarItem icon={<ListPlus /> } text="reservation list" link={'reservation/listR'} />
+          <SidebarItem icon={< Dribbble />} text="Terrain list" link={`terrain/responsable`} />
+          <SidebarItem icon={<ListPlus /> } text="Reservation list" link={'reservation/listR'} />
         </SideBar>
       <div className={`p-5  h-full ml-[${w}px] mt-[82px] w-[100%] justify-center items-center`}>
         <h1 className='bold-52'>{func} Stadium</h1>

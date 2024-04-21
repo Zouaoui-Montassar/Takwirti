@@ -42,9 +42,9 @@ console.log(data._id)
         <ParentCalender2 dayBlocked={data.calendrier.date} openTime={data.calendrier.open} closeTime={data.calendrier.close} time={data.calendrier.duree} date={data.calendrier.date} rh={data.calendrier.time} idTer={data._id} />
         <div className='flex flex-row items-center justify-center'>
           {/* <motion.img src="/taswira2.jpg" alt="taswira" width={400} height={400} className='absolute right-0 top-[500px] rounded-full m-2' variants={imageVariants} initial="hidden" animate="visible" /> */}
-          <div >
+          {/* <div >
               <p className='text-3xl text-bold border border-green-500 p-1 w-[500px] rounded-md shadow-2xl shadow-slate-500 absolute right-[30%] my-5'>Hi , <span className='bold-36 text-green-500'>{user.userObj.nom} {user.userObj.prenom}</span> Take pleasure in overseeing your reservations and stadiums <span className='bold-36 text-green-500'>...</span></p>
-          </div>
+          </div> */}
         </div>
         
       </div>
@@ -96,9 +96,9 @@ const Responsable2 = () => {
       <NavBar links={links} />
       <div className='flex flex-row'>
         <SideBar sendWidth={handleWidth}>
-          <SidebarItem icon={<School />} text="profile responsable" link={'responsable'} />
-          <SidebarItem icon={< Dribbble />} text="list terrain" link={`terrain/responsable`} />
-          <SidebarItem icon={<ListPlus /> } text="reservation list" link={'reservation/listR'} />
+          <SidebarItem icon={<School />} text="Dashboard" link={'responsable'} />
+          <SidebarItem icon={< Dribbble />} text="Terrain list" link={`terrain/responsable`} />
+          <SidebarItem icon={<ListPlus /> } text="Reservation list" link={'reservation/listR'} />
         </SideBar>
         <div className={`ml-[${w}px] flex mt-[82px] w-[100%] justify-center items-center bg-white`}>
           <ResponsableContent data={terrainInfo} user={user} /> {/* Pass terrainInfo as data */}
