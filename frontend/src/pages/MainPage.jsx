@@ -71,16 +71,17 @@ return (
       <div className='flex items-center justify-center mx-[10%] py-16'>
         <img src="/Section 2 image.png" alt="img1" className='rounded-full ml-4 ' />
 
-        <div className='flex flex-col mt-10 px-5'>
+        <div className='flex flex-col mt-10 px-5 items-center justify-center'>
           <motion.h1 variants={pVariants} initial="hidden" animate="visible" className='bold-52 '>
             {text2.split("").map((char,index) =>(
             <motion.span variants={spanVariants} key={index}>{char}</motion.span>
             ))}</motion.h1>
-          <p className='mt-5 text-xl'>
+          <p className='mt-5 text-xl '>
             Are you in search of the perfect football field for your next match? Look no further! <span
               className='text-primary-50 text-2xl'> TAKWIRTI</span> offers a seamless rental experience. Browse through our
             selection of fields, check availability, and book your slot in just a few clicks.
           </p>
+          <Link to="/particulier" className='rounded-xl bg-primary-50 text-xl text-white w-full md:w-1/3 p-3 mt-5'>Explore fields now !</Link>
         </div>
       </div>
 

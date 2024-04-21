@@ -459,7 +459,7 @@ const Terrain = ({ func }) => {
               <div className="flex justify-center items-center h-screen fixed top-0 left-0 w-full bg-gray-500 bg-opacity-75 z-50">
                 <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative w-[50%] my-5">
                   <strong className="font-bold text-xl">Error: </strong>
-                  <span className="block sm:inline text-red-500 text-xl">{error}</span>
+                  <span className="block sm:inline text-red-500 text-xl">{error} make sure all fields are not empty</span>
                 </div>
               </div>
             )}
