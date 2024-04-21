@@ -6,6 +6,7 @@ const Message = () => {
 
   const handleClose = () => {
     setIsVisible(false);
+    window.location.reload();
   };
 
   return (

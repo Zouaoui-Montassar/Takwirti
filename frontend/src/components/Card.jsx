@@ -12,7 +12,7 @@ const Card = ({ view, data }) => {
             <p className={view === 'list' ? 'text-bold text-xl w-[250px] line-clamp-2 ' :'text-bold text-xl line-clamp-1' }>position: {data.position}</p>
             <p className='text-bold text-xl'>phone: {data.phone}</p>
             <p className='text-bold text-xl'>Prix: {data.prix}</p>
-            <p className='text-bold text-xl'>note: {data.ratingAvg}</p>
+            <p className='text-bold text-xl'>note: {data.ratingAvg? data.ratingAvg : `None`}</p>
           </div>
         </div>
         <BiMessageSquareEdit className={`${view === 'list' ? ' w-[50px] h-[50px]' : 'relative bottom-[220px] left-[210px] w-[25px] h-[25px] hover:shadow-md hover:w-[29px] hover:h-[29px]'}`} />
