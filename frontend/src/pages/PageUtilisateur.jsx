@@ -36,22 +36,24 @@ const PageUtilisateur = () => {
       handleW(width);
     },[width]);
     // Check if there is no user or their type is not Particulier
-    useEffect(() => {
+/*     useEffect(() => {
       if (!user || user.userObj.__t !== 'Particulier') {
         return <Navigate to="/signin" />;
       }
       setIsLoaded(true); // Set isLoaded to true once user data is loaded
-    }, [user]);
+    }, [user]); */
 
-
+    if (!user || user.userObj.__t !== "Particulier" ) {
+      return <Navigate to="/signin" />;
+    }
     const handleSearch = (searchTerm) => {
       setSearchTerm(searchTerm);
     };
 
-    if (!isLoaded) {
+/*     if (!isLoaded) {
       // Return null or a loading component while waiting for user data
       return <div>Loading...</div>;
-    }
+    } */
   return (
     <>
         <NavBar />
