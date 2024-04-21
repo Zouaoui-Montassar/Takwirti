@@ -320,7 +320,7 @@ const ProfileModif = () => {
           </form>
           {/* Error message */}
           {error && <p className='text-red-500 text-xl text-bold'>{error}</p>}
-          {isSuccess === true && <Message />}
+          {isSuccess === true && <Message message={"Profil updated successfully"}/>}
         </div>
       </div>
     </>

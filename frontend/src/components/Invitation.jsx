@@ -4,9 +4,12 @@ import { BsTelephone } from 'react-icons/bs';
 import { ImCancelCircle } from 'react-icons/im';
 import { GrValidate } from 'react-icons/gr';
 import { useAuthContext } from '../hooks/useAuthContext';
-
+import Message from './Message';
+import { useState } from 'react';
 const Invitation = ({ data }) => {
     const { user } = useAuthContext();
+    const [message, setMessage] = useState('');
+    const [isMessageVisible, setIsMessageVisible] = useState(false);
 
     const handleAccept = async () => {
         const response = await fetch('http://localhost:4000/api/users/confirm_friend_request', {
@@ -19,8 +22,8 @@ const Invitation = ({ data }) => {
       
       const responseData = await response.json();
         console.log(responseData.message);
-        alert(responseData.message);
-        window.location.reload();
+        setMessage(responseData.message);
+        setIsMessageVisible(true);
     };
 
     const handleDecline = async () => {
@@ -34,8 +37,8 @@ const Invitation = ({ data }) => {
       
       const responseData = await response.json();
         console.log(responseData.message);
-        alert(responseData.message);
-        window.location.reload();
+        setMessage(responseData.message);
+        setIsMessageVisible(true);
     };
 
     return (
@@ -58,7 +61,9 @@ const Invitation = ({ data }) => {
     onClick={handleAccept}
 />
 
+
           </div>
+            {isMessageVisible && <Message message={message} onClose={() => setIsMessageVisible(false)} />}
       </div>
   );
 };
