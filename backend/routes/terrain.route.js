@@ -15,5 +15,7 @@ router.get('/terrain/list/:respId', terrainController.listTerrain);
 //router.post('/terrain/modifcalendar/:respId',terrainController.updateCalendar);
 router.get('/terrain/get', terrainController.getTerrain);
 router.get('/terrain/getInfo/:id', terrainController.getTerrainInfo);
-
+router.post('/terrain/:id/rate', terrainController.rateTerrain);
+router.patch('/terrain/:id/rate', terrainController.updateTerrainRating);
+router.get('/terrain/:id/rate/:userId', terrainController.getUserRate);
 module.exports.terrainRouter = router;

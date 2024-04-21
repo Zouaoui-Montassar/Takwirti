@@ -73,7 +73,6 @@ const Detail = () => {
     if (!terrainInfo) {
         return <div>Terrain not found.</div>;
     }
-    
     return (
         <>
             <NavBar /> 
@@ -111,7 +110,7 @@ const Detail = () => {
                         <p className='text-xl text-bold'>Ferme à {terrainInfo.calendrier.close}h</p>
                     </div>
                     <div className='mt-3'>
-                        <Stars />
+                        <Stars terrain={terrainInfo} />
                     </div>
                     <Link to={`/reservation/add/${idUser}/${terrainInfo._id}`} className='border border-green-400 bg-green-400 w-full md:w-1/6 p-2 rounded-md mt-3 flex items-center justify-center text-white'>
                         <p className='text-bold text-xl mr-1'>Réserver</p>

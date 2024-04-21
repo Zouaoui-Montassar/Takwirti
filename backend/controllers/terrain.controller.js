@@ -178,6 +178,101 @@ const getTerrainInfo = async (req, res) => {
     }
 };
 
+// POST action to rate the terrain by a user
+const rateTerrain = async (req, res) => {
+    const { id } = req.params;
+    const { userId } = req.body;
+    const { rating } = req.body;
+
+    try {
+        const terrain = await terrainModel.findById(id);
+        if (!terrain) {
+            return res.status(404).json({ message: "Terrain not found" });
+        }
+
+        const existingRatingIndex = terrain.ratings.findIndex(r => r.user.toString() === userId);
+        if (existingRatingIndex !== -1) {
+            // User already rated, update the existing rating
+            terrain.ratings[existingRatingIndex].rating = rating;
+        } else {
+            // Add a new rating
+            terrain.ratings.push({ user: userId, rating });
+        }
+        await terrain.save();
+
+        // Calculate average rating
+        const averageRating = terrain.ratings.reduce((total, r) => total + r.rating, 0) / terrain.ratings.length;
+
+        // Update the terrain with the average rating
+        terrain.ratingAvg = averageRating;
+        await terrain.save();
+
+        res.status(200).json({ message: "Terrain rated successfully", terrain });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to rate terrain", error: error.message });
+    }
+};
+
+// PATCH action to update the rating
+const updateTerrainRating = async (req, res) => {
+    const { id } = req.params;
+    const { userId } = req.body;
+    const { rating } = req.body;
+
+    try {
+        const terrain = await terrainModel.findById(id);
+        if (!terrain) {
+            return res.status(404).json({ message: "Terrain not found" });
+        }
+
+        // Find the user's existing rating
+        const existingRating = terrain.ratings.find(r => r.user.toString() === userId);
+        if (!existingRating) {
+            return res.status(400).json({ message: "User has not rated this terrain yet" });
+        }
+
+        // Update the user's rating
+        existingRating.rating = rating;
+        await terrain.save();
+
+        // Calculate average rating
+        const averageRating = terrain.ratings.reduce((total, r) => total + r.rating, 0) / terrain.ratings.length;
+
+        // Update the terrain with the average rating
+        terrain.ratingAvg = averageRating;
+        await terrain.save();
+
+        res.status(200).json({ message: "Terrain rating updated successfully", terrain });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to update terrain rating", error: error.message });
+    }
+};
+
+const getUserRate = async (req, res) => {
+    const { id, userId } = req.params; // Terrain ID and User ID
+
+    try {
+        // Find the terrain by its ID
+        const terrain = await terrainModel.findById(id);
+
+        if (!terrain) {
+            return res.status(404).json({ message: "Terrain not found" });
+        }
+
+        // Find the user's rating for this terrain
+        const userRating = terrain.ratings.find(rating => rating.user.toString() === userId);
+
+        if (!userRating) {
+            return res.status(404).json({ message: "User has not rated this terrain" });
+        }
+
+        res.status(200).json({ userRating });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to get user's rating", error: error.message });
+    }
+}
+
+
 
 module.exports.terrainController = {
     addTerrain,
@@ -188,4 +283,7 @@ module.exports.terrainController = {
     /*updateCalendar,*/
     getTerrain,
     getTerrainInfo,
+    rateTerrain, 
+    updateTerrainRating,
+    getUserRate
 };

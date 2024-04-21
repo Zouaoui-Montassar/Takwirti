@@ -1,7 +1,6 @@
 import { React , useState, useEffect } from 'react';
 
 const TimeList = ({ start, end, step , sendDataToParent,time}) => {
-  console.log(time)
   const [selectedTimes, setSelectedTimes] = useState([]);  
   useEffect(() => { 
     if(time!=null)
@@ -35,10 +34,6 @@ const TimeList = ({ start, end, step , sendDataToParent,time}) => {
     sendDataToParent(updatedSelectedTimes);
   };
 
-/*   useEffect(() => {
-    handleTimeSelection(time);
-  },[]); */
-  console.log(selectedTimes)
   while (currentTime < end) {
     const formattedTime = currentTime.toLocaleTimeString('it-IT', {
       hour12: false,
@@ -46,7 +41,6 @@ const TimeList = ({ start, end, step , sendDataToParent,time}) => {
       minute: '2-digit',
     });
     const isSelected = selectedTimes.includes(formattedTime) && (time != null )? time.includes(formattedTime): false;
-    console.log(isSelected);
     timeList.push(
       
       <div key={formattedTime} className="w-full sm:w-1/2 md:w-1/4 lg:w-1/6 mb-4 lg:mb-0">

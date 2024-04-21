@@ -19,7 +19,11 @@ const terrainSchema = new schema({
         required: true 
     },
     status : { type: String, required: true },
-    note : {type : Object},
+    ratings: [{
+        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Reference to User model
+        rating: { type: Number },
+    }],
+    ratingAvg: { type: Number }
 });
 
 module.exports.terrainModel = mongoose.model('Terrain', terrainSchema);
