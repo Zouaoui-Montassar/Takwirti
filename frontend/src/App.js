@@ -93,9 +93,9 @@ function App() {
           <Route path='/terrain/update/:id' element={<Terrain func={"update"}/>}/>
           <Route path='/friendslist' element={<FriendsList/>}/>
           // eslint-disable-next-line react/jsx-no-comment-textnodes
-          {/* <Route path='/tachkila' element={<Tachkila/>}/>  nest7aouhech normalement*/}
+          <Route path='/tachkila' element={<Tachkila/>}/>  
           <Route path='/admin' element={<Admin/>}/>
-{/*           <Route path='/chat' element={<Chatapp/>}/> kifkif amalneha integré */}
+         <Route path='/chat' element={<Chatapp/>}/> 
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
