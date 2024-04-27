@@ -8,6 +8,8 @@ lib/node_modules/
 /.pnp
 .pnp.js
 
+backend/.env
+database.txt
 # testing
 /coverage
 
