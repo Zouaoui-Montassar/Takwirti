@@ -13,6 +13,7 @@ database.txt
 urlBD.txt
 # testing
 /coverage
+frontend/src/firebase.js
 
 # production
 /build
