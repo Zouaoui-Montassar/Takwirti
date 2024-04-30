@@ -15,7 +15,7 @@ Install with npm
 ```
 ## Environment Variables 
 
-To run this project, you will need to add the following environment variables to your .env file ( which you are going to create in the backend folder )
+To run this project, you will need to add the following environment variables to your .env file ( which you are going to create in the backend folder backend/.env )
 ```bash
   PORT = 4000
   MONGO_URI = your_mongo_uri
