@@ -6,6 +6,6 @@ const router = express.Router();
 router.get('/getallnotiuser/:id', notifController.GetAllNotifUser);
 router.post('/sendnoti', notifController.SendNotif);
 
-// zidou choufou ken fama routes wala controllers okhrin nest7a9ouhom 
+// all for now 
 
 module.exports.notifRouter = router;

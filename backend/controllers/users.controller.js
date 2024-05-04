@@ -8,10 +8,10 @@ require('dotenv').config();
 const jwtSecret = process.env.JWT_SECRET;
 const friendService = require('../services/friend.service');
 
-// create token function , parameter houwa object user ( login + sign up fel zouz nest7a9ouha)
+// create token function , parameter houwa object user 
 const createToken = (user) => {
     return jwt.sign({ userId: user._id, email: user.email }, jwtSecret);
-}  // najmou nzidou exprire date (nharin akeka) ka parameter fel .sign method mel jwt , pour le moment mamalthech
+}  // no expire date yet
 
 //lezem token fel sign up zeda madem bech yetredirecta lel home page toul 
 const addResp = async (req, res) => {

@@ -1,12 +1,11 @@
 const express = require('express');
 const { userController } = require('../controllers/users.controller');
 const router = express.Router();
-/* const passport = require('../config/passport.config.js');  zeyda for now , khaleha lel googleoauth*/
-/* const verifyToken = require('../middlewares/verifyToken'); zeyda for now  */
+/* const passport = require('../config/passport.config.js');  for google auth/
+/* const verifyToken = require('../middlewares/verifyToken');  */
 const requireAuth = require('../middlewares/requireAuth.js');
 
 // el register kol had andou route , fel login lzouz nafsha , w c deja yethatou fard collection eli heya users ama kol wehed andou schema lih , tel9a __t edhika teb3a el "heritage" , yetsama discriminant
-// yaani jet kima hachetna bedhabet 
 
 
 
@@ -15,7 +14,7 @@ router.post('/users/register_responsable', userController.addResp);
 router.post('/users/register_particulier', userController.addParticulier);
 router.post('/users/login', userController.login);
 
-// lezem tet7at lenna bech tprotecti lroutes eli ba3dha lkolhom ken el login w register 
+// route protection
 /*  router.use(requireAuth);  */
 
 // updates
@@ -57,7 +56,7 @@ router.get('/users/:userId/pending_requests', userController.getPendingFriends);
 
  /* // ADMIN STUFF ( optional )
 router.get('/users/all', userController.getAllUsers);
- router.delete('/users/delete_user/:id', userController.deleteUser); khalehom comment sa3at lserver ycrashi  */
+router.delete('/users/delete_user/:id', userController.deleteUser);  */
 
 module.exports.userRouter = router;
 

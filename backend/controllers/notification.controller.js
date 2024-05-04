@@ -43,7 +43,7 @@ const GetAllNotifUser  = async (req, res) => {
             error: error.message
         });
     }
-};   le9dima 1 user khw */ 
+};   old controller */ 
 
 const SendNotif = async (req, res) => {
     try {
