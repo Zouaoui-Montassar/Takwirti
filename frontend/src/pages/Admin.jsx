@@ -5,13 +5,6 @@ import Listuser from '../components/Listuser.jsx';
 import { User  } from 'lucide-react';
 
 
-const links = [
-  { label: 'Accueil', path: '/' },
-  { label: 'Page 1', path: '/page1' },
-  { label: 'Page 2', path: '/page2' },
-  // Ajoutez plus de liens au besoin
-];
-
 export default function Admin() {
   const [userCount, setUserCount] = useState(0);
   const [accessDenied, setAccessDenied] = useState(false);
