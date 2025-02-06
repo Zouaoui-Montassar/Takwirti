@@ -1,3 +1,11 @@
+## Main Functionalities
+
+- User Authentication (JWT on localstorage) & Authorization ( Particulier , Responsable , Admin ) ( useContext for state management )
+- CRUD For Terrains
+- CRUD For Reservations
+- Search functionality for Terrains and Reservations & Notifications
+- Realtime chat ( Zustand for global state )
+
 
 ## Installation
 
